@@ -13,11 +13,11 @@ import { ClienteService } from '../../service/cliente.service';
   styleUrls: ['./clientes.page.less'],
 })
 export class ClientesPage implements OnInit {
-  filterValue: String;
-  clientes: Client[];
-  clickedRow: Client;
+  filterValue: String = '';
+  clientes: Client[] = [];
+  clickedRow: Client | undefined;
   dataSource: any;
-  filterEvent: Event;
+  filterEvent: Event | undefined;
 
   displayedColumns: string[] = [
     'telefone',
@@ -85,7 +85,7 @@ export class ClientesPage implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.rest.deleteCustomer(this.clickedRow.clientId).subscribe(r => {
+        this.rest.deleteCustomer(this.clickedRow!.clientId).subscribe(r => {
           if (r.success)
             this.getCustomers()
         })

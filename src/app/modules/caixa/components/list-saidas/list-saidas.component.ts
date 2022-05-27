@@ -12,8 +12,8 @@ import { CaixaService } from '../../service/caixa.service';
   providers: [DatePipe]
 })
 export class ListSaidasComponent implements OnInit {
-  saidas: Expense[];
-  clickedRow: Expense;
+  saidas: Expense[] = [];
+  clickedRow: Expense | undefined;
   dataSource: any;
 
   constructor(private rest: CaixaService, private storage: BusinessStorage) { }

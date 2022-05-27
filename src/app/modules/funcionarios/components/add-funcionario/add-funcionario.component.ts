@@ -53,19 +53,19 @@ export class AddFuncionarioComponent implements OnInit {
 
   sendEmployee(edit: boolean) {
     var employee: Employee = {
-      cpf: this.formRegisterEmployees.get('cpf').value,
-      name: this.formRegisterEmployees.get('name').value,
-      street: this.formRegisterEmployees.get('street').value,
-      number: this.formRegisterEmployees.get('number').value,
-      district: this.formRegisterEmployees.get('district').value,
-      city: this.formRegisterEmployees.get('city').value,
-      phone: this.formRegisterEmployees.get('phone').value,
-      role: this.formRegisterEmployees.get('role').value,
-      admissionDate: this.formRegisterEmployees.get('admissionDate').value,
-      birthDate: this.formRegisterEmployees.get('birthDate').value,
-      terminationDate: null,
-      salary: this.formRegisterEmployees.get('salary').value,
-      isOutsource: this.formRegisterEmployees.get('isOutsource').value == "Sim",
+      cpf: this.formRegisterEmployees.get('cpf')!.value,
+      name: this.formRegisterEmployees.get('name')!.value,
+      street: this.formRegisterEmployees.get('street')!.value,
+      number: this.formRegisterEmployees.get('number')!.value,
+      district: this.formRegisterEmployees.get('district')!.value,
+      city: this.formRegisterEmployees.get('city')!.value,
+      phone: this.formRegisterEmployees.get('phone')!.value,
+      role: this.formRegisterEmployees.get('role')!.value,
+      admissionDate: this.formRegisterEmployees.get('admissionDate')!.value,
+      birthDate: this.formRegisterEmployees.get('birthDate')!.value,
+      terminationDate: undefined,
+      salary: this.formRegisterEmployees.get('salary')!.value,
+      isOutsource: this.formRegisterEmployees.get('isOutsource')!.value == "Sim",
       isActive: true,
       businessCnpj: this.storage.get(BUSINESS_CNPJ)
     };

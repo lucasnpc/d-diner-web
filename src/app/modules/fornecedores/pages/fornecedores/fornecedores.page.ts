@@ -13,10 +13,10 @@ import { ProvidersService } from '../../services/fornecedores.service';
   styleUrls: ['./fornecedores.page.less']
 })
 export class FornecedoresPage implements OnInit {
-  filterEvent: Event;
-  filterValue: String;
-  providers: Provider[];
-  clickedRow: Provider;
+  filterEvent: Event | undefined;
+  filterValue: String = '';
+  providers: Provider[] = [];
+  clickedRow: Provider | undefined;
   dataSource: any;
 
   displayedColumns: string[] = [
@@ -88,7 +88,7 @@ export class FornecedoresPage implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.service.disableProvider(this.clickedRow.providerCnpj).subscribe(r => {
+        this.service.disableProvider(this.clickedRow!.providerCnpj).subscribe(r => {
           if (r.success)
             this.getProviders()
         })

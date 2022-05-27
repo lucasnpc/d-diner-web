@@ -32,9 +32,9 @@ export class AddExpenseComponent implements OnInit {
     console.log('Add expense');
     var dados: Expense = {
       expenseId: undefined,
-      description: this.formRegisterExpenses.get('description').value,
-      value: this.formRegisterExpenses.get('value').value,
-      expenseDate: this.formRegisterExpenses.get('expenseDate').value,
+      description: this.formRegisterExpenses.get('description')!.value,
+      value: this.formRegisterExpenses.get('value')!.value,
+      expenseDate: this.formRegisterExpenses.get('expenseDate')!.value,
       businessCnpj: this.storage.get(BUSINESS_CNPJ)
     };
     this.rest.postExpense(dados).subscribe((result) => {

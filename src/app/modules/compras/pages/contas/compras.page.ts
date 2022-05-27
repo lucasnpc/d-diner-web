@@ -61,7 +61,7 @@ export class ComprasPage implements OnInit {
   }
 
   lessProductQuantity(product: Product) {
-    const p = this.products.find(p => product.productId === p.productId)
+    const p = this.products.find(p => product.productId === p.productId)!
     if (Number(product.currentStock) <= Number(p.currentStock))
       return
     switch (product.measurementUnit) {
@@ -81,7 +81,7 @@ export class ComprasPage implements OnInit {
   }
 
   increaseProductQuantity(product: Product) {
-    const p = this.products.find(p => product.productId === p.productId)
+    const p = this.products.find(p => product.productId === p.productId)!
     if (Number(product.currentStock) >= Number(p.maximumStock))
       return
     switch (product.measurementUnit) {
@@ -106,7 +106,7 @@ export class ComprasPage implements OnInit {
       const quantityPurchased = Number(formatter.format(this.productsToSelect[index].currentStock - this.products[index].currentStock))
       if (this.productsToSelect[index].currentStock > this.products[index].currentStock)
         this.productRequest.push({
-          productId: this.productsToSelect[index].productId,
+          productId: this.productsToSelect[index].productId!,
           productName: this.productsToSelect[index].productName,
           quantity: quantityPurchased,
           totalCostValue: this.productsToSelect[index].costValue * quantityPurchased,

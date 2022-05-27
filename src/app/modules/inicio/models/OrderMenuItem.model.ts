@@ -1,11 +1,11 @@
-export interface ItemRequest {
-    itemId: number;
-    quantity: number;
+export class ItemRequest {
+    itemId: number | undefined;
+    quantity: number | undefined;
 }
 
-export interface ClientOrdersItems {
-    clientOrderId: number;
-    itemId: number;
-    itemQuantity: number;
-    orderStatus: string;
+export class ClientOrdersItems {
+    clientOrderId: number | undefined;
+    itemId: number | undefined;
+    itemQuantity: number | undefined;
+    orderStatus: string = '';
 }

@@ -52,17 +52,17 @@ export class AddProductDialog implements OnInit {
 
   addProduct() {
     var data: Product = {
-      productId: null,
-      productName: this.formRegisterProduct.get('productName').value,
-      minimumStock: this.formRegisterProduct.get('minimumStock').value,
-      maximumStock: this.formRegisterProduct.get('maximumStock').value,
-      currentStock: this.formRegisterProduct.get('currentStock').value,
-      measurementUnit: this.formRegisterProduct.get('measurementUnit').value.name,
+      productId: undefined,
+      productName: this.formRegisterProduct.get('productName')!.value,
+      minimumStock: this.formRegisterProduct.get('minimumStock')!.value,
+      maximumStock: this.formRegisterProduct.get('maximumStock')!.value,
+      currentStock: this.formRegisterProduct.get('currentStock')!.value,
+      measurementUnit: this.formRegisterProduct.get('measurementUnit')!.value.name,
       businessCnpj: this.storage.get(BUSINESS_CNPJ),
-      barcode: this.formRegisterProduct.get('barcode').value,
-      productBatch: this.formRegisterProduct.get('productBatch').value,
-      costValue: this.formRegisterProduct.get('costValue').value,
-      providerCnpj: this.formRegisterProduct.get('providerCnpj').value.providerCnpj,
+      barcode: this.formRegisterProduct.get('barcode')!.value,
+      productBatch: this.formRegisterProduct.get('productBatch')!.value,
+      costValue: this.formRegisterProduct.get('costValue')!.value,
+      providerCnpj: this.formRegisterProduct.get('providerCnpj')!.value.providerCnpj,
       selected: undefined
     };
     if (data.barcode == '') {

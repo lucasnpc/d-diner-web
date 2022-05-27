@@ -11,7 +11,7 @@ import { DashboardService } from '../../service/dashboard.service';
 export class GainsComponent implements OnInit {
   gains = 0;
   expenses = 0;
-  @Input() selectedDate: Date
+  @Input() selectedDate: Date = new Date()
   @Output() changedDate = new EventEmitter<Date>()
 
   constructor(private rest: DashboardService, private storage: BusinessStorage) { }
@@ -25,7 +25,7 @@ export class GainsComponent implements OnInit {
   }
 
   changeDate(date: MatDatepickerInputEvent<Date>) {
-    this.changedDate.emit(date.value)
+    this.changedDate.emit(date.value!)
   }
 
   getTotalGainsNExpenses() {

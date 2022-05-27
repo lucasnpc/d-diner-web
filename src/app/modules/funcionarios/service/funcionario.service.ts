@@ -37,6 +37,6 @@ export class FuncionarioService {
 
   unactivateEmployee(cpf: string) {
     const pipe = new DatePipe('en-US')
-    return this.httpClient.delete<any>(deleteFuncionario, { params: { id: cpf, date: pipe.transform(Date.now(), 'yyyy-MM-dd') } })
+    return this.httpClient.delete<any>(deleteFuncionario, { params: { id: cpf, date: pipe.transform(Date.now(), 'yyyy-MM-dd')! } })
   }
 }

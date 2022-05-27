@@ -16,20 +16,9 @@
     </p>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="2" [rowspan]="6">
-    <ngx-charts-bar-vertical
-      [scheme]="colorScheme"
-      [results]="data"
-      [gradient]="gradient"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [legend]="showLegend"
-      [legendTitle]="'Legenda'"
-      [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel"
-      (select)="onSelect($event)"
-    >
+    <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="data" [gradient]="gradient" [xAxis]="showXAxis"
+      [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="'Legenda'" [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
     </ngx-charts-bar-vertical>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">

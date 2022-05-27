@@ -27,9 +27,9 @@ export class AddItemComponent implements OnInit {
     descricao: ['', Validators.required],
   });
 
-  products: Product[]
-  filteredProducts: Observable<string[]>;
-  productsDescription: string[];
+  products: Product[] = []
+  filteredProducts: Observable<string[]> = new Observable;
+  productsDescription: string[] = [];
   selectedProducts: Product[] = []
   createMenuItemControl = new FormControl('');
 
@@ -63,8 +63,8 @@ export class AddItemComponent implements OnInit {
 
     var dados: MenuItem = {
       itemId: undefined,
-      price: this.formRegisterItems.get('preco').value,
-      description: this.formRegisterItems.get('descricao').value,
+      price: this.formRegisterItems.get('preco')!.value,
+      description: this.formRegisterItems.get('descricao')!.value,
       itemQuantity: undefined,
       businessCnpj: this.storage.get(BUSINESS_CNPJ),
       selected: undefined
@@ -104,7 +104,7 @@ export class AddItemComponent implements OnInit {
     }
 
     this.selectedProducts.push(product)
-    this.productRequest.push({ productId: product.productId, quantity: 1 })
+    this.productRequest.push({ productId: product.productId!, quantity: 1 })
   }
 
   sumQuantity(p: ProductRequest) {
@@ -123,7 +123,7 @@ export class AddItemComponent implements OnInit {
       return
     }
 
-    this.productRequest[itemIndex].quantity = Number(formatter.format(p.quantity))
+    this.productRequest[itemIndex].quantity = Number(formatter.format(p.quantity!))
   }
 
   private _filter(value: string): string[] {

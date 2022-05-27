@@ -13,11 +13,11 @@ import { FuncionarioService } from '../../service/funcionario.service';
   styleUrls: ['./funcionarios.page.less'],
 })
 export class FuncionariosPage implements OnInit {
-  filterEvent: Event;
-  filterValue: String;
-  funcionarios: Employee[];
+  filterEvent: Event | undefined;
+  filterValue: String = '';
+  funcionarios: Employee[] = [];
   dataSource: any;
-  clickedRow: Employee;
+  clickedRow: Employee | undefined;
 
   displayedColumns: string[] = [
     'CPF',
@@ -92,7 +92,7 @@ export class FuncionariosPage implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.rest.unactivateEmployee(this.clickedRow.cpf).subscribe(r => {
+        this.rest.unactivateEmployee(this.clickedRow!.cpf).subscribe(r => {
           if (r.success)
             this.getEmployees()
         })

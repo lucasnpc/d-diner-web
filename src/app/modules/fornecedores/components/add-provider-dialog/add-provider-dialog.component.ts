@@ -36,16 +36,16 @@ export class AddProviderDialogComponent implements OnInit {
 
   sendProvider(edit: boolean) {
     var data: Provider = {
-      providerCnpj: this.formRegisterProviders.get('providerCnpj').value,
+      providerCnpj: this.formRegisterProviders.get('providerCnpj')!.value,
       businessCnpj: this.storage.get(BUSINESS_CNPJ),
-      corporateName: this.formRegisterProviders.get('corporateName').value,
-      street: this.formRegisterProviders.get('street').value,
-      number: this.formRegisterProviders.get('number').value,
-      district: this.formRegisterProviders.get('district').value,
-      city: this.formRegisterProviders.get('city').value,
-      state: this.formRegisterProviders.get('state').value,
-      phone: this.formRegisterProviders.get('phone').value,
-      email: this.formRegisterProviders.get('phone').value,
+      corporateName: this.formRegisterProviders.get('corporateName')!.value,
+      street: this.formRegisterProviders.get('street')!.value,
+      number: this.formRegisterProviders.get('number')!.value,
+      district: this.formRegisterProviders.get('district')!.value,
+      city: this.formRegisterProviders.get('city')!.value,
+      state: this.formRegisterProviders.get('state')!.value,
+      phone: this.formRegisterProviders.get('phone')!.value,
+      email: this.formRegisterProviders.get('phone')!.value,
       decommissioned: false
     }
 

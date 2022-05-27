@@ -45,7 +45,7 @@ export class DashboardDetailPage implements OnInit {
   }
 
   finishOrder(order: Order) {
-    this.inicioService.getClientOrdersWithOrderId(order.orderId.toString()).subscribe(r => {
+    this.inicioService.getClientOrdersWithOrderId(order.orderId!.toString()).subscribe(r => {
       if (r)
         r.data.map(v => {
           this.inicioService.getItemsWithClientOrderId(v.clientOrderId).subscribe(r2 => {

@@ -12,9 +12,9 @@ import { CaixaService } from '../../service/caixa.service';
   providers: [DatePipe]
 })
 export class ListEntradasComponent implements OnInit {
-  entradas: Gain[];
+  entradas: Gain[] = [];
   dataSource: any;
-  clickedRow: Gain;
+  clickedRow: Gain | undefined;
 
   constructor(private rest: CaixaService, private storage: BusinessStorage) { }
 

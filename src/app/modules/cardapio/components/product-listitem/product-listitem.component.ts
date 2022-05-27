@@ -9,7 +9,7 @@ import { ProductRequest } from '../../models/menu-item-product.model';
 })
 export class ProductListitemComponent implements OnInit {
 
-  @Input() product: Product
+  @Input() product: Product = new Product
   productQuantity: number = 0;
   _request: ProductRequest = new ProductRequest()
   @Output() lessQuantity = new EventEmitter<ProductRequest>()

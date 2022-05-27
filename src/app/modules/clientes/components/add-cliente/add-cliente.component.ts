@@ -39,12 +39,12 @@ export class AddClienteComponent implements OnInit {
   sendClient(edit: boolean) {
     var data: Client = {
       clientId: this.data.clientId,
-      name: this.formRegisterClients.get('name').value,
-      street: this.formRegisterClients.get('street').value,
-      number: this.formRegisterClients.get('number').value,
-      district: this.formRegisterClients.get('district').value,
-      city: this.formRegisterClients.get('city').value,
-      phone: this.formRegisterClients.get('phone').value,
+      name: this.formRegisterClients.get('name')!.value,
+      street: this.formRegisterClients.get('street')!.value,
+      number: this.formRegisterClients.get('number')!.value,
+      district: this.formRegisterClients.get('district')!.value,
+      city: this.formRegisterClients.get('city')!.value,
+      phone: this.formRegisterClients.get('phone')!.value,
       businessCnpj: this.storage.get(BUSINESS_CNPJ)
     };
 

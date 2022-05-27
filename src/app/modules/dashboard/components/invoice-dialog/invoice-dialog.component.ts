@@ -13,7 +13,7 @@ import { MenuItem } from 'src/app/modules/cardapio/models/menu-item.model';
 })
 export class InvoiceDialogComponent implements OnInit {
 
-  payementForm: string;
+  payementForm: string = '';
   payements: string[] = ['Crédito', 'Débito', 'Dinheiro', 'Pix'];
   totalValue = 0
   additionalValue = 0
@@ -24,7 +24,7 @@ export class InvoiceDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.map(i => {
-      this.totalValue += Number(i.price * i.itemQuantity)
+      this.totalValue += Number(i.price * i.itemQuantity!)
     })
     this.additionalValue = Number(this.totalValue * 0.1)
     this.totalValue += Number(this.additionalValue)

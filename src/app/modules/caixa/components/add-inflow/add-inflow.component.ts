@@ -22,12 +22,12 @@ interface Desks {
   styleUrls: ['./add-inflow.component.less'],
 })
 export class AddInflowComponent implements OnInit {
-  @ViewChild('search') searchBar: ElementRef;
+  @ViewChild('search') searchBar: ElementRef | undefined;
   @ViewChild('select') selectedDesk: any;
   filled = false;
-  itemIndex: number[];
-  itens: MenuItem[];
-  total: number;
+  itemIndex: number[] = [];
+  itens: MenuItem[] = [];
+  total: number = 0;
 
   desks: Desks[] = [
     { name: 'Mesa - Delivery' },
@@ -63,10 +63,10 @@ export class AddInflowComponent implements OnInit {
   }
 
   focusSearchBar() {
-    if (this.searchBar.nativeElement.value == '') {
+    if (this.searchBar!.nativeElement.value == '') {
       this.filled = true;
     }
-    this.searchBar.nativeElement.focus();
+    this.searchBar!.nativeElement.focus();
   }
 
   applyFilter(event: Event) {

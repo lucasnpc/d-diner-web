@@ -13,7 +13,7 @@ export class BusinessStorage {
 
     get(key: string): any {
         if (this.isLocalStorageSupported) {
-            return JSON.parse(this.storage.getItem(key));
+            return JSON.parse(this.storage.getItem(key)!);
         }
         return null;
     }

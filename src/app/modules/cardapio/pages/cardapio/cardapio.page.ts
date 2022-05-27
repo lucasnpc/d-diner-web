@@ -11,10 +11,10 @@ import { CardapioService } from '../../service/menu.service';
   styleUrls: ['./cardapio.page.less']
 })
 export class CardapioPage implements OnInit {
-  filterEvent: Event;
-  filterValue: String;
-  items: MenuItem[];
-  clickedRow: MenuItem;
+  filterEvent: Event | undefined;
+  filterValue: String = '';
+  items: MenuItem[] = [];
+  clickedRow: MenuItem | undefined;
   dataSource: any;
 
   displayedColumns: string[] = [

@@ -6,6 +6,8 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { DatePipe } from '@angular/common';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
+import { Color } from '@swimlane/ngx-charts/lib/utils/color-sets';
+import { ScaleType } from '@swimlane/ngx-charts';
 
 const EXPORT_ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
 <path fill="none" d="M0 0h24v24H0z"/><path d="M13 14h-2a8.999 8.999 0 0 0-7.968 4.81A10.136 10.136 0 0 1 3 18C3 12.477 7.477 8 13 8V3l10 8-10 8v-5z"
@@ -31,8 +33,11 @@ export class InformativeGraphComponent implements OnInit {
   showYAxisLabel = true;
   yAxisLabel = 'Quantidade';
 
-  colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
+  colorScheme: string | Color = {
+    name: '',
+    selectable: true,
+    group: ScaleType.Linear,
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
   constructor(
@@ -63,6 +68,9 @@ export class InformativeGraphComponent implements OnInit {
 
   selectTopDesksGraph() {
     this.colorScheme = {
+      name: '',
+      selectable: true,
+      group: ScaleType.Linear,
       domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
     };
     this.rest.getTopSalesDesks(this.storage.get("businessCnpj")).subscribe((result) => {
@@ -73,6 +81,9 @@ export class InformativeGraphComponent implements OnInit {
 
   selectTopItemsGraph() {
     this.colorScheme = {
+      name: '',
+      selectable: true,
+      group: ScaleType.Linear,
       domain: ['#278DF6', '#19AD79', '#FA4B4B', '#AAAAAA'],
     };
     this.rest.getTopMenuItems(this.storage.get("businessCnpj")).subscribe((result) => {

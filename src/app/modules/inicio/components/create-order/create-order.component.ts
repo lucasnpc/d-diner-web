@@ -46,7 +46,7 @@ export class CreateOrderComponent implements OnInit {
 
     if (this.orderToUpdate != undefined && this.createdOrder == undefined) {
       this.createdOrder = this.orderToUpdate
-      this.service.getClientOrdersWithOrderId(this.orderToUpdate.orderId.toString()).subscribe(result => {
+      this.service.getClientOrdersWithOrderId(this.orderToUpdate.orderId!.toString()).subscribe(result => {
         if (result)
           result.data.map(v => {
             this.service.getItemsWithClientOrderId(v.clientOrderId).subscribe(result => {

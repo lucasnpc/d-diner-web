@@ -10,7 +10,7 @@ import { DashboardService } from '../../service/dashboard.service';
 })
 export class ConcludedOrdersComponent implements OnInit {
   concludedOrders: Order[] = []
-  @Input() selectedDate: Date
+  @Input() selectedDate: Date = new Date()
 
   constructor(private rest: DashboardService, private storage: BusinessStorage) { }
 
