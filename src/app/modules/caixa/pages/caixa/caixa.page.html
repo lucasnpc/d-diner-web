@@ -1,0 +1,22 @@
+<div class="container background-muted">
+  <div class="content-container">
+    <mat-grid-list cols="4" rowHeight="68px">
+      <mat-grid-tile [colspan]="4" [rowspan]="1">
+        <rp-top-bar (openDialog)="openDialog()"></rp-top-bar>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="2" [rowspan]="7" class="list-tile">
+        <rp-list-entradas></rp-list-entradas>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="2" [rowspan]="7" class="list-tile">
+        <rp-list-saidas></rp-list-saidas>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="4" [rowspan]="2">
+        <rp-caixa-balance></rp-caixa-balance>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1"> </mat-grid-tile>
+      <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+    </mat-grid-list>
+    <button mat-button class="button-editar">Editar</button>
+    <button mat-button class="button-excluir">Excluir</button>
+  </div>
+</div>

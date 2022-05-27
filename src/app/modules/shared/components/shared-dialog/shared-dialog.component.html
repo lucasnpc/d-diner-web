@@ -1,0 +1,9 @@
+<mat-dialog-content>
+    <p *ngIf="message!=''">{{message}}</p>
+    <p *ngIf="data.name!=undefined" class="highlight-name">{{data.name}}</p>
+    <p *ngIf="message2!=''">{{message2}}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button class="cancel" mat-dialog-close>{{bCancel}}</button>
+    <button mat-button class="confirm" [mat-dialog-close]="true" cdkFocusInitial>{{bConfirm}}</button>
+</mat-dialog-actions>

@@ -1,0 +1,27 @@
+<mat-grid-list cols="4" rowHeight="4rem">
+    <mat-grid-tile mat-dialog-title [colspan]="4" [rowspan]="1">
+        <div class="gray-bar-large">
+            <h2>Registro de Compras</h2>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="4" [rowspan]="8">
+        <mat-dialog-content>
+            <mat-selection-list #products [multiple]="false">
+                <mat-list-option *ngFor="let product of data" [value]="product">
+                    <div mat-line>
+                        Descrição: {{ product.productName }};
+                        <span class="end">Qtd.{{ product.quantity}}
+                            Total:R${{product.totalCostValue | number:'1.2-2' }}</span>
+                    </div>
+                </mat-list-option>
+            </mat-selection-list>
+        </mat-dialog-content>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="4" [rowspan]="1">
+        <mat-dialog-actions align="end">
+            <button mat-button class="cancel" mat-dialog-close>Cancelar</button>
+            <button mat-button class="confirm" (click)="addPurchase()" [mat-dialog-close]="true"
+                cdkFocusInitial>Confirmar</button>
+        </mat-dialog-actions>
+    </mat-grid-tile>
+</mat-grid-list>

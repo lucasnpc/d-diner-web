@@ -1,0 +1,36 @@
+<div class="container" [class.example-is-mobile]="mobileQuery.matches">
+
+  <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56" opened>
+      <mat-nav-list>
+        <button mat-icon-button class="user-button">
+        </button>
+        <h3>{{userRole}}</h3>
+        <span *ngIf="userRole==='Administrador'">
+          <button mat-button *ngFor="let option of adminOptions" [routerLink]="[option.routerLink]"
+            class="buttom-nav-style" (click)="clickEvent(option)" [ngClass]="
+              selectedOption == option
+                ? 'buttom-nav-style'
+                : 'buttom-nav-style-unselected'
+            ">
+            {{option.name}}
+          </button>
+        </span>
+        <span *ngIf="userRole!='Administrador'">
+          <button mat-button *ngFor="let option of notAdminOptions" [routerLink]="[option.routerLink]"
+            class="buttom-nav-style" (click)="clickEvent(option)" [ngClass]="
+            selectedOption == option
+              ? 'buttom-nav-style'
+              : 'buttom-nav-style-unselected'
+          ">
+            {{option.name}}
+          </button>
+        </span>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

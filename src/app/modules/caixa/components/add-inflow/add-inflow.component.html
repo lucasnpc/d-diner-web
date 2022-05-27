@@ -1,0 +1,62 @@
+<mat-grid-list cols="4" rowHeight="4rem">
+  <mat-grid-tile mat-dialog-title [colspan]="3" [rowspan]="1">
+    <div class="gray-bar-large">
+      <h2>Lista de Mesas</h2>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile mat-dialog-title [colspan]="1" [rowspan]="1">
+    <div class="gray-bar-short">
+      <form id="search">
+        <mat-icon
+          class="search-button"
+          svgIcon="search-button"
+          (click)="focusSearchBar()"
+        ></mat-icon>
+        <input
+          #search
+          mat-input
+          (keyup)="applyFilter($event)"
+          type="search"
+          [placeholder]="filled ? 'Pesquisar' : ''"
+          [ngClass]="{ filled: filled }"
+          (click)="filled = true"
+          (blur)="filled = search.value ? true : false"
+        />
+      </form>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="3" [rowspan]="8">
+    <mat-dialog-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Mesas disponíveis</mat-label>
+        <mat-select #select>
+          <mat-option *ngFor="let desk of desks" [value]="desk.name">
+            {{ desk.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-dialog-content>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="8">
+    <mat-dialog-content>
+      <mat-selection-list id="item" [multiple]="true">
+        <div class="title"></div>
+        <mat-list-option
+          #item
+          *ngFor="let item of itens; let i = index"
+          [value]="item"
+          (click)="item.selected = !item.selected"
+          [ngClass]="{ selected: item.selected }"
+        >
+          <mat-icon mat-list-icon></mat-icon>
+          <div mat-line>{{ item.description }}</div>
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-dialog-content>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="4" [rowspan]="1">
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="openDialogInvoice()">Finalizar</button>
+    </mat-dialog-actions>
+  </mat-grid-tile>
+</mat-grid-list>

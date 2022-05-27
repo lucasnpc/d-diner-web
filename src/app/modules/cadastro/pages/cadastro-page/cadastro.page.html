@@ -1,0 +1,113 @@
+<div class="container">
+  <mat-horizontal-stepper linear #stepper class="container background-muted">
+    <mat-step [stepControl]="formBusinessRegister" label="Cadastre seu negócio">
+      <form [formGroup]="formBusinessRegister" class="form-container background">
+        <mat-grid-list cols="2" rowHeight="6rem" [gutterSize]="'8.2px'">
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <p>Nome da Empresa</p>
+            <mat-form-field appearance="outline">
+              <mat-label>Nome</mat-label>
+              <input matInput formControlName="nomeNegocio" placeholder="Razão Social" required />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <p>CNPJ/CPF</p>
+            <mat-form-field appearance="outline">
+              <mat-label>CNPJ</mat-label>
+              <input matInput formControlName="cnpjNegocio" placeholder="CNPJ da empresa" required />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1"> </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <p>Município</p>
+            <mat-form-field appearance="outline">
+              <mat-label>Município</mat-label>
+              <input matInput formControlName="cidadeNegocio" placeholder="Município" required />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <p>Rua</p>
+            <mat-form-field appearance="outline">
+              <mat-label>Rua</mat-label>
+              <input matInput formControlName="ruaNegocio" placeholder="Rua do Endereço" required />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <p>Número</p>
+            <mat-form-field appearance="outline">
+              <mat-label>Número</mat-label>
+              <input matInput formControlName="numeroNegocio" placeholder="Número do Endereço" required />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <p>Bairro</p>
+            <mat-form-field appearance="outline">
+              <mat-label>Bairro</mat-label>
+              <input matInput formControlName="bairroNegocio" placeholder="Bairro do Endereço" required />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <p>Estado do Endereço</p>
+            <mat-form-field appearance="outline">
+              <mat-label>Estado</mat-label>
+              <input matInput formControlName="estadoNegocio" placeholder="Estado do Endereço" required />
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+      <button mat-button matStepperNext (click)="setBusiness()">Salvar</button>
+    </mat-step>
+    <mat-step [stepControl]="formUserRegister" label="Cadastre seu usuário">
+      <form [formGroup]="formUserRegister" class="form-container background">
+        <mat-grid-list cols="2" rowHeight="6rem" [gutterSize]="'8.2px'">
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <p>Nome de Usuário</p>
+            <mat-form-field appearance="outline">
+              <mat-label>Usuário</mat-label>
+              <input matInput formControlName="userName" placeholder="ID do usuário" required />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <p>Senha</p>
+            <mat-form-field appearance="outline">
+              <mat-label>Senha</mat-label>
+              <input matInput type="password" formControlName="password" placeholder="Senha do usuário" required />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <p>Confirmar Senha</p>
+            <mat-form-field appearance="outline">
+              <mat-label>Confirmar Senha</mat-label>
+              <input matInput type="password" formControlName="confirmPassword" placeholder="Confirmar Senha"
+                required />
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+      <button mat-button matStepperPrevious>Cancelar</button>
+      <button mat-button matStepperNext (click)="setUser()">Salvar</button>
+    </mat-step>
+    <mat-step label="Finalize o cadastro">
+      <div class="result-container">
+        <span *ngIf="negocio != null && usuario != null">
+          <p class="result-label">Nome da empresa: {{negocio.corporateName}}</p>
+          <p class="result-label">Nome do Usuário: {{usuario.email}}</p>
+          <p class="result-label">CNPJ/CPF: {{negocio.cnpj}}</p>
+          <p class="result-label">
+            Endereço: {{negocio.street}}, {{negocio.number}}, {{negocio.district}},
+            {{negocio.city}}
+          </p>
+          <p class="result-label">Estado: {{negocio.state}}</p>
+        </span>
+      </div>
+      <div>
+        <button mat-button class="reset-button" (click)="stepper.reset()">
+          Resetar
+        </button>
+        <button mat-button class="finish-button" (click)="finishRegistration()">
+          Finalizar
+        </button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

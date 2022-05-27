@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="content-container">
+    <mat-grid-list cols="3" rowHeight="3rem" [gutterSize]="'8.2px'">
+      <mat-grid-tile [colspan]="3" [rowspan]="1">
+        <p class="header">{{todayDate | date : 'longDate' : '': 'pt-BR'}}</p>
+      </mat-grid-tile>
+      <span *ngIf="userRole==='Caixa'">
+        <mat-grid-tile [colspan]="3" [rowspan]="1">
+          <p class="header">Pedidos Ativos {{activeOrders.length}}</p>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3" [rowspan]="11">
+          <mat-selection-list #item [multiple]="false">
+            <mat-list-option *ngFor="let order of activeOrders" [value]="order">
+              <div mat-line>
+                <p>{{order.deskDescription}} </p>
+                <p>#{{order.orderId}}</p>
+                <button mat-button class="edit" (click)="updateOrder(order)">Editar</button>
+                <button mat-button class="finish" (click)="finishOrder(order)">Finalizar</button>
+              </div>
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-grid-tile>
+      </span>
+      <span *ngIf="userRole==='Administrador'">
+        <mat-grid-tile [colspan]="3" [rowspan]="1">
+          <p class="header">Pedidos Concluídos {{concludedOrders.length}}</p>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3" [rowspan]="11">
+          <mat-selection-list #item [multiple]="false">
+            <mat-list-option *ngFor="let order of concludedOrders" [value]="order">
+              <div mat-line>
+                <p>{{order.deskDescription}} </p>
+                <p>#{{order.orderId}}</p>
+              </div>
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-grid-tile>
+      </span>
+    </mat-grid-list>
+  </div>
+</div>

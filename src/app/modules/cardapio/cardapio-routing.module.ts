@@ -1,0 +1,16 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { CardapioPage } from './pages/cardapio/cardapio.page';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: CardapioPage
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class CardapioRoutingModule { }

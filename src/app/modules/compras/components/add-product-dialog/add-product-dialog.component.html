@@ -1,0 +1,69 @@
+<mat-grid-list cols="4" rowHeight="4rem">
+  <mat-grid-tile mat-dialog-title [colspan]="4" [rowspan]="1">
+    <div class="gray-bar-large">
+      <h2>Registro de Produtos</h2>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="4" [rowspan]="8">
+    <mat-dialog-content>
+      <form [formGroup]="formRegisterProduct">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Descrição do produto</mat-label>
+          <input matInput formControlName="productName" placeholder="Descrição do produto" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Estoque mínimo</mat-label>
+          <input matInput currencyMask formControlName="minimumStock" placeholder="0"
+            [options]="{ prefix: '', thousands: '', decimal: '.' }" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Estoque máximo</mat-label>
+          <input matInput currencyMask formControlName="maximumStock" placeholder="0"
+            [options]="{ prefix: '', thousands: '', decimal: '.' }" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Estoque atual</mat-label>
+          <input matInput currencyMask formControlName="currentStock" placeholder="0"
+            [options]="{ prefix: '', thousands: '', decimal: '.' }" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Valor de custo</mat-label>
+          <input matInput currencyMask formControlName="costValue" placeholder="0"
+            [options]="{ prefix: '', thousands: '', decimal: '.' }" required />
+          <span matPrefix>R$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Unidade de medida</mat-label>
+          <mat-select #select formControlName="measurementUnit">
+            <mat-option *ngFor="let opt of measureOpts" [value]="opt">
+              {{ opt.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Código de barras</mat-label>
+          <input matInput formControlName="barcode" placeholder="Código de barras" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Lote do produto</mat-label>
+          <input matInput formControlName="productBatch" placeholder="Lote do produto" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Fornecedores</mat-label>
+          <mat-select #select formControlName="providerCnpj">
+            <mat-option *ngFor="let opt of providerOpts" [value]="opt">
+              {{ opt.corporateName }}; {{ opt.providerCnpj }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </mat-dialog-content>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="4" [rowspan]="1">
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="addProduct()" type="submit" [disabled]="!formRegisterProduct.valid">
+        Registrar
+      </button>
+    </mat-dialog-actions>
+  </mat-grid-tile>
+</mat-grid-list>

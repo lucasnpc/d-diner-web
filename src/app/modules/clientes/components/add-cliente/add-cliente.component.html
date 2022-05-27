@@ -1,0 +1,49 @@
+<mat-grid-list cols="4" rowHeight="4rem">
+  <mat-grid-tile mat-dialog-title [colspan]="4" [rowspan]="1">
+    <div class="gray-bar-large">
+      <h2>Registro de Clientes</h2>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="4" [rowspan]="8">
+    <mat-dialog-content>
+      <form [formGroup]="formRegisterClients">
+        <mat-form-field appearance="outline">
+          <mat-label>Telefone</mat-label>
+          <input [(ngModel)]="data.phone" matInput formControlName="phone" placeholder="Telefone" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Nome</mat-label>
+          <input [(ngModel)]="data.name" matInput formControlName="name" placeholder="Nome" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Número de endereço</mat-label>
+          <input [(ngModel)]="data.number" matInput formControlName="number" placeholder="Número" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Rua de enredeço</mat-label>
+          <input [(ngModel)]="data.street" matInput formControlName="street" placeholder="Rua" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Bairro de endereço</mat-label>
+          <input [(ngModel)]="data.district" matInput formControlName="district" placeholder="Bairro" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Cidade de enredeço</mat-label>
+          <input [(ngModel)]="data.city" matInput formControlName="city" placeholder="Cidade" required />
+        </mat-form-field>
+      </form>
+    </mat-dialog-content>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="4" [rowspan]="1">
+    <mat-dialog-actions align="end">
+      <button *ngIf="!isEditting" mat-button (click)="sendClient(false)" type="submit"
+        [disabled]="!formRegisterClients.valid">
+        Registrar
+      </button>
+      <button *ngIf="isEditting" mat-button (click)="sendClient(true)" type="submit"
+        [disabled]="!formRegisterClients.valid">
+        Atualizar
+      </button>
+    </mat-dialog-actions>
+  </mat-grid-tile>
+</mat-grid-list>

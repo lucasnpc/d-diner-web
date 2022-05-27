@@ -1,0 +1,12 @@
+<mat-dialog-content>
+    <div class="gray-bar-large">
+        <h2>Detalhes do pedido</h2>
+    </div>
+    <span *ngFor="let item of items">
+        <p class="description">{{item.description}}</p>
+        <p>&nbsp;&nbsp;Qtd.{{item.itemQuantity}}</p>
+    </span>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button class="confirm" [mat-dialog-close]="true" cdkFocusInitial>Iniciar</button>
+</mat-dialog-actions>

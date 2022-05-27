@@ -1,0 +1,32 @@
+<mat-grid-list cols="3" rowHeight="68px">
+    <mat-grid-tile class="gray-background" [colspan]="3" [rowspan]="1">
+        <h2>Mesa escolhida: {{createdOrder.deskDescription}}</h2>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="3" [rowspan]="1">
+        <mat-form-field class="example-full-width" appearance="outline" *ngIf="orderToUpdate==undefined">
+            <mat-label>Pesquisar no Cardápio</mat-label>
+            <input type="text" placeholder="Selecione um item" aria-label="Number" matInput
+                [formControl]="createOrderControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="setItem($event.option.value)">
+                <mat-option *ngFor="let item of filteredItems | async" [value]="item">
+                    {{item}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="3" [rowspan]="7">
+        <mat-selection-list #item [multiple]="false">
+            <mat-list-option *ngFor="let item of selectedItems" [value]="item">
+                <rp-order-listitem [item]="item" (lessOrder)="lessOrder($event)" (sumOrder)="sumOrder($event)">
+                </rp-order-listitem>
+            </mat-list-option>
+        </mat-selection-list>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="3" [rowspan]="2"> </mat-grid-tile>
+</mat-grid-list>
+<span>
+    <p class="total-hint">Total</p>
+    <p class="total-value">R{{totalOrder | currency: ''}}</p>
+</span>
+<button mat-button class="button-cancel" (click)="cancelAttendance(true)">Cancelar</button>
+<button mat-button class="button-finish" (click)="createOrder()">Adicionar</button>

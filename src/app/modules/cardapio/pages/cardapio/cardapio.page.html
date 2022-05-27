@@ -1,0 +1,45 @@
+<div class="container background-muted">
+  <div class="content-cardapio">
+    <mat-grid-list cols="3" rowHeight="68px">
+      <mat-grid-tile [colspan]="3" [rowspan]="1">
+        <rp-top-bar (openDialog)="openDialog()" (filter)="applyFilter($event)"></rp-top-bar>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="3" [rowspan]="9">
+        <mat-card class="card-style">
+          <mat-card-content>
+            <table mat-table [dataSource]="dataSource">
+
+              <!-- Item Column -->
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef>Item</th>
+                <td class="item-border-left" mat-cell *matCellDef="let element">
+                  {{ element.description }}
+                </td>
+              </ng-container>
+              <!-- Preço Column -->
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Preço</th>
+                <td class="item-border-right" mat-cell *matCellDef="let element">{{ element.price }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row (click)="setRow(row)" [ngClass]="{ rowSelected: clickedRow == row }"
+                *matRowDef="let row; columns: displayedColumns"></tr>
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">
+                  No data matching the filter "{{ filterValue }}"
+                </td>
+              </tr>
+            </table>
+          </mat-card-content>
+          <mat-card-actions> </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1"> </mat-grid-tile>
+      <mat-grid-tile [colspan]="2" [rowspan]="1"> </mat-grid-tile>
+    </mat-grid-list>
+    <button mat-button class="button-editar">Editar</button>
+    <button mat-button class="button-excluir">Excluir</button>
+  </div>
+</div>

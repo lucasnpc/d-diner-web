@@ -1,0 +1,24 @@
+<mat-grid-list cols="2" rowHeight="50px">
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <p>Ganhos</p>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <button mat-button (click)="picker.open()">Alterar Data</button>
+        <mat-form-field>
+            <!-- Input Escondido -->
+            <input matInput [matDatepicker]="picker" (dateChange)="changeDate($event)" [disabled]="true">
+            <mat-datepicker-toggle matSuffix [for]="picker">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="2">
+        <div class="see-gains">Entradas: R$ {{gains}}</div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="2">
+        <div class="see-expenses">Saídas: R$ {{expenses}}</div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="2">
+        <div class="see-total">Total: R$ {{gains - expenses | currency: ''}}</div>
+    </mat-grid-tile>
+</mat-grid-list>

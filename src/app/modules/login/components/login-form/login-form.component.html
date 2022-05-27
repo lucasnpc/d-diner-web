@@ -1,0 +1,25 @@
+<span class="title">Bem Vindo!</span>
+<span class="subtitle">Entre com sua conta.</span>
+<form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="form-container">
+  <span class="email">Endereço de E-mail</span>
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Usuário" formControlName="usuario" />
+  </mat-form-field>
+  <div class="pass-container">
+    <span class="pass">Senha</span>
+    <a href="" class="forget-pass">Esqueceu sua senha?</a>
+  </div>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Senha</mat-label>
+    <input type="password" matInput placeholder="Senha" formControlName="senha" />
+  </mat-form-field>
+
+  <div class="login-container">
+    <span class="new-account">Não possui conta? <a href="/cadastro" class="create-account">Cadastre-se</a></span>
+    <button type="submit" [disabled]="!loginForm.valid" mat-flat-button color="primary" class="login">
+      Log in
+    </button>
+  </div>
+</form>

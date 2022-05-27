@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="content-container">
+    <mat-grid-list cols="3" rowHeight="68px" [gutterSize]="'8.7px'">
+      <mat-grid-tile [colspan]="1" [rowspan]="3">
+        <rp-total-orders [selectedDate]="selectedDate"></rp-total-orders>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="3">
+        <rp-active-orders [selectedDate]="selectedDate"></rp-active-orders>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="3">
+        <rp-concluded-orders [selectedDate]="selectedDate"></rp-concluded-orders>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="2" [rowspan]="7">
+        <rp-informative-graph [selectedDate]="selectedDate"></rp-informative-graph>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="7">
+        <rp-gains (changedDate)="changeDate($event)" [selectedDate]="selectedDate"></rp-gains>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

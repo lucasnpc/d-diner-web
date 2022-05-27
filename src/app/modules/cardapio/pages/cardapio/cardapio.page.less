@@ -1,0 +1,120 @@
+@import "../../../../../styles/_variaveis.less";
+
+.container {
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  border: 1px solid #848684;
+  box-sizing: border-box;
+
+  height: 99%;
+  width: 99%;
+}
+
+.content-cardapio {
+  width: 90%;
+  max-height: 95%;
+  padding: 1.2em;
+}
+
+mat-grid-tile {
+  background: @background;
+  border-radius: @border-radius;
+  border-style: @border-style;
+}
+
+.card-style {
+  height: 99%;
+  width: 99%;
+}
+
+mat-card-title {
+  font-weight: 550;
+  font-size: 24px;
+  line-height: 28px;
+
+  color: #848684;
+}
+
+table {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #848684;
+  box-sizing: border-box;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+th {
+  background: #EEF5F8;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+
+  color: #848684;
+}
+
+td {
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+
+  color: #848684;
+}
+
+.item-border-left {
+  border-bottom-left-radius: 16px;
+}
+
+.item-border-right {
+  border-bottom-right-radius: 16px;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: black;
+  cursor: pointer;
+}
+
+.rowSelected {
+  background-color: #EEF5F8;
+}
+
+mat-card-content {
+  overflow: auto;
+  height: 470px;
+}
+
+.button-editar {
+  position: absolute;
+  width: 10%;
+  height: 52px;
+  left: 72%;
+  top: 91%;
+
+  background: #278DF6;
+  border-radius: 16px;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+
+  color: #FFFFFF;
+}
+
+.button-excluir {
+  position: absolute;
+  width: 10%;
+  height: 52px;
+  left: 84%;
+  top: 91%;
+
+  background: #FA4B4B;
+  border-radius: 16px;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+
+  color: #FFFFFF;
+}

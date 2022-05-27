@@ -1,0 +1,22 @@
+<div class="container">
+  <form id="search">
+    <mat-icon
+      class="search-button"
+      svgIcon="search-button"
+      (click)="focusSearchBar()"
+    ></mat-icon>
+    <input
+      #search
+      mat-input
+      (keyup)="applyFilter($event)"
+      type="search"
+      [placeholder]="filled ? 'Pesquisar' : ''"
+      [ngClass]="{ filled: filled }"
+      (click)="filled = true"
+      (blur)="filled = search.value ? true : false"
+    />
+  </form>
+  <button mat-button class="add-button" (click)="addSomething()">
+    Adicionar
+  </button>
+</div>
