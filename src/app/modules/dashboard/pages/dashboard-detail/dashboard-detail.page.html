@@ -1,6 +1,6 @@
 <div class="container">
   <div class="content-container">
-    <mat-grid-list cols="3" rowHeight="3rem" [gutterSize]="'8.2px'">
+    <mat-grid-list cols="3" rowHeight="75px">
       <mat-grid-tile [colspan]="3" [rowspan]="1">
         <p class="header">{{todayDate | date : 'longDate' : '': 'pt-BR'}}</p>
       </mat-grid-tile>
@@ -8,7 +8,7 @@
         <mat-grid-tile [colspan]="3" [rowspan]="1">
           <p class="header">Pedidos Ativos {{activeOrders.length}}</p>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="3" [rowspan]="11">
+        <mat-grid-tile [colspan]="3" [rowspan]="8">
           <mat-selection-list #item [multiple]="false">
             <mat-list-option *ngFor="let order of activeOrders" [value]="order">
               <div mat-line>
@@ -25,7 +25,7 @@
         <mat-grid-tile [colspan]="3" [rowspan]="1">
           <p class="header">Pedidos Concluídos {{concludedOrders.length}}</p>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="3" [rowspan]="11">
+        <mat-grid-tile [colspan]="3" [rowspan]="8">
           <mat-selection-list #item [multiple]="false">
             <mat-list-option *ngFor="let order of concludedOrders" [value]="order">
               <div mat-line>

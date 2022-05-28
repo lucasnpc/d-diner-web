@@ -8,9 +8,6 @@ const getPedidosTotal = environment.url + 'dashboard/getPedidosTotal'
 const getPedidosAtivos = environment.url + 'dashboard/getPedidosAtivos';
 const getPedidosConcluidos = environment.url + 'dashboard/getPedidosConcluidos'
 
-const getMenuTopItens = environment.url + 'dashboard/getMenuTopItens';
-const getMesasTopVendas = environment.url + 'dashboard/getMesasTopVendas';
-
 const getTotalEntradas = environment.url + 'dashboard/getTotalEntradas';
 const getTotalSaidas = environment.url + 'dashboard/getTotalSaidas';
 
@@ -39,14 +36,6 @@ export class DashboardService {
 
   getConcludedOrders(cnpj: string, date: Date) {
     return this.httpClient.get<{ data: Order[] }>(getPedidosConcluidos, { params: { businessCnpj: cnpj, dateOrder: pipe.transform(date, 'yyyy-MM-dd')! } })
-  }
-
-  getTopMenuItems(cnpj: string) {
-    return this.httpClient.get<{ data: any[] }>(getMenuTopItens, { params: { businessCnpj: cnpj } });
-  }
-
-  getTopSalesDesks(cnpj: string) {
-    return this.httpClient.get<{ data: any[] }>(getMesasTopVendas, { params: { businessCnpj: cnpj } });
   }
 
   getTotalGains(cnpj: string, date: Date) {

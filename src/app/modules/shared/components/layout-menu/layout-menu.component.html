@@ -4,9 +4,11 @@
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56" opened>
       <mat-nav-list>
-        <button mat-icon-button class="user-button">
-        </button>
-        <h3>{{userRole}}</h3>
+        <span class="header">
+          <button mat-icon-button class="user-button">
+          </button>
+          <h3>{{userRole}}</h3>
+        </span>
         <span *ngIf="userRole==='Administrador'">
           <button mat-button *ngFor="let option of adminOptions" [routerLink]="[option.routerLink]"
             class="buttom-nav-style" (click)="clickEvent(option)" [ngClass]="

@@ -53,9 +53,7 @@ export class InformativeGraphComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.rest.getTopSalesDesks(this.storage.get("businessCnpj")).subscribe((result) => {
-      this.data = result.data;
-    });
+
   }
 
   ngOnChanges() {
@@ -73,10 +71,6 @@ export class InformativeGraphComponent implements OnInit {
       group: ScaleType.Linear,
       domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
     };
-    this.rest.getTopSalesDesks(this.storage.get("businessCnpj")).subscribe((result) => {
-      this.data = result.data;
-      this.xAxisLabel = 'Mesas';
-    });
   }
 
   selectTopItemsGraph() {
@@ -86,10 +80,6 @@ export class InformativeGraphComponent implements OnInit {
       group: ScaleType.Linear,
       domain: ['#278DF6', '#19AD79', '#FA4B4B', '#AAAAAA'],
     };
-    this.rest.getTopMenuItems(this.storage.get("businessCnpj")).subscribe((result) => {
-      this.data = result.data;
-      this.xAxisLabel = 'Itens';
-    });
   }
 
   exportData() {
