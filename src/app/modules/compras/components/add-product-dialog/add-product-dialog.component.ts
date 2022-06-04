@@ -21,13 +21,8 @@ export class AddProductDialog implements OnInit {
   formRegisterProduct = this.fb.group({
     productName: ['', Validators.required],
     minimumStock: ['', Validators.required],
-    maximumStock: ['', Validators.required],
-    currentStock: ['', Validators.required],
     measurementUnit: ['', Validators.required],
     barcode: [''],
-    productBatch: [''],
-    costValue: ['', Validators.required],
-    providerCnpj: ['']
   });
 
   measureOpts: MeasureUnit[] = [
@@ -55,21 +50,14 @@ export class AddProductDialog implements OnInit {
       productId: undefined,
       productName: this.formRegisterProduct.get('productName')!.value,
       minimumStock: this.formRegisterProduct.get('minimumStock')!.value,
-      maximumStock: this.formRegisterProduct.get('maximumStock')!.value,
-      currentStock: this.formRegisterProduct.get('currentStock')!.value,
+      currentStock: 0,
       measurementUnit: this.formRegisterProduct.get('measurementUnit')!.value.name,
       businessCnpj: this.storage.get(BUSINESS_CNPJ),
       barcode: this.formRegisterProduct.get('barcode')!.value,
-      productBatch: this.formRegisterProduct.get('productBatch')!.value,
-      costValue: this.formRegisterProduct.get('costValue')!.value,
-      providerCnpj: this.formRegisterProduct.get('providerCnpj')!.value.providerCnpj,
       selected: undefined
     };
     if (data.barcode == '') {
       data.barcode = undefined
-    }
-    if (data.productBatch === '') {
-      data.productBatch = undefined
     }
     if (data.businessCnpj === undefined) {
       data.businessCnpj = undefined

@@ -6,17 +6,28 @@
     </mat-grid-tile>
     <mat-grid-tile [colspan]="4" [rowspan]="8">
         <mat-dialog-content>
-            <mat-selection-list #products [multiple]="false">
-                <mat-list-option *ngFor="let product of data" [value]="product">
-                    <div mat-line>
-                        <span class="product-description">
-                            Descrição: {{ product.productName }}
-                        </span>
-                        Qtd.{{ product.quantity}}
-                        Total:R${{product.totalCostValue | number:'1.2-2' }}
-                    </div>
-                </mat-list-option>
-            </mat-selection-list>
+            <mat-accordion class="header-align">
+                <div *ngFor="let product of data; index as i, last as isLast">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Nome do Produto</mat-panel-title>
+                            <mat-panel-description>{{product.productName}}</mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Fornecedor</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Lote do produto</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Preço Unitário</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </mat-expansion-panel>
+                </div>
+            </mat-accordion>
         </mat-dialog-content>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="4" [rowspan]="1">

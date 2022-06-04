@@ -20,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComprasService } from './service/compras.service';
 import { MatListModule } from '@angular/material/list';
 import { AddPurchaseDialogComponent } from './components/add-purchase-dialog/add-purchase-dialog.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { AddPurchaseDialogComponent } from './components/add-purchase-dialog/add
     MatInputModule,
     MatSelectModule,
     HttpClientModule,
-    MatListModule
+    MatListModule,
+    MatExpansionModule
   ],
   providers: [ComprasService],
 })

@@ -7,20 +7,7 @@ import { Product } from '../../models/product.model';
 import { ComprasService } from '../../service/compras.service';
 import { deepCopy } from '@angular-devkit/core/src/utils/object';
 import { AddPurchaseDialogComponent } from '../../components/add-purchase-dialog/add-purchase-dialog.component';
-
-
-interface ProductRequest {
-  productId: number,
-  productName: string,
-  quantity: number,
-  totalCostValue: number;
-  currentStock: number;
-}
-
-const formatter = new Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
+import { PurchaseRequest } from '../../models/purchaseRequest.model';
 
 @Component({
   templateUrl: './compras.page.html',
@@ -29,7 +16,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 export class ComprasPage implements OnInit {
   products: Product[] = [];
   productsToSelect: Product[] = [];
-  productRequest: ProductRequest[] = [];
+  purchaseRequest: PurchaseRequest[] = [];
 
   constructor(private dialog: MatDialog, private service: ComprasService, private storage: BusinessStorage) { }
 
@@ -56,76 +43,39 @@ export class ComprasPage implements OnInit {
   }
 
   changeColor(item: Product) {
-    this.productsToSelect.find(p => p.selected === true ? p.selected = false : undefined)
+    const index = this.purchaseRequest.findIndex(p => p.productId === item.productId)
+    if (index > -1) {
+      this.purchaseRequest.splice(index, 1)
+      item.selected = false
+      return
+    }
+    this.purchaseRequest.push({ productId: item.productId, productName: item.productName, currentStock: item.currentStock })
     item.selected = true
   }
 
-  lessProductQuantity(product: Product) {
-    const p = this.products.find(p => product.productId === p.productId)!
-    if (Number(product.currentStock) <= Number(p.currentStock))
-      return
-    switch (product.measurementUnit) {
-      case 'Unidade':
-        product.currentStock -= Number(1);
-        break;
-      case 'Quilos':
-        product.currentStock -= Number(0.5)
-        break;
-      case 'Gramas':
-        product.currentStock -= Number(0.1)
-        break;
-      case 'Litros':
-        product.currentStock -= Number(0.5)
-        break
-    }
-  }
-
-  increaseProductQuantity(product: Product) {
-    const p = this.products.find(p => product.productId === p.productId)!
-    if (Number(product.currentStock) >= Number(p.maximumStock))
-      return
-    switch (product.measurementUnit) {
-      case 'Unidade':
-        product.currentStock = Number(product.currentStock) + Number(1);
-        break;
-      case 'Quilos':
-        product.currentStock = Number(product.currentStock) + Number(0.5)
-        break;
-      case 'Gramas':
-        product.currentStock = Number(product.currentStock) + Number(0.1)
-        break;
-      case 'Litros':
-        product.currentStock = Number(product.currentStock) + Number(0.5)
-        break;
-    }
-  }
-
   concludePurchase() {
-    this.productsToSelect.map(p => {
-      const index = this.products.findIndex(p2 => p2.productId == p.productId)
-      const quantityPurchased = Number(formatter.format(this.productsToSelect[index].currentStock - this.products[index].currentStock))
-      if (this.productsToSelect[index].currentStock > this.products[index].currentStock)
-        this.productRequest.push({
-          productId: this.productsToSelect[index].productId!,
-          productName: this.productsToSelect[index].productName,
-          quantity: quantityPurchased,
-          totalCostValue: this.productsToSelect[index].costValue * quantityPurchased,
-          currentStock: this.products[index].currentStock
-        })
-    })
+    // this.productsToSelect.map(p => {
+    //   const index = this.products.findIndex(p2 => p2.productId == p.productId)
+    //   if (this.productsToSelect[index].currentStock > this.products[index].currentStock)
+    //     this.productRequest.push({
+    //       productId: this.productsToSelect[index].productId!,
+    //       productName: this.productsToSelect[index].productName,
+    //       currentStock: this.products[index].currentStock
+    //     })
+    // })
 
-    if (this.productRequest.length == 0) {
+    if (this.purchaseRequest.length == 0) {
       alert('Altere os produtos do estoque antes de concluir uma compra')
       return
     }
 
     const dialogRef = this.dialog.open(AddPurchaseDialogComponent, {
-      data: this.productRequest
+      data: this.purchaseRequest
     });
 
     dialogRef.afterClosed().subscribe(() => {
       this.getProducts()
-      this.productRequest = []
+      this.purchaseRequest = []
     });
   }
 }
