@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
-import { Provider } from 'src/app/modules/fornecedores/models/provider.model';
 import { Product } from '../../models/product.model';
 import { ComprasService } from '../../service/compras.service';
 
@@ -32,17 +31,12 @@ export class AddProductDialog implements OnInit {
     { name: 'Unidade' }
   ]
 
-  providerOpts: Provider[] = []
-
   constructor(private fb: FormBuilder, private storage: BusinessStorage, private service: ComprasService,
     private dialogRef: MatDialogRef<AddProductDialog>,
   ) { }
 
   ngOnInit(): void {
-    this.service.getProviders(this.storage.get(BUSINESS_CNPJ)).subscribe(result => {
-      if (result)
-        this.providerOpts = result.data
-    })
+
   }
 
   addProduct() {
@@ -56,12 +50,6 @@ export class AddProductDialog implements OnInit {
       barcode: this.formRegisterProduct.get('barcode')!.value,
       selected: undefined
     };
-    if (data.barcode == '') {
-      data.barcode = undefined
-    }
-    if (data.businessCnpj === undefined) {
-      data.businessCnpj = undefined
-    }
 
     this.service.postProduct(data).subscribe(result => {
       if (result.success) this.dialogRef.close(true)

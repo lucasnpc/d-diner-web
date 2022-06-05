@@ -54,16 +54,6 @@ export class ComprasPage implements OnInit {
   }
 
   concludePurchase() {
-    // this.productsToSelect.map(p => {
-    //   const index = this.products.findIndex(p2 => p2.productId == p.productId)
-    //   if (this.productsToSelect[index].currentStock > this.products[index].currentStock)
-    //     this.productRequest.push({
-    //       productId: this.productsToSelect[index].productId!,
-    //       productName: this.productsToSelect[index].productName,
-    //       currentStock: this.products[index].currentStock
-    //     })
-    // })
-
     if (this.purchaseRequest.length == 0) {
       alert('Altere os produtos do estoque antes de concluir uma compra')
       return
@@ -73,7 +63,9 @@ export class ComprasPage implements OnInit {
       data: this.purchaseRequest
     });
 
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        alert('Compras registradas com sucesso!')
       this.getProducts()
       this.purchaseRequest = []
     });

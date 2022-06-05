@@ -7,24 +7,45 @@
     <mat-grid-tile [colspan]="4" [rowspan]="8">
         <mat-dialog-content>
             <mat-accordion class="header-align">
-                <div *ngFor="let product of data; index as i, last as isLast">
-                    <mat-expansion-panel>
+                <div *ngFor="let purchase of purchases; index as i, last as isLast; first as isFirst">
+                    <mat-expansion-panel [expanded]="step == i" (opened)="setStep(i)">
                         <mat-expansion-panel-header>
-                            <mat-panel-title>Nome do Produto</mat-panel-title>
-                            <mat-panel-description>{{product.productName}}</mat-panel-description>
+                            <mat-panel-title>Nome do Produto:</mat-panel-title>
+                            <mat-panel-description>{{purchase.description}}</mat-panel-description>
                         </mat-expansion-panel-header>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Fornecedor</mat-label>
-                            <input matInput>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Lote do produto</mat-label>
-                            <input matInput>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Preço Unitário</mat-label>
-                            <input matInput>
-                        </mat-form-field>
+                        <form [formGroup]="formRegisterPurchase">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Fornecedores</mat-label>
+                                <mat-select #select [(ngModel)]="purchase.provider" formControlName="provider">
+                                    <mat-option *ngFor="let opt of providerOpts" [value]="opt">
+                                        {{ opt.corporateName }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Lote do produto</mat-label>
+                                <input matInput [(ngModel)]="purchase.productBatch" formControlName="productBatch"
+                                    oninput="this.value = this.value.toUpperCase()" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Preço unitário</mat-label>
+                                <input matInput [(ngModel)]="purchase.unitCostValue" currencyMask
+                                    formControlName="costValue" placeholder="0"
+                                    [options]="{ prefix: '', thousands: '', decimal: '.' }" required />
+                                <span matPrefix>R$&nbsp;</span>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Quantidade</mat-label>
+                                <input matInput [(ngModel)]="purchase.quantityPurchased" currencyMask
+                                    formControlName="quantityPurchased" placeholder="0"
+                                    [options]="{ prefix: '', thousands: '', decimal: '.' }" required />
+                            </mat-form-field>
+                        </form>
+                        <mat-action-row>
+                            <button mat-button *ngIf="!isFirst" color="warn" (click)="previousStep(i)">Anterior</button>
+                            <button mat-button *ngIf="!isLast" color="primary" (click)="nextStep(i)">Próximo</button>
+                            <button mat-button *ngIf="isLast" color="primary" (click)="nextStep(i)">Finalizar</button>
+                        </mat-action-row>
                     </mat-expansion-panel>
                 </div>
             </mat-accordion>

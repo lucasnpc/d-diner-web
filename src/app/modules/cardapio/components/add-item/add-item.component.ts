@@ -5,16 +5,12 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
+import { formatter } from 'src/app/core/utils/numberFormatter';
 import { Product } from 'src/app/modules/compras/models/product.model';
 import { ProductRequest } from '../../models/menu-item-product.model';
 import { MenuItem } from '../../models/menu-item.model';
 import { CardapioService } from '../../service/menu.service';
 import { DialogAddInCardapioComponent } from '../dialog-add-in-cardapio/dialog-add-in-cardapio.component';
-
-const formatter = new Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
 
 @Component({
   selector: 'rp-add-item',

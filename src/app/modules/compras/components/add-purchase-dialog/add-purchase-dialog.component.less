@@ -24,10 +24,11 @@ h2 {
     flex-basis: 0;
 }
 
-.mat-expansion-panel-header-title, .mat-expansion-panel-header-description{
+.mat-expansion-panel-header-title,
+.mat-expansion-panel-header-description {
     font-weight: 500;
     font-size: 20px;
-    
+
     color: #848684;
 }
 
@@ -40,11 +41,14 @@ h2 {
     margin-left: 8px;
 }
 
-mat-form-field {
-    margin-left: 8px;
+form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
 }
 
-button {
+button.cancel {
     width: 130px;
     height: 52px;
     border-radius: 16px;
@@ -53,12 +57,17 @@ button {
     margin-top: 20px;
 
     color: #FFFFFF;
-}
-
-button.cancel {
     background: #FA4B4B;
 }
 
 button.confirm {
+    width: 130px;
+    height: 52px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 24px;
+    margin-top: 20px;
+
+    color: #FFFFFF;
     background: #00DD31;
 }
