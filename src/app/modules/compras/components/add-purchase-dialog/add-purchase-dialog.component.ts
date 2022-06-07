@@ -20,6 +20,7 @@ export class AddPurchaseDialogComponent implements OnInit {
     productBatch: ['', Validators.required],
     costValue: ['', Validators.required],
     quantityPurchased: ['', Validators.required],
+    expirationDate: ['']
   });
 
   step = 0;
@@ -44,7 +45,8 @@ export class AddPurchaseDialogComponent implements OnInit {
         businessCnpj: this.storage.get(BUSINESS_CNPJ),
         datePurchased: new Date(),
         productBatch: '',
-        provider: new Provider()
+        provider: new Provider(),
+        expirationDate: undefined
       })
     })
   }

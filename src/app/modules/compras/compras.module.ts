@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, NativeDateModule } from '@angular/material/core';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -47,7 +47,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatSelectModule,
     HttpClientModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDatepickerModule,
+    NativeDateModule
   ],
   providers: [ComprasService],
 })

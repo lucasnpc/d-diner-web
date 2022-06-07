@@ -40,6 +40,13 @@
                                     formControlName="quantityPurchased" placeholder="0"
                                     [options]="{ prefix: '', thousands: '', decimal: '.' }" required />
                             </mat-form-field>
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Data de validade</mat-label>
+                                <input matInput [matDatepicker]="pickExpirationDate" formControlName="expirationDate"
+                                    placeholder="Data de Validade" [(ngModel)]="purchase.expirationDate" />
+                                <mat-datepicker-toggle matSuffix [for]="pickExpirationDate"></mat-datepicker-toggle>
+                                <mat-datepicker touchUi #pickExpirationDate></mat-datepicker>
+                            </mat-form-field>
                         </form>
                         <mat-action-row>
                             <button mat-button *ngIf="!isFirst" color="warn" (click)="previousStep(i)">Anterior</button>
