@@ -104,6 +104,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "d-diner-web:build:production",
+            "firebaseProject": "d-diner",
+            "firebaseHostingSite": "d-diner"
+          }
         }
       }
     }

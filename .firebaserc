@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "d-diner"
+  },
+  "targets": {
+    "d-diner": {
+      "hosting": {
+        "d-diner-web": [
+          "d-diner"
+        ]
+      }
+    }
+  }
+}
