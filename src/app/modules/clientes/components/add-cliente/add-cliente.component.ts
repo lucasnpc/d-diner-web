@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { Client } from '../../models/client.model';
 import { ClienteService } from '../../service/cliente.service';
 import { DialogAddInClientesComponent } from '../dialog-add-in-clientes/dialog-add-in-clientes.component';
@@ -45,7 +45,7 @@ export class AddClienteComponent implements OnInit {
       district: this.formRegisterClients.get('district')!.value,
       city: this.formRegisterClients.get('city')!.value,
       phone: this.formRegisterClients.get('phone')!.value,
-      businessCnpj: this.storage.get(BUSINESS_CNPJ)
+      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj
     };
 
     edit ? this.updateClient(data) : this.addClient(data)

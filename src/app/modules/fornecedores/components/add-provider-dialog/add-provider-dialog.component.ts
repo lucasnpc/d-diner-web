@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { Provider } from '../../models/provider.model';
 import { ProvidersService } from '../../services/fornecedores.service';
 
@@ -37,7 +37,7 @@ export class AddProviderDialogComponent implements OnInit {
   sendProvider(edit: boolean) {
     var data: Provider = {
       providerCnpj: this.formRegisterProviders.get('providerCnpj')!.value,
-      businessCnpj: this.storage.get(BUSINESS_CNPJ),
+      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
       corporateName: this.formRegisterProviders.get('corporateName')!.value,
       street: this.formRegisterProviders.get('street')!.value,
       number: this.formRegisterProviders.get('number')!.value,

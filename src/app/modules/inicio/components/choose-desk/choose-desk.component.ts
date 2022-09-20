@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ, OPEN_DESK_KEY } from 'src/app/core/utils/constants';
+import { OPEN_DESK_KEY, USER_INFO } from 'src/app/core/utils/constants';
 import { Order } from 'src/app/modules/dashboard/models/order.model';
 import { SharedDialogComponent } from 'src/app/modules/shared/components/shared-dialog/shared-dialog.component';
 import { InicioService } from '../../services/inicio.service';
@@ -41,7 +41,7 @@ export class ChooseDeskComponent implements OnInit {
   constructor(private storage: BusinessStorage, private dialog: MatDialog, private service: InicioService) { }
 
   ngOnInit(): void {
-    this.service.getOccupiedDesks(this.storage.get(BUSINESS_CNPJ)).subscribe(r => {
+    this.service.getOccupiedDesks(JSON.parse(this.storage.get(USER_INFO)).businessCnpj).subscribe(r => {
       if (r) {
         r.data.map(desk => {
           const index = this.desks.findIndex(v => desk.deskDescription === v.name)
@@ -70,7 +70,7 @@ export class ChooseDeskComponent implements OnInit {
           employeeCpf: undefined,
           deskDescription: this.selectedDesk,
           concluded: false,
-          businessCnpj: this.storage.get(BUSINESS_CNPJ),
+          businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
           dateTimeOrder: new Date()
         }).subscribe(result => {
           if (result) {

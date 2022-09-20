@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ, USER_ROLE } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
+import { USERS_COLLECTION } from 'src/app/core/utils/firestore-keys';
 import { User } from '../../models/usuario.model';
 import { LoginService } from '../../services/login.service';
 
@@ -10,27 +13,31 @@ import { LoginService } from '../../services/login.service';
   styleUrls: ['./login.page.less'],
 })
 export class LoginPage implements OnInit {
-  constructor(private rest: LoginService, private router: Router, private storage: BusinessStorage) { }
+  constructor(private rest: LoginService, private router: Router,
+    private auth: AngularFireAuth, private firestore: AngularFirestore) { }
 
   ngOnInit(): void { }
 
   logarSistema(login: User) {
-    this.rest.authUser(login).subscribe(
-      (result) => {
-        if (result) {
-          this.storage.set(BUSINESS_CNPJ, result.data.businessCnpj)
-          this.storage.set(USER_ROLE, result.data.userType)
-          if (result.data.userType === 'Administrador') {
-            this.router.navigate(['/menu/dashboard']);
-            return
-          }
-          this.router.navigate(['menu/inicio'])
+    this.auth.signInWithEmailAndPassword(login.email, login.password).then(() => {
+      this.auth.authState.subscribe(user => {
+        if (user) {
+          this.firestore.collection(USERS_COLLECTION).doc(user.email?.toString()).get().subscribe(doc => {
+            if (doc.exists) {
+              localStorage.setItem(USER_INFO, JSON.stringify(doc.data()))
+              const userRole = JSON.parse(localStorage.getItem(USER_INFO)!).role;
+              if (userRole === 'Administrador') {
+                this.router.navigate(['/menu/dashboard']);
+                return
+              }
+              this.router.navigate(['menu/inicio'])
+            }
+          })
         }
-      },
-      (error) => {
-        console.log(error);
-        alert('Usuário inválido');
-      }
-    );
+      })
+    }).catch(exception => {
+      console.log(exception);
+      alert('Usuário inválido');
+    })
   }
 }

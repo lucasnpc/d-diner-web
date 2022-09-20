@@ -3,7 +3,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_ROLE } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { Order } from 'src/app/modules/dashboard/models/order.model';
 
 const DOOR_OPEN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="120" height="120"><path fill="none" d="M0 0H24V24H0z"/>
@@ -36,7 +36,7 @@ export class InicioPage implements OnInit {
       this.orderToUpdate = history.state.order
       this.selected = 2
     }
-    this.userRole = this.storage.get(USER_ROLE)
+    this.userRole = JSON.parse(this.storage.get(USER_INFO)).role
   }
 
   changeIndex(index: number) {

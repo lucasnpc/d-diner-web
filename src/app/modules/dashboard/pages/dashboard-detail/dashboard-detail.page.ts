@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_ROLE } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { InicioService } from 'src/app/modules/inicio/services/inicio.service';
 import { InvoiceDialogComponent } from '../../components/invoice-dialog/invoice-dialog.component';
 import { Order } from '../../models/order.model';
@@ -24,7 +24,7 @@ export class DashboardDetailPage implements OnInit {
     private dialog: MatDialog, private router: Router, private inicioService: InicioService) { }
 
   ngOnInit(): void {
-    this.userRole = this.storage.get(USER_ROLE)
+    this.userRole = JSON.parse(this.storage.get(USER_INFO)).role
     this.getOrders()
   }
 

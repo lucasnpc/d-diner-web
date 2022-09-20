@@ -1,6 +1,5 @@
 export const ORDER_TAG = "order"
-export const BUSINESS_CNPJ = "businessCnpj"
-export const USER_ROLE = "userRole"
+export const USER_INFO = "userInfo"
 
 export const PROVIDER_KEY = "provider"
 export const EMPLOYEE_KEY = "employee"
