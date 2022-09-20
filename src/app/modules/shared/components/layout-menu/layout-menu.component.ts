@@ -10,7 +10,8 @@ import { USER_INFO } from 'src/app/core/utils/constants';
   styleUrls: ['./layout-menu.component.less'],
 })
 export class LayoutMenuComponent implements OnInit {
-  userRole = '';
+  userRole = this.storage.get(USER_INFO).role
+
   mobileQuery: MediaQueryList;
   adminOptions = [
     { name: 'Dashboard', routerLink: 'dashboard' },
@@ -41,7 +42,6 @@ export class LayoutMenuComponent implements OnInit {
     this.mobileQuery.addEventListener('change', this._mobileQueryListener);
   }
   ngOnInit(): void {
-    this.userRole = JSON.parse(this.storage.get(USER_INFO)).role;
     switch (this.router.url) {
       case '/menu/inicio':
         this.selectedOption = this.notAdminOptions[0]
@@ -50,7 +50,7 @@ export class LayoutMenuComponent implements OnInit {
         this.selectedOption = this.adminOptions[0];
         break;
       case '/menu/dashboard/detail':
-        if (JSON.parse(this.storage.get(USER_INFO)).role === 'Caixa') {
+        if (this.userRole === 'Caixa') {
           this.selectedOption = this.notAdminOptions[0]
           return
         }

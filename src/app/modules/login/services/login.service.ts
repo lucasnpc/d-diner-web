@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { User } from '../models/usuario.model';
-import { environment } from 'src/environments/environment';
-
-const authUsers = environment.url + "usuarios/authUsuarios";
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { USERS_COLLECTION } from 'src/app/core/utils/firestore-keys';
+import { BusinessStorage } from 'src/app/core/utils/business-storage';
+import { USER_INFO } from 'src/app/core/utils/constants';
 
 @Injectable()
 export class LoginService {
@@ -14,9 +16,16 @@ export class LoginService {
     }),
   };
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private auth: AngularFireAuth, private firestore: AngularFirestore, private storage: BusinessStorage) { }
 
-  public authUser(login: User){
-      return this.httpClient.post<any>(authUsers, login, this.httpOptions);
+  public async authUser(login: User) {
+    const result = await this.auth.signInWithEmailAndPassword(login.email, login.password);
+    if (result.user) {
+      this.firestore.collection(USERS_COLLECTION).doc(result.user.email!).get().subscribe(doc => {
+        if (doc.exists) {
+          this.storage.set(USER_INFO, doc.data());
+        }
+      });
+    }
   }
 }

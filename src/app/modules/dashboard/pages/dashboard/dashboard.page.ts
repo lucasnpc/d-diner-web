@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { USER_INFO } from 'src/app/core/utils/constants';
 
 @Component({
   templateUrl: './dashboard.page.html',
@@ -12,7 +11,7 @@ export class DashboardPage implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(localStorage.getItem(USER_INFO));
+    
   }
 
   changeDate(changedDate: Date) {
