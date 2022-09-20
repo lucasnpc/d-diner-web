@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { formatter } from 'src/app/core/utils/numberFormatter';
 import { Product } from 'src/app/modules/compras/models/product.model';
 import { ProductRequest } from '../../models/menu-item-product.model';
@@ -40,7 +40,7 @@ export class AddItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.service.getProducts(this.storage.get(BUSINESS_CNPJ)).subscribe(result => {
+    this.service.getProducts(JSON.parse(this.storage.get(USER_INFO)).businessCnpj).subscribe(result => {
       this.products = result.data
       this.productsDescription = this.products.map(p => p.productName)
 
@@ -62,7 +62,7 @@ export class AddItemComponent implements OnInit {
       price: this.formRegisterItems.get('preco')!.value,
       description: this.formRegisterItems.get('descricao')!.value,
       itemQuantity: undefined,
-      businessCnpj: this.storage.get(BUSINESS_CNPJ),
+      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
       selected: undefined
     };
     this.postItem(dados)

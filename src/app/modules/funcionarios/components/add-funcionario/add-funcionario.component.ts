@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { Employee } from '../../models/employee.model';
 import { FuncionarioService } from '../../service/funcionario.service';
 import { DialogAddInFuncionariosComponent } from '../dialog-add-in-funcionarios/dialog-add-in-funcionarios.component';
@@ -67,7 +67,7 @@ export class AddFuncionarioComponent implements OnInit {
       salary: this.formRegisterEmployees.get('salary')!.value,
       isOutsource: this.formRegisterEmployees.get('isOutsource')!.value == "Sim",
       isActive: true,
-      businessCnpj: this.storage.get(BUSINESS_CNPJ)
+      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj
     };
 
     edit ? this.updateEmployee(employee) : this.addEmployee(employee)

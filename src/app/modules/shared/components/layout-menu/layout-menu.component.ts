@@ -2,7 +2,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_ROLE } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 
 @Component({
   selector: 'rp-layout-menu',
@@ -41,7 +41,7 @@ export class LayoutMenuComponent implements OnInit {
     this.mobileQuery.addEventListener('change', this._mobileQueryListener);
   }
   ngOnInit(): void {
-    this.userRole = this.storage.get(USER_ROLE);
+    this.userRole = JSON.parse(this.storage.get(USER_INFO)).role;
     switch (this.router.url) {
       case '/menu/inicio':
         this.selectedOption = this.notAdminOptions[0]
@@ -50,7 +50,7 @@ export class LayoutMenuComponent implements OnInit {
         this.selectedOption = this.adminOptions[0];
         break;
       case '/menu/dashboard/detail':
-        if (this.storage.get(USER_ROLE) === 'Caixa') {
+        if (JSON.parse(this.storage.get(USER_INFO)).role === 'Caixa') {
           this.selectedOption = this.notAdminOptions[0]
           return
         }

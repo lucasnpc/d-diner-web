@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { Gain } from 'src/app/modules/caixa/models/gain.model';
 import { CaixaService } from 'src/app/modules/caixa/service/caixa.service';
 import { MenuItem } from 'src/app/modules/cardapio/models/menu-item.model';
@@ -38,7 +38,7 @@ export class InvoiceDialogComponent implements OnInit {
       paymentWay: this.payementForm,
       gainDate: new Date(),
       additionalValue: this.additionalValue,
-      businessCnpj: this.storage.get(BUSINESS_CNPJ)
+      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj
     }
 
     this.service.postGain(gain).subscribe((result) => {

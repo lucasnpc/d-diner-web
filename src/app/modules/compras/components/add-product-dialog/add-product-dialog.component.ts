@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { Product } from '../../models/product.model';
 import { ComprasService } from '../../service/compras.service';
 
@@ -46,7 +46,7 @@ export class AddProductDialog implements OnInit {
       minimumStock: this.formRegisterProduct.get('minimumStock')!.value,
       currentStock: 0,
       measurementUnit: this.formRegisterProduct.get('measurementUnit')!.value.name,
-      businessCnpj: this.storage.get(BUSINESS_CNPJ),
+      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
       barcode: this.formRegisterProduct.get('barcode')!.value,
       selected: undefined
     };

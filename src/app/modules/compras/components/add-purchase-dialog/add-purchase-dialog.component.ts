@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { Provider } from 'src/app/modules/fornecedores/models/provider.model';
 import { Purchase } from '../../models/purchase.model';
 import { PurchaseRequest } from '../../models/purchaseRequest.model';
@@ -32,7 +32,7 @@ export class AddPurchaseDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.service.getProviders(this.storage.get(BUSINESS_CNPJ)).subscribe(result => {
+    this.service.getProviders(JSON.parse(this.storage.get(USER_INFO)).businessCnpj).subscribe(result => {
       if (result)
         this.providerOpts = result.data
     })
@@ -42,7 +42,7 @@ export class AddPurchaseDialogComponent implements OnInit {
         quantityPurchased: 0,
         unitCostValue: 0,
         productId: p.productId,
-        businessCnpj: this.storage.get(BUSINESS_CNPJ),
+        businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
         datePurchased: new Date(),
         productBatch: '',
         provider: new Provider(),

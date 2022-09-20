@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ, STATUS_PREPARED, STATUS_PREPARING } from 'src/app/core/utils/constants';
+import { STATUS_PREPARED, STATUS_PREPARING, USER_INFO } from 'src/app/core/utils/constants';
 import { InicioService } from '../../services/inicio.service';
 import { KitchenService } from '../../services/kitchen.service';
 import { KitchenOrderDialogComponent } from '../kitchen-order-dialog/kitchen-order-dialog.component';
@@ -53,7 +53,7 @@ export class KitchenListComponent implements OnInit {
   }
 
   getClientOrders() {
-    this.kitchenService.getSentClientOrders(this.storage.get(BUSINESS_CNPJ)).subscribe(result => {
+    this.kitchenService.getSentClientOrders(JSON.parse(this.storage.get(USER_INFO)).businessCnpj).subscribe(result => {
       if (result) {
         this.clientOrders = result.data
       }

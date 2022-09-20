@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { AddProductDialog } from '../../components/add-product-dialog/add-product-dialog.component';
 import { Product } from '../../models/product.model';
 import { ComprasService } from '../../service/compras.service';
@@ -34,7 +34,7 @@ export class ComprasPage implements OnInit {
   }
 
   getProducts() {
-    this.service.getProducts(this.storage.get(BUSINESS_CNPJ)).subscribe(result => {
+    this.service.getProducts(JSON.parse(this.storage.get(USER_INFO)).businessCnpj).subscribe(result => {
       if (result) {
         this.products = result.data
         this.productsToSelect = deepCopy(this.products)
