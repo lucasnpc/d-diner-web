@@ -1,8 +1,8 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
+import { CASHIER_ROUTE, CLIENTS_ROUTE, DASHBOARD_DETAIL_ROUTE, DASHBOARD_ROUTE, INICIO_ROUTE, KITCHEN_ROUTE, USER_INFO } from 'src/app/core/utils/constants';
 
 @Component({
   selector: 'rp-layout-menu',
@@ -24,6 +24,7 @@ export class LayoutMenuComponent implements OnInit {
   ];
   notAdminOptions = [
     { name: 'Início', routerLink: 'inicio' },
+    { name: 'Cozinha', RouterLink: 'cozinha' }
   ]
   selectedOption: any;
 
@@ -43,23 +44,26 @@ export class LayoutMenuComponent implements OnInit {
   }
   ngOnInit(): void {
     switch (this.router.url) {
-      case '/menu/inicio':
+      case INICIO_ROUTE:
         this.selectedOption = this.notAdminOptions[0]
         break;
-      case '/menu/dashboard':
+      case KITCHEN_ROUTE:
+        this.selectedOption = this.notAdminOptions[1]
+        break;
+      case DASHBOARD_ROUTE:
         this.selectedOption = this.adminOptions[0];
         break;
-      case '/menu/dashboard/detail':
+      case DASHBOARD_DETAIL_ROUTE:
         if (this.userRole === 'Caixa') {
           this.selectedOption = this.notAdminOptions[0]
           return
         }
         this.selectedOption = this.adminOptions[0];
         break;
-      case '/menu/caixa':
+      case CASHIER_ROUTE:
         this.selectedOption = this.adminOptions[1];
         break;
-      case '/menu/clientes':
+      case CLIENTS_ROUTE:
         this.selectedOption = this.adminOptions[2];
         break;
       case '/menu/cardapio':

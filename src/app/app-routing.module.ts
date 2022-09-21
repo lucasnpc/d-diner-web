@@ -18,6 +18,11 @@ const routes: Routes = [
           import('./modules/inicio/inicio.module').then((m) => m.InicioModule)
       },
       {
+        path: 'cozinha',
+        loadChildren: () =>
+          import('./modules/kitchen/kitchen.module').then((m) => m.KitchenModule)
+      },
+      {
         path: 'dashboard',
         loadChildren: () =>
           import('./modules/dashboard/dashboard.module').then(

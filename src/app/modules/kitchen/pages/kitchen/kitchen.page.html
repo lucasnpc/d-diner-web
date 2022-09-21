@@ -1,0 +1,25 @@
+<div class="container background-muted">
+    <div class="content-container">
+        <mat-grid-list cols="3" rowHeight="68px">
+            <mat-grid-tile class="gray-background" [colspan]="3" [rowspan]="1">
+                <h2>Cozinha</h2>
+            </mat-grid-tile>
+            <mat-grid-tile class="grid-tile-orders" [colspan]="3" [rowspan]="10">
+                <ul>
+                    <li *ngFor="let order of clientOrders">
+                        <div class="order-container">
+                            <p>{{order.deskDescription}}</p>
+                            <p>#{{order.id}}</p>
+                            <button mat-button class="less-quantity-button"
+                                (click)="seeOrderDetail(order)">Detalhes</button>
+                            <button mat-button class="quantitity-product-button"
+                                (click)="startOrderPreparing(order)">Iniciar</button>
+                            <button mat-button class="increase-quantity-button"
+                                (click)="concludeOrderPreparing(order)">Concluído</button>
+                        </div>
+                    </li>
+                </ul>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>

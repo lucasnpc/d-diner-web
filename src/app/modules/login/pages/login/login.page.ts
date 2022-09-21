@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
+import { DASHBOARD_ROUTE, KITCHEN_ROUTE, USER_INFO } from 'src/app/core/utils/constants';
 import { User } from '../../models/usuario.model';
 import { LoginService } from '../../services/login.service';
 
@@ -18,11 +18,14 @@ export class LoginPage implements OnInit {
   logarSistema(login: User) {
     this.rest.authUser(login).then(() => {
       const userRole = this.storage.get(USER_INFO).role;
-      if (userRole === 'Administrador') {
-        this.router.navigate(['/menu/dashboard']);
-        return
+      switch (userRole) {
+        case 'Administrador':
+          this.router.navigate([DASHBOARD_ROUTE]);
+          break;
+        case 'Cozinha':
+          this.router.navigate([KITCHEN_ROUTE]);
+          break;
       }
-      this.router.navigate(['menu/inicio'])
     }).catch(exception => {
       console.log(exception);
       alert('Usuário inválido');
