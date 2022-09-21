@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { KitchenPage } from './pages/kitchen/kitchen.page';
 import { KitchenRoutingModule } from './kitchen-routing.module';
 import { KitchenOrderDialogComponent } from './components/kitchen-order-dialog/kitchen-order-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { KitchenOrderDialogComponent } from './components/kitchen-order-dialog/k
         MatAutocompleteModule,
         MatListModule,
         MatDialogModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatProgressSpinnerModule
     ],
     providers: [KitchenService]
 })

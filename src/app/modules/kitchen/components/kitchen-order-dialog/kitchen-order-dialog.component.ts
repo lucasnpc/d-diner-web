@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MenuItem } from 'src/app/modules/cardapio/models/menu-item.model';
+import { MenuItemInfo } from '../../models/MenuItemInfo.model';
 
 @Component({
   selector: 'rp-kitchen-order-dialog',
@@ -9,9 +9,9 @@ import { MenuItem } from 'src/app/modules/cardapio/models/menu-item.model';
 })
 export class KitchenOrderDialogComponent implements OnInit {
 
-  items: MenuItem[] = []
+  items: MenuItemInfo[] = []
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: MenuItem[]) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: MenuItemInfo[]) { }
 
   ngOnInit(): void {
     this.items = this.data
