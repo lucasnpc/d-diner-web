@@ -53,9 +53,9 @@ export class KitchenListComponent implements OnInit {
   }
 
   getClientOrders() {
-    this.kitchenService.getSentClientOrders(JSON.parse(this.storage.get(USER_INFO)).businessCnpj).subscribe(result => {
+    this.kitchenService.getSentClientOrders().then(result => {
       if (result) {
-        this.clientOrders = result.data
+        this.clientOrders = result
       }
     })
   }

@@ -24,7 +24,7 @@ export class InicioPage implements OnInit {
   selected = 0;
   createdOrder: Order = new Order();
   orderToUpdate: Order | undefined
-  userRole = ''
+  userRole = this.storage.get(USER_INFO).role
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private storage: BusinessStorage, private router: Router) {
     iconRegistry.addSvgIconLiteral('door-open', sanitizer.bypassSecurityTrustHtml(DOOR_OPEN))
@@ -36,7 +36,6 @@ export class InicioPage implements OnInit {
       this.orderToUpdate = history.state.order
       this.selected = 2
     }
-    this.userRole = JSON.parse(this.storage.get(USER_INFO)).role
   }
 
   changeIndex(index: number) {

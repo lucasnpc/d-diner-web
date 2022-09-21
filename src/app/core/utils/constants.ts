@@ -8,7 +8,6 @@ export const OPEN_DESK_KEY = "open_desk"
 export const ADD_ITEMS_TO_ORDER_KEY = "add_items_to_order"
 export const DELETE_ORDER_KEY = "delete_order"
 
-export const COOK_ROLE = "cozinha"
 export const CASH_ROLE = "caixa"
 export const CLIENT_ROLE = "cliente"
 

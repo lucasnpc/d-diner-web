@@ -1,1 +1,5 @@
+export const BUSINESS_COLLECTION = "business"
 export const USERS_COLLECTION = "users"
+export const DESKS_COLLECTION = "desks"
+export const ORDERS_COLLECTION = "orders"
+export const ORDERED_ITEMS_COLLECTION = "orderedItems"
