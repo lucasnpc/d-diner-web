@@ -52,21 +52,19 @@ export class KitchenPage implements OnInit {
     })
   }
 
-  updateOrderStatus(clientOrder: KitchenInfo, status: string) {
-    // if (clientOrder.orderStatus === status) {
-    //   alert('Pedido já está sendo preparado')
-    //   return
-    // }
+  updateOrderStatus(order: KitchenInfo, status: string) {
+    if (order.status === status) {
+      alert('Pedido já está sendo preparado')
+      return
+    }
 
     var msg = () => { if (status === STATUS_PREPARED) { this.getClientOrders(); return 'Pedido Preparado!!! 🍕' } else return 'Pedido Iniciado!!! 🍕' }
 
-    // this.kitchenService.updateOrderStatus({ status: status, id: clientOrder.clientOrderId }).subscribe(r => {
-    //   if (r) {
-    //     this.snackBar.open(msg(), undefined, {
-    //       duration: 3000,
-    //       panelClass: ['blue-snackbar']
-    //     })
-    //   }
-    // })
+    this.kitchenService.updateOrderStatus(order, status).then(() => {
+        this.snackBar.open(msg(), undefined, {
+          duration: 3000,
+          panelClass: ['blue-snackbar']
+        })
+    })
   }
 }

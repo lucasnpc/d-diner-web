@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { STATUS_STARTING, USER_INFO } from 'src/app/core/utils/constants';
 import { BUSINESS_COLLECTION, DESKS_COLLECTION, MENU_ITEMS_COLLECTION, ORDERED_ITEMS_COLLECTION, ORDERS_COLLECTION } from 'src/app/core/utils/firestore-keys';
@@ -21,7 +22,7 @@ export class KitchenService {
     this.businessCollection.collection(DESKS_COLLECTION, ref => {
       ref.get().then(desks => {
         desks.docs.forEach(desk => {
-          ref.doc(desk.id).collection(ORDERS_COLLECTION).where('concluded', '==', true).get().then(orders => {
+          ref.doc(desk.id).collection(ORDERS_COLLECTION).where('concluded', '==', false).get().then(orders => {
             orders.docs.forEach(order => {
               order.ref.collection(ORDERED_ITEMS_COLLECTION).where('status', '==', STATUS_STARTING).get().then(placedItemsRef => {
                 placedItemsRef.docs.forEach(placedItem => {
@@ -29,6 +30,7 @@ export class KitchenService {
                   placedItems.push({
                     id: placedItem.id,
                     deskId: desk.id,
+                    orderId: order.id,
                     deskDescription: desk.data()['description'],
                     observations: item['observations'],
                     placedItems: item['placedItems'],
@@ -64,7 +66,8 @@ export class KitchenService {
     return menuItems
   }
 
-  updateOrderStatus(id: any) {
-    // return this.httpClient.put<any>(updatePedidoStatus, id, this.httpOptions)
+  async updateOrderStatus(info: KitchenInfo, status: string) {
+    return this.businessCollection.collection(DESKS_COLLECTION).doc(info.deskId).collection(ORDERS_COLLECTION)
+      .doc(info.orderId).collection(ORDERED_ITEMS_COLLECTION).doc(info.id).update({ status: status })
   }
 }
