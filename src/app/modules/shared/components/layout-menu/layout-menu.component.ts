@@ -7,9 +7,8 @@ import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { CASHIER_ROUTE, CLIENTS_ROUTE, DASHBOARD_DETAIL_ROUTE, DASHBOARD_ROUTE, KITCHEN_ROUTE, USER_INFO } from 'src/app/core/utils/constants';
 import { LoginService } from 'src/app/modules/login/services/login.service';
 
-const LOGOUT_ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="240" height="240">
-<path fill="none" d="M0 0h24v24H0z"/><path d="M5 2h14a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm4 9V8l-5 4 5 4v-3h6v-2H9z"
- fill="rgba(231,76,60,1)"/></svg>`
+const LOGOUT_ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="none" d="M0 0h24v24H0z"/>
+<path d="M4 18h2v2h12V4H6v2H4V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3zm2-7h7v2H6v3l-5-4 5-4v3z" fill="rgba(231,76,60,1)"/></svg>`
 
 @Component({
   selector: 'rp-layout-menu',

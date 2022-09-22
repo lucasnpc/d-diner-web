@@ -22,7 +22,7 @@ export class InicioPage implements OnInit {
 
   tabs = ['First', 'Second', 'Third'];
   selected = 0;
-  createdOrder: Order = new Order();
+  createdOrder: any;
   orderToUpdate: Order | undefined
   userRole = this.storage.get(USER_INFO).role
 

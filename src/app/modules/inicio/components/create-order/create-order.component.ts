@@ -19,7 +19,7 @@ import { InicioService } from '../../services/inicio.service';
 export class CreateOrderComponent implements OnInit {
   @Input() index: number = 0;
   @Output() indexChanged = new EventEmitter<number>();
-  @Input() createdOrder: Order = new Order();
+  @Input() createdOrder: any;
   @Input() orderToUpdate: Order | undefined
 
   createOrderControl = new FormControl('');
@@ -141,21 +141,21 @@ export class CreateOrderComponent implements OnInit {
   }
 
   _postOrder() {
-    this.service.postClientOrder({ orderId: this.createdOrder.orderId, clientOrder: undefined }).subscribe(result => {
-      if (result.success) {
-        this.itemRequest.map(value => {
-          this.service.postClientOrdersItems({
-            clientOrderId: result.id,
-            itemId: value.itemId,
-            itemQuantity: value.quantity,
-            orderStatus: STATUS_STARTING
-          }).subscribe(r2 => {
-            if (r2.success)
-              this.cancelAttendance(false)
-          })
-        })
-      }
-    })
+    // this.service.postClientOrder({ orderId: this.createdOrder.orderId, clientOrder: undefined }).subscribe(result => {
+    //   if (result.success) {
+    //     this.itemRequest.map(value => {
+    //       this.service.postClientOrdersItems({
+    //         clientOrderId: result.id,
+    //         itemId: value.itemId,
+    //         itemQuantity: value.quantity,
+    //         orderStatus: STATUS_STARTING
+    //       }).subscribe(r2 => {
+    //         if (r2.success)
+    //           this.cancelAttendance(false)
+    //       })
+    //     })
+    //   }
+    // })
   }
 
   _updateOrder() {

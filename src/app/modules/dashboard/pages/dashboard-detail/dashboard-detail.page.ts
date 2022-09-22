@@ -35,9 +35,9 @@ export class DashboardDetailPage implements OnInit {
       });
       return
     }
-    this.dashboardService.getConcludedOrders(this.storage.get("businessCnpj"), this.todayDate).subscribe((result) => {
-      this.concludedOrders = result.data;
-    });
+    // this.dashboardService.getConcludedOrders(this.storage.get("businessCnpj"), this.todayDate).subscribe((result) => {
+    //   this.concludedOrders = result.data;
+    // });
   }
 
   updateOrder(order: Order) {

@@ -64,24 +64,24 @@ export class ChooseDeskComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.service.postOrder({
-          orderId: undefined,
-          employeeCpf: undefined,
-          deskDescription: this.selectedDesk,
-          concluded: false,
-          businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
-          dateTimeOrder: new Date()
-        }).subscribe(result => {
-          if (result) {
-            this.orderCreated.emit(result.data)
-            this.index += 1;
-            this.indexChanged.emit(this.index)
-          }
-        })
-      }
-      else
-        this.cancelAttendance()
+      // if (result) {
+      //   this.service.postOrder({
+      //     orderId: undefined,
+      //     employeeCpf: undefined,
+      //     deskDescription: this.selectedDesk,
+      //     concluded: false,
+      //     businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
+      //     dateTimeOrder: new Date()
+      //   }).subscribe(result => {
+      //     if (result) {
+      //       this.orderCreated.emit(result.data)
+      //       this.index += 1;
+      //       this.indexChanged.emit(this.index)
+      //     }
+      //   })
+      // }
+      // else
+      //   this.cancelAttendance()
     })
   }
 

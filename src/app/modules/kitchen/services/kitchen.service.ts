@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { STATUS_STARTING, USER_INFO } from 'src/app/core/utils/constants';
 import { BUSINESS_COLLECTION, DESKS_COLLECTION, MENU_ITEMS_COLLECTION, ORDERED_ITEMS_COLLECTION, ORDERS_COLLECTION } from 'src/app/core/utils/firestore-keys';

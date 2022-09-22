@@ -23,8 +23,8 @@ export class ConcludedOrdersComponent implements OnInit {
   }
 
   getConcludedOrders() {
-    this.rest.getConcludedOrders(this.storage.get("businessCnpj"), this.selectedDate).subscribe((result) => {
-      this.concludedOrders = result.data;
+    this.rest.getConcludedOrders(this.selectedDate.toDateString()).then((result) => {
+      this.concludedOrders = result
     });
   }
 }

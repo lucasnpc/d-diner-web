@@ -5,8 +5,8 @@ import { DashboardPage } from './pages/dashboard/dashboard.page';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { TotalOrdersComponent } from './components/total-orders/total-orders.component';
-import { ActiveOrdersComponent } from './components/active-orders/active-orders.component';
+import { OrderInKitchenComponent } from './components/orders-in-kitchen/orders-in-kitchen.component';
+import { BusyDesksComponent } from './components/busy-desks/busy-desks.component';
 import { ConcludedOrdersComponent } from './components/concluded-orders/concluded-orders.component';
 import { GainsComponent } from './components/gains/gains.component';
 import { InformativeGraphComponent } from './components/informative-graph/informative-graph.component';
@@ -30,13 +30,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, NativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { KitchenService } from '../kitchen/services/kitchen.service';
 registerLocaleData(LocalePT);
 
 @NgModule({
   declarations: [
     DashboardPage,
-    TotalOrdersComponent,
-    ActiveOrdersComponent,
+    OrderInKitchenComponent,
+    BusyDesksComponent,
     ConcludedOrdersComponent,
     GainsComponent,
     InformativeGraphComponent,
@@ -65,6 +66,6 @@ registerLocaleData(LocalePT);
     MatInputModule,
     MatFormFieldModule
   ],
-  providers: [DashboardService, CaixaService, InicioService],
+  providers: [DashboardService, CaixaService, InicioService, KitchenService],
 })
 export class DashboardModule { }
