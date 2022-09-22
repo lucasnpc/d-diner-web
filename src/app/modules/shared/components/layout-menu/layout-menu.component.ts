@@ -1,8 +1,15 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { CASHIER_ROUTE, CLIENTS_ROUTE, DASHBOARD_DETAIL_ROUTE, DASHBOARD_ROUTE, INICIO_ROUTE, KITCHEN_ROUTE, USER_INFO } from 'src/app/core/utils/constants';
+import { CASHIER_ROUTE, CLIENTS_ROUTE, DASHBOARD_DETAIL_ROUTE, DASHBOARD_ROUTE, KITCHEN_ROUTE, USER_INFO } from 'src/app/core/utils/constants';
+import { LoginService } from 'src/app/modules/login/services/login.service';
+
+const LOGOUT_ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="240" height="240">
+<path fill="none" d="M0 0h24v24H0z"/><path d="M5 2h14a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm4 9V8l-5 4 5 4v-3h6v-2H9z"
+ fill="rgba(231,76,60,1)"/></svg>`
 
 @Component({
   selector: 'rp-layout-menu',
@@ -23,8 +30,7 @@ export class LayoutMenuComponent implements OnInit {
     { name: 'Fornecedores', routerLink: 'fornecedores' },
   ];
   notAdminOptions = [
-    { name: 'Início', routerLink: 'inicio' },
-    { name: 'Cozinha', RouterLink: 'cozinha' }
+    { name: 'Cozinha', routerLink: 'cozinha' }
   ]
   selectedOption: any;
 
@@ -36,19 +42,23 @@ export class LayoutMenuComponent implements OnInit {
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     private router: Router,
-    private storage: BusinessStorage
+    private storage: BusinessStorage,
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer,
+    private loginService: LoginService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener('change', this._mobileQueryListener);
+    iconRegistry.addSvgIconLiteral(
+      'logout-icon',
+      sanitizer.bypassSecurityTrustHtml(LOGOUT_ICON)
+    );
   }
   ngOnInit(): void {
     switch (this.router.url) {
-      case INICIO_ROUTE:
-        this.selectedOption = this.notAdminOptions[0]
-        break;
       case KITCHEN_ROUTE:
-        this.selectedOption = this.notAdminOptions[1]
+        this.selectedOption = this.notAdminOptions[0]
         break;
       case DASHBOARD_ROUTE:
         this.selectedOption = this.adminOptions[0];
@@ -87,5 +97,10 @@ export class LayoutMenuComponent implements OnInit {
 
   clickEvent(opt: any) {
     this.selectedOption = opt;
+  }
+
+  logoutUser() {
+    this.loginService.logoutUser()
+    this.router.navigate([''])
   }
 }

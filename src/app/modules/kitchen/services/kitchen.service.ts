@@ -24,18 +24,33 @@ export class KitchenService {
         desks.docs.forEach(desk => {
           ref.doc(desk.id).collection(ORDERS_COLLECTION).where('concluded', '==', false).get().then(orders => {
             orders.docs.forEach(order => {
-              order.ref.collection(ORDERED_ITEMS_COLLECTION).where('status', '==', STATUS_STARTING).get().then(placedItemsRef => {
-                placedItemsRef.docs.forEach(placedItem => {
-                  const item = placedItem.data()
-                  placedItems.push({
-                    id: placedItem.id,
-                    deskId: desk.id,
-                    orderId: order.id,
-                    deskDescription: desk.data()['description'],
-                    observations: item['observations'],
-                    placedItems: item['placedItems'],
-                    status: item['status']
-                  })
+              order.ref.collection(ORDERED_ITEMS_COLLECTION).where('status', '==', STATUS_STARTING).onSnapshot(snapshot => {
+                snapshot.docChanges().forEach(change => {
+                  if (change.type == 'added') {
+                    const item = change.doc.data()
+                    placedItems.push({
+                      id: change.doc.id,
+                      deskId: desk.id,
+                      orderId: order.id,
+                      deskDescription: desk.data()['description'],
+                      observations: item['observations'],
+                      placedItems: item['placedItems'],
+                      status: item['status']
+                    })
+                  }
+                  if (change.type == 'modified') {
+                    const item = change.doc.data()
+                    const index = placedItems.findIndex(index => index.id == change.doc.id)
+                    placedItems[index] = {
+                      id: change.doc.id,
+                      deskId: desk.id,
+                      orderId: order.id,
+                      deskDescription: desk.data()['description'],
+                      observations: item['observations'],
+                      placedItems: item['placedItems'],
+                      status: item['status']
+                    }
+                  }
                 })
               })
             })

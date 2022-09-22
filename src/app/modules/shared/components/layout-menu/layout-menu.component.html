@@ -5,7 +5,8 @@
       fixedTopGap="56" opened>
       <mat-nav-list>
         <span class="header">
-          <button mat-icon-button class="user-button">
+          <button mat-icon-button class="icon-button" (click)="logoutUser()">
+            <mat-icon svgIcon="logout-icon"></mat-icon>
           </button>
           <h3>{{userRole}}</h3>
         </span>

@@ -28,4 +28,9 @@ export class LoginService {
       });
     }
   }
+
+  public logoutUser() {
+    this.auth.signOut();
+    this.storage.clear();
+  }
 }
