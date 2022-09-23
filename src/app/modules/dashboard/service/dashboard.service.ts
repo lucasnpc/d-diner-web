@@ -1,25 +1,16 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { snapshotChanges } from '@angular/fire/compat/database';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { USER_INFO } from 'src/app/core/utils/constants';
-import { BUSINESS_COLLECTION, DESKS_COLLECTION, ORDERS_COLLECTION } from 'src/app/core/utils/firestore-keys';
+import { BUSINESS_COLLECTION, DESKS_COLLECTION, EXPENSES_COLLECTION, GAINS_COLLECTION, ORDERS_COLLECTION } from 'src/app/core/utils/firestore-keys';
 import { environment } from 'src/environments/environment';
 import { Desk } from '../models/desk.model';
 import { Order } from '../models/order.model';
 
-const getPedidosTotal = environment.url + 'dashboard/getPedidosTotal'
-const getPedidosAtivos = environment.url + 'dashboard/getPedidosAtivos';
-const getPedidosConcluidos = environment.url + 'dashboard/getPedidosConcluidos'
-
-const getTotalEntradas = environment.url + 'dashboard/getTotalEntradas';
-const getTotalSaidas = environment.url + 'dashboard/getTotalSaidas';
-
 const postAtualizaPedidoAtivoConcluido = environment.url + 'dashboard/postAtualizaPedidoAtivoConcluido';
-
-const pipe = new DatePipe('en-US')
+const datePipe = new DatePipe('pt-BR');
 
 @Injectable()
 export class DashboardService {
@@ -38,16 +29,12 @@ export class DashboardService {
       .collection(DESKS_COLLECTION).ref.where('isOccupied', "==", true).onSnapshot(snapshot => {
         snapshot.docChanges().forEach(changes => {
           if (changes.type == 'added') {
-            console.log('added');
-
             desks.push({
               description: changes.doc.data()['description'],
               isOccupied: changes.doc.data()['isOccupied']
             })
           }
           if (changes.type == 'removed') {
-            console.log('removed');
-
             const index = desks.findIndex(index => index.description === changes.doc.data()['description'])
             desks.splice(index)
           }
@@ -56,13 +43,14 @@ export class DashboardService {
     return desks
   }
 
-  async getConcludedOrders(date: string) {
+  async getConcludedOrders(date: Date) {
     var orders: Order[] = []
+    const dateConverted = datePipe.transform(date, "dd 'de' MMMM 'de' yyyy")
     this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
       .collection(DESKS_COLLECTION, ref => {
         ref.get().then(desks => {
           desks.docs.forEach(desk => {
-            ref.doc(desk.id).collection(ORDERS_COLLECTION).where('concluded', '==', true).where('endDate', '==', date).onSnapshot(snapshot => {
+            ref.doc(desk.id).collection(ORDERS_COLLECTION).where('concluded', '==', true).where('endDate', '==', dateConverted).onSnapshot(snapshot => {
               snapshot.docChanges().forEach(changes => {
                 if (changes.type == 'added') {
                   orders.push({
@@ -99,24 +87,13 @@ export class DashboardService {
     return orders
   }
 
-  getTotalOrders(cnpj: string, date: Date) {
-    return this.httpClient.get<{ data: Order[] }>(getPedidosTotal, { params: { businessCnpj: cnpj, dateOrder: pipe.transform(date, 'yyyy-MM-dd')! } })
+  async getGainsSum() {
+    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(GAINS_COLLECTION)
   }
-
-  getActiveOrders(cnpj: string, date: Date) {
-    return this.httpClient.get<{ data: Order[] }>(getPedidosAtivos, { params: { businessCnpj: cnpj, dateOrder: pipe.transform(date, 'yyyy-MM-dd')! } })
-  }
-
-  // getConcludedOrders(cnpj: string, date: Date) {
-  //   return this.httpClient.get<{ data: Order[] }>(getPedidosConcluidos, { params: { businessCnpj: cnpj, dateOrder: pipe.transform(date, 'yyyy-MM-dd')! } })
-  // }
-
-  getTotalGains(cnpj: string, date: Date) {
-    return this.httpClient.get<{ data: number }>(getTotalEntradas, { params: { businessCnpj: cnpj, dateGain: pipe.transform(date, 'yyyy-MM-dd')! } });
-  }
-
-  getTotalExpenses(cnpj: string, date: Date) {
-    return this.httpClient.get<{ data: number }>(getTotalSaidas, { params: { businessCnpj: cnpj, dateExpense: pipe.transform(date, 'yyyy-MM-dd')! } });
+  async getExpensesSum() {
+    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(EXPENSES_COLLECTION)
   }
 
   updateActiveOrderToConcluded(id: any) {

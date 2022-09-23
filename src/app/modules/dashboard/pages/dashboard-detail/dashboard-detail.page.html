@@ -2,7 +2,7 @@
   <div class="content-container">
     <mat-grid-list cols="3" rowHeight="75px">
       <mat-grid-tile [colspan]="3" [rowspan]="1">
-        <p class="header">{{todayDate | date : 'longDate' : '': 'pt-BR'}}</p>
+        <p class="header">{{selectedDate | date : 'longDate' : '': 'pt-BR'}}</p>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="3" [rowspan]="1">
         <p class="header">Pedidos Concluídos {{concludedOrders.length}}</p>

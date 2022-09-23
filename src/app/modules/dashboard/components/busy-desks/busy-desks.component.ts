@@ -17,6 +17,10 @@ export class BusyDesksComponent implements OnInit {
     this.getBusyDesks()
   }
 
+  ngOnChanges() {
+    this.getBusyDesks()
+  }
+
   getBusyDesks() {
     this.rest.getBusyDesks().then(result =>
       this.busyDesks = result

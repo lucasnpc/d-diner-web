@@ -6,6 +6,7 @@
         <p class="total-orders-style">{{concludedOrders.length}}</p>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <button mat-raised-button class="button-see-orders" routerLink="detail">Ver todos</button>
+        <button mat-raised-button class="button-see-orders" [routerLink]="['detail']"
+            [state]="{date: selectedDate}">Ver todos</button>
     </mat-grid-tile>
 </mat-grid-list>
