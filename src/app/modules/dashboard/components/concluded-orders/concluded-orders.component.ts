@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { Order } from '../../models/order.model';
@@ -12,7 +13,7 @@ export class ConcludedOrdersComponent implements OnInit {
   concludedOrders: Order[] = []
   @Input() selectedDate: Date = new Date()
 
-  constructor(private rest: DashboardService, private storage: BusinessStorage) { }
+  constructor(private rest: DashboardService) { }
 
   ngOnInit(): void {
     this.getConcludedOrders()
@@ -23,7 +24,9 @@ export class ConcludedOrdersComponent implements OnInit {
   }
 
   getConcludedOrders() {
-    this.rest.getConcludedOrders(this.selectedDate.toDateString()).then((result) => {
+    var datePipe = new DatePipe('pt-BR');
+    const date = datePipe.transform(this.selectedDate, "dd 'de' MMMM 'de' yyyy")
+    this.rest.getConcludedOrders(date!).then((result) => {
       this.concludedOrders = result
     });
   }

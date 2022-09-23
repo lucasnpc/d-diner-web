@@ -1,9 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
 import { InicioService } from 'src/app/modules/inicio/services/inicio.service';
 import { InvoiceDialogComponent } from '../../components/invoice-dialog/invoice-dialog.component';
 import { Order } from '../../models/order.model';
@@ -24,20 +24,17 @@ export class DashboardDetailPage implements OnInit {
     private dialog: MatDialog, private router: Router, private inicioService: InicioService) { }
 
   ngOnInit(): void {
-    this.userRole = JSON.parse(this.storage.get(USER_INFO)).role
     this.getOrders()
   }
 
   getOrders() {
-    if (this.userRole === 'Caixa') {
-      this.dashboardService.getActiveOrders(this.storage.get("businessCnpj"), this.todayDate).subscribe((result) => {
-        this.activeOrders = result.data;
-      });
-      return
-    }
-    // this.dashboardService.getConcludedOrders(this.storage.get("businessCnpj"), this.todayDate).subscribe((result) => {
-    //   this.concludedOrders = result.data;
-    // });
+    var datePipe = new DatePipe('pt-BR');
+    const date = datePipe.transform(this.todayDate, "dd 'de' MMMM 'de' yyyy")
+    this.dashboardService.getConcludedOrders(date!).then(result => {
+      console.log(result);
+      
+      this.concludedOrders = result;
+    });
   }
 
   updateOrder(order: Order) {

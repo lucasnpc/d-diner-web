@@ -4,5 +4,7 @@ export interface Order {
     deskDescription: string
     concluded: boolean
     startDate: string
+    startHour: string
     endDate: string | undefined
+    endHour: string | undefined
 }

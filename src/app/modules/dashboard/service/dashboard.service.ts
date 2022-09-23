@@ -7,6 +7,7 @@ import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { USER_INFO } from 'src/app/core/utils/constants';
 import { BUSINESS_COLLECTION, DESKS_COLLECTION, ORDERS_COLLECTION } from 'src/app/core/utils/firestore-keys';
 import { environment } from 'src/environments/environment';
+import { Desk } from '../models/desk.model';
 import { Order } from '../models/order.model';
 
 const getPedidosTotal = environment.url + 'dashboard/getPedidosTotal'
@@ -31,9 +32,28 @@ export class DashboardService {
 
   constructor(private httpClient: HttpClient, private firestore: AngularFirestore, private storage: BusinessStorage) { }
 
-  getBusyDesks() {
-    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
-      .collection(DESKS_COLLECTION, ref => ref.where('isOccupied', "==", true)).get();
+  async getBusyDesks() {
+    var desks: Desk[] = []
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(DESKS_COLLECTION).ref.where('isOccupied', "==", true).onSnapshot(snapshot => {
+        snapshot.docChanges().forEach(changes => {
+          if (changes.type == 'added') {
+            console.log('added');
+
+            desks.push({
+              description: changes.doc.data()['description'],
+              isOccupied: changes.doc.data()['isOccupied']
+            })
+          }
+          if (changes.type == 'removed') {
+            console.log('removed');
+
+            const index = desks.findIndex(index => index.description === changes.doc.data()['description'])
+            desks.splice(index)
+          }
+        })
+      })
+    return desks
   }
 
   async getConcludedOrders(date: string) {
@@ -42,7 +62,7 @@ export class DashboardService {
       .collection(DESKS_COLLECTION, ref => {
         ref.get().then(desks => {
           desks.docs.forEach(desk => {
-            ref.doc(desk.id).collection(ORDERS_COLLECTION).where('concluded', '==', false).onSnapshot(snapshot => {
+            ref.doc(desk.id).collection(ORDERS_COLLECTION).where('concluded', '==', true).where('endDate', '==', date).onSnapshot(snapshot => {
               snapshot.docChanges().forEach(changes => {
                 if (changes.type == 'added') {
                   orders.push({
@@ -51,7 +71,9 @@ export class DashboardService {
                     deskDescription: desk.data()['description'],
                     concluded: changes.doc.data()['concluded'],
                     startDate: changes.doc.data()['startDate'],
-                    endDate: changes.doc.data()['endDate']
+                    startHour: changes.doc.data()['startHour'],
+                    endDate: changes.doc.data()['endDate'],
+                    endHour: changes.doc.data()['endHour']
                   })
                 }
                 if (changes.type == 'modified') {
@@ -62,7 +84,9 @@ export class DashboardService {
                     deskDescription: desk.data()['description'],
                     concluded: changes.doc.data()['concluded'],
                     startDate: changes.doc.data()['startDate'],
-                    endDate: changes.doc.data()['endDate']
+                    startHour: changes.doc.data()['startHour'],
+                    endDate: changes.doc.data()['endDate'],
+                    endHour: changes.doc.data()['endHour']
                   }
                 }
               })

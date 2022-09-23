@@ -18,13 +18,8 @@ export class BusyDesksComponent implements OnInit {
   }
 
   getBusyDesks() {
-    this.rest.getBusyDesks().subscribe(result =>
-      result.docs.forEach(doc =>
-        this.busyDesks.push({
-          description: doc.data()['description'],
-          isOccupied: doc.data()['isOccupied']
-        })
-      )
+    this.rest.getBusyDesks().then(result =>
+      this.busyDesks = result
     )
   }
 
