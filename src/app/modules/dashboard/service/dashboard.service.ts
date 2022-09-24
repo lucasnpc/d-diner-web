@@ -1,15 +1,13 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { USER_INFO } from 'src/app/core/utils/constants';
 import { BUSINESS_COLLECTION, DESKS_COLLECTION, EXPENSES_COLLECTION, GAINS_COLLECTION, ORDERS_COLLECTION } from 'src/app/core/utils/firestore-keys';
-import { environment } from 'src/environments/environment';
-import { Desk } from '../models/desk.model';
+import { Desk } from '../../desks/model/desk.model';
 import { Order } from '../models/order.model';
 
-const postAtualizaPedidoAtivoConcluido = environment.url + 'dashboard/postAtualizaPedidoAtivoConcluido';
 const datePipe = new DatePipe('pt-BR');
 
 @Injectable()
@@ -21,7 +19,7 @@ export class DashboardService {
     }),
   };
 
-  constructor(private httpClient: HttpClient, private firestore: AngularFirestore, private storage: BusinessStorage) { }
+  constructor(private firestore: AngularFirestore, private storage: BusinessStorage) { }
 
   async getBusyDesks() {
     var desks: Desk[] = []
@@ -30,6 +28,7 @@ export class DashboardService {
         snapshot.docChanges().forEach(changes => {
           if (changes.type == 'added') {
             desks.push({
+              id: changes.doc.id,
               description: changes.doc.data()['description'],
               isOccupied: changes.doc.data()['isOccupied']
             })
@@ -95,9 +94,4 @@ export class DashboardService {
     return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
       .collection(EXPENSES_COLLECTION)
   }
-
-  updateActiveOrderToConcluded(id: any) {
-    return this.httpClient.post<any>(postAtualizaPedidoAtivoConcluido, id, this.httpOptions)
-  }
-
 }

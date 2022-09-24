@@ -13,9 +13,9 @@ const routes: Routes = [
     component: LayoutMenuComponent,
     children: [
       {
-        path: 'inicio',
+        path: 'mesas',
         loadChildren: () =>
-          import('./modules/inicio/inicio.module').then((m) => m.InicioModule)
+          import('./modules/desks/desks.module').then((m) => m.DesksModule)
       },
       {
         path: 'cozinha',

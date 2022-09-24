@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { STATUS_PREPARING, STATUS_PREPARED } from 'src/app/core/utils/constants';
 import { KitchenOrderDialogComponent } from '../../components/kitchen-order-dialog/kitchen-order-dialog.component';
 import { KitchenInfo } from '../../models/KitchenInfo.model';
@@ -15,7 +14,7 @@ export class KitchenPage implements OnInit {
   clientOrders: KitchenInfo[] = []
 
   constructor(private kitchenService: KitchenService, private dialog: MatDialog,
-    private snackBar: MatSnackBar, private storage: BusinessStorage) { }
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getClientOrders()

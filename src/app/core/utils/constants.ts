@@ -17,6 +17,7 @@ export const STATUS_PREPARED = "preparado"
 
 export const INICIO_ROUTE = "/menu/inicio"
 export const KITCHEN_ROUTE = "/menu/cozinha"
+export const DESKS_ROUTE = "/menu/mesas"
 export const DASHBOARD_ROUTE = "/menu/dashboard"
 export const DASHBOARD_DETAIL_ROUTE = "/menu/dashboard/detail"
 export const CASHIER_ROUTE = "/menu/caixa"

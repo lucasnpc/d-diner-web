@@ -46,7 +46,6 @@ registerLocaleData(LocalePT);
   ],
   imports: [
     CommonModule,
-    HttpClientModule,
     DashboardRoutingModule,
     SharedModule,
     MatGridListModule,

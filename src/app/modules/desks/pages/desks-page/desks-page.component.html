@@ -1,0 +1,22 @@
+<div class="container background-muted">
+    <div class="content-container">
+        <mat-grid-list cols="3" rowHeight="68px">
+            <mat-grid-tile class="gray-background" [colspan]="3" [rowspan]="1">
+                <h2>Mesas</h2>
+            </mat-grid-tile>
+            <mat-grid-tile class="grid-tile-orders" [colspan]="3" [rowspan]="10">
+                <ul>
+                    <li *ngFor="let desk of desks">
+                        <button mat-button [ngClass]="{'busy-button': desk.isOccupied == true}"
+                            (click)="showDeskData(desk)">
+                            <mat-icon class="info-icon" *ngIf="desk.isOccupied" svgIcon="info-icon"></mat-icon>
+                            <mat-icon [svgIcon]="desk.isOccupied ? 'restaurant-icon-white' : 'restaurant-icon-gray'">
+                            </mat-icon>
+                            <p [ngClass]="{'busy-text': desk.isOccupied == true}">{{desk.description}}</p>
+                        </button>
+                    </li>
+                </ul>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>
