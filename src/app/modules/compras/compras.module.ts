@@ -21,6 +21,7 @@ import { ComprasService } from './service/compras.service';
 import { MatListModule } from '@angular/material/list';
 import { AddPurchaseDialogComponent } from './components/add-purchase-dialog/add-purchase-dialog.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ProvidersService } from '../fornecedores/services/fornecedores.service';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDatepickerModule,
     NativeDateModule
   ],
-  providers: [ComprasService],
+  providers: [ComprasService, ProvidersService],
 })
 export class ComprasModule { }

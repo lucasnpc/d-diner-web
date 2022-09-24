@@ -40,20 +40,20 @@ export class AddProductDialog implements OnInit {
   }
 
   addProduct() {
-    var data: Product = {
-      productId: undefined,
-      productName: this.formRegisterProduct.get('productName')!.value,
-      minimumStock: this.formRegisterProduct.get('minimumStock')!.value,
-      currentStock: 0,
-      measurementUnit: this.formRegisterProduct.get('measurementUnit')!.value.name,
-      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
-      barcode: this.formRegisterProduct.get('barcode')!.value,
-      selected: undefined
-    };
+    // var data: Product = {
+    //   id: undefined,
+    //   name: this.formRegisterProduct.get('productName')!.value,
+    //   minimumStock: this.formRegisterProduct.get('minimumStock')!.value,
+    //   currentStock: 0,
+    //   measurementUnit: this.formRegisterProduct.get('measurementUnit')!.value.name,
+    //   businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
+    //   barcode: this.formRegisterProduct.get('barcode')!.value,
+    //   selected: undefined
+    // };
 
-    this.service.postProduct(data).subscribe(result => {
-      if (result.success) this.dialogRef.close(true)
-    })
+    // this.service.postProduct(data).subscribe(result => {
+    //   if (result.success) this.dialogRef.close(true)
+    // })
   }
 
 }

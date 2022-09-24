@@ -24,7 +24,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline">
                                 <mat-label>Lote do produto</mat-label>
-                                <input matInput [(ngModel)]="purchase.productBatch" formControlName="productBatch"
+                                <input matInput [(ngModel)]="purchase.batch" formControlName="productBatch"
                                     oninput="this.value = this.value.toUpperCase()" required>
                             </mat-form-field>
                             <mat-form-field appearance="outline" floatLabel="always">
@@ -36,7 +36,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline" floatLabel="always">
                                 <mat-label>Quantidade</mat-label>
-                                <input matInput [(ngModel)]="purchase.quantityPurchased" currencyMask
+                                <input matInput [(ngModel)]="purchase.quantity" currencyMask
                                     formControlName="quantityPurchased" placeholder="0"
                                     [options]="{ prefix: '', thousands: '', decimal: '.' }" required />
                             </mat-form-field>

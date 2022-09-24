@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
 import { Provider } from '../../models/provider.model';
 import { ProvidersService } from '../../services/fornecedores.service';
 
@@ -31,13 +30,12 @@ export class AddProviderDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.data.providerCnpj != undefined) this.isEditting = true
+    if (this.data.idCnpj != undefined) this.isEditting = true
   }
 
   sendProvider(edit: boolean) {
     var data: Provider = {
-      providerCnpj: this.formRegisterProviders.get('providerCnpj')!.value,
-      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
+      idCnpj: this.formRegisterProviders.get('providerCnpj')!.value,
       corporateName: this.formRegisterProviders.get('corporateName')!.value,
       street: this.formRegisterProviders.get('street')!.value,
       number: this.formRegisterProviders.get('number')!.value,

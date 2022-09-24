@@ -35,7 +35,7 @@ export class DashboardService {
           }
           if (changes.type == 'removed') {
             const index = desks.findIndex(index => index.description === changes.doc.data()['description'])
-            desks.splice(index)
+            desks.splice(index, 1)
           }
         })
       })

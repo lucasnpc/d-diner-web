@@ -42,7 +42,7 @@ export class AddItemComponent implements OnInit {
   ngOnInit(): void {
     this.service.getProducts(JSON.parse(this.storage.get(USER_INFO)).businessCnpj).subscribe(result => {
       this.products = result.data
-      this.productsDescription = this.products.map(p => p.productName)
+      this.productsDescription = this.products.map(p => p.name)
 
       this.filteredProducts = this.createMenuItemControl.valueChanges.pipe(
         startWith(''),
@@ -89,18 +89,18 @@ export class AddItemComponent implements OnInit {
     this.createMenuItemControl.setValue('', { emitEvent: true })
 
     // verifica se o item já esta na lista de items 
-    if (this.selectedProducts.some(product => product.productName === p)) {
+    if (this.selectedProducts.some(product => product.name === p)) {
       alert("Este item já esta na lista")
       return
     }
 
-    const product = this.products.find(i => i.productName === p)
+    const product = this.products.find(i => i.name === p)
     if (!product) {
       return
     }
 
     this.selectedProducts.push(product)
-    this.productRequest.push({ productId: product.productId!, quantity: 1 })
+    this.productRequest.push({ productId: product.id!, quantity: 1 })
   }
 
   sumQuantity(p: ProductRequest) {

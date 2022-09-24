@@ -1,11 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
 import { Provider } from 'src/app/modules/fornecedores/models/provider.model';
+import { ProvidersService } from 'src/app/modules/fornecedores/services/fornecedores.service';
+import { Product } from '../../models/product.model';
 import { Purchase } from '../../models/purchase.model';
-import { PurchaseRequest } from '../../models/purchaseRequest.model';
 import { ComprasService } from '../../service/compras.service';
 
 @Component({
@@ -27,25 +26,23 @@ export class AddPurchaseDialogComponent implements OnInit {
   providerOpts: Provider[] = []
   purchases: Purchase[] = []
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: PurchaseRequest[], private storage: BusinessStorage,
-    private service: ComprasService, private fb: FormBuilder, public dialogRef: MatDialogRef<AddPurchaseDialogComponent>,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Product[], private service: ComprasService, private providerService: ProvidersService,
+    private fb: FormBuilder, public dialogRef: MatDialogRef<AddPurchaseDialogComponent>,
   ) { }
 
   ngOnInit(): void {
-    this.service.getProviders(JSON.parse(this.storage.get(USER_INFO)).businessCnpj).subscribe(result => {
+    this.providerService.getProviders().then(result => {
       if (result)
-        this.providerOpts = result.data
+        this.providerOpts = result
     })
     this.data.map(p => {
       this.purchases.push({
-        description: p.productName,
-        quantityPurchased: 0,
+        description: p.name,
+        quantity: 0,
         unitCostValue: 0,
-        productId: p.productId,
-        businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
-        datePurchased: new Date(),
-        productBatch: '',
-        provider: new Provider(),
+        purchaseDate: new Date(),
+        batch: '',
+        provider: undefined,
         expirationDate: undefined
       })
     })
@@ -55,11 +52,11 @@ export class AddPurchaseDialogComponent implements OnInit {
     this.purchases.map(p => {
       const purchase: Purchase = p
 
-      const index = this.data.findIndex(product => product.productId === p.productId)
+      // const index = this.data.findIndex(product => product.productId === p.productId)
 
-      this.service.updateProductCurrentStock({ stock: Number(this.data[index].currentStock) + p.quantityPurchased, id: p.productId }).subscribe()
+      // this.service.updateProductCurrentStock({ stock: Number(this.data[index].currentStock) + p.quantityPurchased, id: p.productId }).subscribe()
 
-      this.service.postPurchase(purchase).subscribe()
+      // this.service.postPurchase(purchase).subscribe()
     })
   }
 

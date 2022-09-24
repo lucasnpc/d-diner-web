@@ -7,10 +7,10 @@
       </mat-grid-tile>
       <mat-grid-tile class="grid-tile-products" [colspan]="4" [rowspan]="9">
         <ul>
-          <li *ngFor="let product of productsToSelect" [ngClass]="{'itemSelected': product.selected}">
-            <button mat-button class="b-container" (click)="changeColor(product)">
+          <li *ngFor="let product of products" [ngClass]="{'itemSelected': product.selected}">
+            <button mat-button class="b-container" (click)="product.selected = !product.selected">
               <p>
-                {{product.productName}}
+                {{product.name}}
               </p>
               <div class="align-center" mat-line>
                 <p class="subtitle">Quantidade Atual:</p>
