@@ -44,7 +44,8 @@ import { ProductListitemComponent } from './components/product-listitem/product-
     MatTableModule,
     MatCardModule,
     MatAutocompleteModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule
   ],
   providers: [CardapioService],
 })

@@ -29,7 +29,8 @@ export class ComprasService {
           currentStock: c.payload.doc.data()['currentStock'],
           measurementUnit: c.payload.doc.data()['measurementUnit'],
           barcode: c.payload.doc.data()['barcode'],
-          selected: false
+          selected: false,
+          menuItemQuantity: 0
         })))
       )
   }

@@ -1,16 +1,18 @@
-<mat-grid-list cols="4" rowHeight="4rem">
-  <mat-grid-tile mat-dialog-title [colspan]="4" [rowspan]="1">
+<mat-grid-list cols="3" rowHeight="4rem">
+  <mat-grid-tile mat-dialog-title [colspan]="3" [rowspan]="1">
     <div class="gray-bar-large">
       <h2>Registro de Itens no Cardápio</h2>
     </div>
   </mat-grid-tile>
   <mat-dialog-content>
     <form [formGroup]="formRegisterItems">
-      <mat-grid-tile [colspan]="4" [rowspan]="1">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Descrição</mat-label>
           <input matInput formControlName="descricao" placeholder="Descrição do Item" required />
         </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Pesquisar no Cardápio</mat-label>
           <input type="text" placeholder="Selecione um produto" aria-label="Number" matInput
@@ -22,7 +24,17 @@
           </mat-autocomplete>
         </mat-form-field>
       </mat-grid-tile>
-      <mat-grid-tile [colspan]="4" [rowspan]="6">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Categoria</mat-label>
+          <mat-select #select formControlName="category">
+            <mat-option *ngFor="let cat of categories" [value]="cat">
+              {{ cat.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="3" [rowspan]="6">
         <mat-selection-list #product [multiple]="false">
           <mat-list-option *ngFor="let product of selectedProducts" [value]="product">
             <rp-product-listitem [product]="product" (lessQuantity)="lessQuantity($event)"
@@ -30,7 +42,7 @@
           </mat-list-option>
         </mat-selection-list>
       </mat-grid-tile>
-      <mat-grid-tile [colspan]="4" [rowspan]="1">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-form-field appearance="outline">
           <mat-label>Preço</mat-label>
           <input matInput currencyMask formControlName="preco" placeholder="0"
@@ -40,7 +52,7 @@
       </mat-grid-tile>
     </form>
   </mat-dialog-content>
-  <mat-grid-tile [colspan]="4" [rowspan]="1">
+  <mat-grid-tile [colspan]="3" [rowspan]="1">
     <mat-dialog-actions align="end">
       <button mat-button (click)="addItem()" type="submit" [disabled]="!formRegisterItems.valid">
         Registrar

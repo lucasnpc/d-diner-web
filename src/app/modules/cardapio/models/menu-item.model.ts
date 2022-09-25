@@ -1,7 +1,10 @@
 export interface MenuItem {
   id: string
-  price: number
+  category: string
   description: string
+  price: number
+
+  //Not saved data
   itemQuantity: number
   selected: boolean
 }

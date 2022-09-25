@@ -6,4 +6,5 @@ export interface Product {
     measurementUnit: string;
     barcode: string;
     selected: boolean;
+    menuItemQuantity: number;
 }

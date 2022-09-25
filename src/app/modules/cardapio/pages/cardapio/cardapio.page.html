@@ -19,7 +19,7 @@
               <!-- Preço Column -->
               <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef>Preço</th>
-                <td class="item-border-right" mat-cell *matCellDef="let element">{{ element.price }}</td>
+                <td class="item-border-right" mat-cell *matCellDef="let element">R{{ element.price | currency: '' }}</td>
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

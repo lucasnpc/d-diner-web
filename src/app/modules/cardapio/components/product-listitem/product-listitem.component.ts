@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from 'src/app/modules/compras/models/product.model';
-import { ProductRequest } from '../../models/menu-item-product.model';
 
 @Component({
   selector: 'rp-product-listitem',
@@ -16,12 +15,12 @@ export class ProductListitemComponent implements OnInit {
     currentStock: 0,
     measurementUnit: '',
     barcode: '',
-    selected: false
+    selected: false,
+    menuItemQuantity: 0
   }
   productQuantity: number = 0;
-  _request: ProductRequest = new ProductRequest()
-  @Output() lessQuantity = new EventEmitter<ProductRequest>()
-  @Output() sumQuantity = new EventEmitter<ProductRequest>();
+  @Output() lessQuantity = new EventEmitter<Product>()
+  @Output() sumQuantity = new EventEmitter<Product>();
 
   constructor() { }
 
@@ -45,8 +44,8 @@ export class ProductListitemComponent implements OnInit {
         lessUnit = 0.5
         break
     }
-    if (this.productQuantity > lessUnit) {
-      this.productQuantity -= Number(lessUnit)
+    if (this.product.menuItemQuantity > lessUnit) {
+      this.product.menuItemQuantity -= Number(lessUnit)
       this.emitProductQuantity(false)
     }
   }
@@ -54,26 +53,22 @@ export class ProductListitemComponent implements OnInit {
   increaseItemQuantity() {
     switch (this.product.measurementUnit) {
       case 'Unidade':
-        this.productQuantity = Number(this.productQuantity) + Number(1);
+        this.product.menuItemQuantity = Number(this.product.menuItemQuantity) + Number(1);
         break;
       case 'Quilos':
-        this.productQuantity = Number(this.productQuantity) + Number(0.5)
+        this.product.menuItemQuantity = Number(this.product.menuItemQuantity) + Number(0.5)
         break;
       case 'Gramas':
-        this.productQuantity = Number(this.productQuantity) + Number(0.1)
+        this.product.menuItemQuantity = Number(this.product.menuItemQuantity) + Number(0.1)
         break;
       case 'Litros':
-        this.productQuantity = Number(this.productQuantity) + Number(0.5)
+        this.product.menuItemQuantity = Number(this.product.menuItemQuantity) + Number(0.5)
         break;
     }
     this.emitProductQuantity(true)
   }
 
   emitProductQuantity(sum: boolean) {
-    // this._request = {
-    //   productId: this.product.id,
-    //   quantity: this.productQuantity,
-    // }
-    sum ? this.sumQuantity.emit(this._request) : this.lessQuantity.emit(this._request)
+    sum ? this.sumQuantity.emit(this.product) : this.lessQuantity.emit(this.product)
   }
 }

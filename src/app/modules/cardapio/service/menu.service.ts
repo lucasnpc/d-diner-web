@@ -1,20 +1,13 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { environment } from 'src/environments/environment';
 import { Product } from '../../compras/models/product.model';
 import { MenuItem } from '../models/menu-item.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BUSINESS_COLLECTION, MENU_ITEMS_COLLECTION, PRODUCTS_COLLECTION } from 'src/app/core/utils/firestore-keys';
+import { BUSINESS_COLLECTION, ITEM_PRODUCTS_COLLECTION, MENU_ITEMS_COLLECTION, PRODUCTS_COLLECTION } from 'src/app/core/utils/firestore-keys';
 import { USER_INFO } from 'src/app/core/utils/constants';
-
-const get = environment.url + 'itens/getItem';
-const getProdutos = environment.url + 'produtos/getProdutos';
-
-const post = environment.url + 'itens/postItem';
-const postProdutoItem = environment.url + 'itens/postProdutoItem'
 
 @Injectable({
   providedIn: 'root'
@@ -30,10 +23,11 @@ export class CardapioService {
     }),
   };
 
-  constructor(private httpClient: HttpClient, private firestore: AngularFirestore, private storage: BusinessStorage) {
+  constructor(private firestore: AngularFirestore, private storage: BusinessStorage) {
     this.menuItems = firestore.collection(BUSINESS_COLLECTION).doc(storage.get(USER_INFO).businessCnpj).collection(MENU_ITEMS_COLLECTION)
       .snapshotChanges().pipe(map(changes => changes.map(c => ({
         id: c.payload.doc.id,
+        category: c.payload.doc.data()['category'],
         price: c.payload.doc.data()['price'],
         description: c.payload.doc.data()['description'],
         itemQuantity: 0,
@@ -49,6 +43,7 @@ export class CardapioService {
         measurementUnit: c.payload.doc.data()['measurementUnit'],
         barcode: c.payload.doc.data()['barcode'],
         selected: false,
+        menuItemQuantity: 0
       }))))
   }
 
@@ -60,10 +55,22 @@ export class CardapioService {
     return this.products
   }
 
-  public postItem(item: any) {
-    return this.httpClient.post<any>(post, item, this.httpOptions);
+  async postItem(item: MenuItem) {
+    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(MENU_ITEMS_COLLECTION).add(({
+        category: item.category,
+        description: item.description,
+        price: item.price
+      }))
   }
-  postMenuItemProduct(productMenuItem: any) {
-    return this.httpClient.post<any>(postProdutoItem, productMenuItem, this.httpOptions);
+  
+  async postItemProducts(selectedProducts: Product[], id: string) {
+    selectedProducts.forEach(product => {
+      this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+        .collection(MENU_ITEMS_COLLECTION).doc(id).collection(ITEM_PRODUCTS_COLLECTION).doc(product.id).set(({
+          description: product.name,
+          quantity: product.menuItemQuantity
+        }))
+    })
   }
 }

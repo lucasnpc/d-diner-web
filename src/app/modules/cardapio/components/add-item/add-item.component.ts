@@ -3,11 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
-import { formatter } from 'src/app/core/utils/numberFormatter';
 import { Product } from 'src/app/modules/compras/models/product.model';
-import { ProductRequest } from '../../models/menu-item-product.model';
 import { MenuItem } from '../../models/menu-item.model';
 import { CardapioService } from '../../service/menu.service';
 import { DialogAddInCardapioComponent } from '../dialog-add-in-cardapio/dialog-add-in-cardapio.component';
@@ -17,10 +13,12 @@ import { DialogAddInCardapioComponent } from '../dialog-add-in-cardapio/dialog-a
   templateUrl: './add-item.component.html',
   styleUrls: ['./add-item.component.less'],
 })
+
 export class AddItemComponent implements OnInit {
   formRegisterItems = this.fb.group({
-    preco: ['', Validators.required],
+    category: ['', Validators.required],
     descricao: ['', Validators.required],
+    preco: ['', Validators.required],
   });
 
   products: Product[] = []
@@ -29,20 +27,25 @@ export class AddItemComponent implements OnInit {
   selectedProducts: Product[] = []
   createMenuItemControl = new FormControl('');
 
-  productRequest: ProductRequest[] = []
+  categories = [
+    { name: 'Pizzas Salgadas' },
+    { name: 'Pizzas Doces' },
+    { name: 'Lanches' },
+    { name: 'Pratos' },
+    { name: 'Bebidas' },
+    { name: 'Sobremesas' }
+  ]
 
   constructor(
     private fb: FormBuilder,
     private rest: CardapioService,
     public dialogRef: MatDialogRef<DialogAddInCardapioComponent>,
-    private service: CardapioService,
-    private storage: BusinessStorage
-  ) { }
+    private service: CardapioService) { }
 
   ngOnInit(): void {
     this.service.getProducts().subscribe(result => {
       this.products = result
-      this.productsDescription = this.products.map(p => p.name)      
+      this.productsDescription = this.products.map(p => p.name)
 
       this.filteredProducts = this.createMenuItemControl.valueChanges.pipe(
         startWith(''),
@@ -57,31 +60,28 @@ export class AddItemComponent implements OnInit {
       return
     }
 
-    var dados: MenuItem = {
+    var item: MenuItem = {
       id: '',
       price: this.formRegisterItems.get('preco')!.value,
       description: this.formRegisterItems.get('descricao')!.value,
+      category: this.formRegisterItems.get('category')!.value.name,
       itemQuantity: 0,
       selected: false
     };
-    this.postItem(dados)
+    this.postItem(item)
   }
 
-  postItem(data: any) {
-    this.rest.postItem(data).subscribe((result) => {
-      if (result) {
-        this.productRequest.map(p => {
-          this.rest.postMenuItemProduct({
-            itemId: result.itemId,
-            productId: p.productId,
-            productQuantity: p.quantity
-          }).subscribe(result => {
-            if (result.success)
-              this.dialogRef.close(true)
-          })
+  postItem(menuItem: MenuItem) {
+    try {
+      this.rest.postItem(menuItem).then(result => {
+        this.rest.postItemProducts(this.selectedProducts, result.id).then(() => {
+          this.dialogRef.close(true)
         })
-      }
-    })
+      })
+    } catch (error) {
+      console.log(error);
+      alert('Alguma coisa deu errado')
+    }
   }
 
   setProduct(p: string) {
@@ -99,26 +99,23 @@ export class AddItemComponent implements OnInit {
     }
 
     this.selectedProducts.push(product)
-    this.productRequest.push({ productId: product.id!, quantity: 1 })
   }
 
-  sumQuantity(p: ProductRequest) {
-    // this.selectedProducts.map(value => value.productId == order.productId ? this.totalOrder += Number(value.price) : undefined)
+  sumQuantity(p: Product) {
     this._changeQuantity(p)
   }
 
-  lessQuantity(p: ProductRequest) {
-    //this.selectedItems.map(value => value.itemId == order.itemId ? this.totalOrder -= Number(value.price) : undefined)
+  lessQuantity(p: Product) {
     this._changeQuantity(p)
   }
 
-  _changeQuantity(p: ProductRequest) {
-    const itemIndex = this.productRequest.findIndex(product => product.productId === p.productId)
+  _changeQuantity(p: Product) {
+    const itemIndex = this.selectedProducts.findIndex(product => product.id === p.id)
     if (itemIndex < 0) {
       return
     }
 
-    this.productRequest[itemIndex].quantity = Number(formatter.format(p.quantity!))
+    this.selectedProducts[itemIndex] = p
   }
 
   private _filter(value: string): string[] {
