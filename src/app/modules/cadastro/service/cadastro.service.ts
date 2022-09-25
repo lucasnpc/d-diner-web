@@ -1,11 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { BUSINESS_COLLECTION, USERS_COLLECTION } from 'src/app/core/utils/firestore-keys';
 import { User } from '../../login/models/usuario.model';
 import { Business } from '../models/negocio.model';
-
-const postNegocio = environment.url + 'negocios/postNegocio';
-const postUsuario = environment.url + 'usuario/postUsuario';
 
 @Injectable()
 export class CadastroService {
@@ -16,20 +15,23 @@ export class CadastroService {
     }),
   };
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private auth: AngularFireAuth, private firestore: AngularFirestore) { }
 
-  postBusiness(negocio: Business) {
-    return this.httpClient.post<any>(
-      postNegocio,
-      negocio,
-      this.httpOptions
-    );
+  postBusiness(business: Business) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(business.idCnpj).set(({
+      city: business.city,
+      corporateName: business.corporateName,
+      district: business.district,
+      number: business.number,
+      state: business.state,
+      street: business.street
+    }))
   }
-  postUser(usuario: User) {
-    return this.httpClient.post<any>(
-      postUsuario,
-      usuario,
-      this.httpOptions
-    );
+  postUser(user: User) {
+    this.auth.createUserWithEmailAndPassword(user.email, user.password)
+    this.firestore.collection(USERS_COLLECTION).doc(user.email).set({
+      businessCnpj: user.businessCnpj,
+      role: user.role
+    })
   }
 }
