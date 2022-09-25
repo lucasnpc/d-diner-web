@@ -24,7 +24,7 @@ export class BusyDesksComponent implements OnInit {
   }
 
   getBusyDesks() {
-    this.rest.getBusyDesks().then(result =>
+    this.rest.getBusyDesks().subscribe(result =>
       this.busyDesks = result
     )
   }

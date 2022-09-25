@@ -21,7 +21,7 @@ export class OrderListitemComponent implements OnInit {
     if (this.item!.itemQuantity != undefined) {
       for (let i = 1; i <= this.item!.itemQuantity; i++) {
         this.itemQuantity = i;
-        this.sumOrder.emit({ itemId: this.item!.itemId, quantity: this.itemQuantity })
+        this.sumOrder.emit({ itemId: this.item!.id, quantity: this.itemQuantity })
       }
     }
     else
@@ -42,7 +42,7 @@ export class OrderListitemComponent implements OnInit {
 
   emitOrder(sum: boolean) {
     this._request = {
-      itemId: this.item!.itemId,
+      itemId: this.item!.id,
       quantity: this.itemQuantity,
     }
     sum ? this.sumOrder.emit(this._request) : this.lessOrder.emit(this._request)

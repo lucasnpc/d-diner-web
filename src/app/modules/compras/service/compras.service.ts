@@ -5,59 +5,37 @@ import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { USER_INFO } from 'src/app/core/utils/constants';
 import { BUSINESS_COLLECTION, PRODUCTS_COLLECTION } from 'src/app/core/utils/firestore-keys';
 import { Product } from '../models/product.model';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ComprasService {
+
+  products: Observable<Product[]>
+
 
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     }),
   };
-  constructor(private firestore: AngularFirestore, private storage: BusinessStorage) { }
-
-  async getProducts() {
-    var products: Product[] = []
-    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
-      .collection(PRODUCTS_COLLECTION, ref => {
-        ref.onSnapshot(snapshot => {
-          snapshot.docChanges().forEach(changes => {
-            if (changes.type == 'added') {
-              products.push({
-                id: changes.doc.id,
-                name: changes.doc.data()['name'],
-                minimumStock: changes.doc.data()['minimumStock'],
-                currentStock: changes.doc.data()['currentStock'],
-                measurementUnit: changes.doc.data()['measurementUnit'],
-                barcode: changes.doc.data()['barcode'],
-                selected: false
-              })
-            }
-            if (changes.type == 'modified') {
-              const index = products.findIndex(index => index.id == changes.doc.id)
-              products[index] = {
-                id: changes.doc.id,
-                name: changes.doc.data()['name'],
-                minimumStock: changes.doc.data()['minimumStock'],
-                currentStock: changes.doc.data()['currentStock'],
-                measurementUnit: changes.doc.data()['measurementUnit'],
-                barcode: changes.doc.data()['barcode'],
-                selected: false
-              }
-            }
-            if (changes.type == 'removed') {
-              const index = products.findIndex(index => index.id == changes.doc.id)
-              products.splice(index, 1)
-            }
-          })
-        })
-        return ref
-      })
-    return products
+  constructor(private firestore: AngularFirestore, private storage: BusinessStorage) {
+    this.products = this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(PRODUCTS_COLLECTION).snapshotChanges().pipe(
+        map(changes => changes.map(c => ({
+          id: c.payload.doc.id,
+          name: c.payload.doc.data()['name'],
+          minimumStock: c.payload.doc.data()['minimumStock'],
+          currentStock: c.payload.doc.data()['currentStock'],
+          measurementUnit: c.payload.doc.data()['measurementUnit'],
+          barcode: c.payload.doc.data()['barcode'],
+          selected: false
+        })))
+      )
   }
 
-  getProviders(cnpj: string) {
-    // return this.httpClient.get<{ data: Provider[] }>(getFornecedores, { params: { businessCnpj: cnpj } });
+  getProducts() {
+    return this.products
   }
 
   postProduct(product: Product) {

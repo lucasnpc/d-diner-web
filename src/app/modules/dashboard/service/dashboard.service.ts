@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map, Observable } from 'rxjs';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { USER_INFO } from 'src/app/core/utils/constants';
 import { BUSINESS_COLLECTION, DESKS_COLLECTION, EXPENSES_COLLECTION, GAINS_COLLECTION, ORDERS_COLLECTION } from 'src/app/core/utils/firestore-keys';
@@ -13,33 +14,27 @@ const datePipe = new DatePipe('pt-BR');
 @Injectable()
 export class DashboardService {
 
+  desks: Observable<Desk[]>
+
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     }),
   };
 
-  constructor(private firestore: AngularFirestore, private storage: BusinessStorage) { }
+  constructor(private firestore: AngularFirestore, private storage: BusinessStorage) {
+    this.desks = firestore.collection(BUSINESS_COLLECTION).doc(storage.get(USER_INFO).businessCnpj)
+      .collection(DESKS_COLLECTION, ref => ref.where('isOccupied', "==", true)).snapshotChanges().pipe(
+        map(changes => changes.map(c => ({
+          id: c.payload.doc.id,
+          description: c.payload.doc.data()['description'],
+          isOccupied: c.payload.doc.data()['isOccupied']
+        })))
+      )
+  }
 
-  async getBusyDesks() {
-    var desks: Desk[] = []
-    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
-      .collection(DESKS_COLLECTION).ref.where('isOccupied', "==", true).onSnapshot(snapshot => {
-        snapshot.docChanges().forEach(changes => {
-          if (changes.type == 'added') {
-            desks.push({
-              id: changes.doc.id,
-              description: changes.doc.data()['description'],
-              isOccupied: changes.doc.data()['isOccupied']
-            })
-          }
-          if (changes.type == 'removed') {
-            const index = desks.findIndex(index => index.description === changes.doc.data()['description'])
-            desks.splice(index, 1)
-          }
-        })
-      })
-    return desks
+  getBusyDesks() {
+    return this.desks
   }
 
   async getConcludedOrders(date: Date) {
@@ -78,7 +73,6 @@ export class DashboardService {
                 }
               })
             })
-
           })
         })
         return ref

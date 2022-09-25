@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
 import { Employee } from '../../models/employee.model';
 import { FuncionarioService } from '../../service/funcionario.service';
 import { DialogAddInFuncionariosComponent } from '../dialog-add-in-funcionarios/dialog-add-in-funcionarios.component';
@@ -22,7 +21,6 @@ export class AddFuncionarioComponent implements OnInit {
     district: ['', Validators.required],
     city: ['', Validators.required],
     phone: ['', Validators.required],
-    role: ['', Validators.required],
     admissionDate: ['', Validators.required],
     birthDate: ['', Validators.required],
     salary: ['', Validators.required],
@@ -44,7 +42,7 @@ export class AddFuncionarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.data.cpf != undefined) {
+    if (this.data.idCpf != undefined) {
       this.data.isOutsource ? this.formRegisterEmployees.controls['isOutsource'].setValue('option1')
         : this.formRegisterEmployees.controls['isOutsource'].setValue('option2')
       this.isEditting = true
@@ -53,21 +51,19 @@ export class AddFuncionarioComponent implements OnInit {
 
   sendEmployee(edit: boolean) {
     var employee: Employee = {
-      cpf: this.formRegisterEmployees.get('cpf')!.value,
+      idCpf: this.formRegisterEmployees.get('cpf')!.value,
       name: this.formRegisterEmployees.get('name')!.value,
       street: this.formRegisterEmployees.get('street')!.value,
       number: this.formRegisterEmployees.get('number')!.value,
       district: this.formRegisterEmployees.get('district')!.value,
       city: this.formRegisterEmployees.get('city')!.value,
       phone: this.formRegisterEmployees.get('phone')!.value,
-      role: this.formRegisterEmployees.get('role')!.value,
       admissionDate: this.formRegisterEmployees.get('admissionDate')!.value,
       birthDate: this.formRegisterEmployees.get('birthDate')!.value,
       terminationDate: undefined,
       salary: this.formRegisterEmployees.get('salary')!.value,
       isOutsource: this.formRegisterEmployees.get('isOutsource')!.value == "Sim",
       isActive: true,
-      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj
     };
 
     edit ? this.updateEmployee(employee) : this.addEmployee(employee)

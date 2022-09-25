@@ -8,7 +8,7 @@
       <ng-container matColumnDef="N. Mesa">
         <th mat-header-cell *matHeaderCellDef>Valor da conta</th>
         <td class="item-border-left" mat-cell *matCellDef="let element">
-          {{ element.value }}
+          R{{ element.value | currency: ''}}
         </td>
       </ng-container>
 
@@ -20,19 +20,15 @@
 
       <!-- Valor Column -->
       <ng-container matColumnDef="Forma de pagamento">
-        <th mat-header-cell *matHeaderCellDef>Data da entrda</th>
+        <th mat-header-cell *matHeaderCellDef>Data da entrada</th>
         <td class="item-border-right" mat-cell *matCellDef="let element">
-          {{ element.gainDate | date:'dd-MM-yyyy' }}
+          {{ element.gainDate }}
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        (click)="setRow(row)"
-        [ngClass]="{ rowSelected: clickedRow == row }"
-        *matRowDef="let row; columns: displayedColumns"
-      ></tr>
+      <tr mat-row (click)="setRow(row)" [ngClass]="{ rowSelected: clickedRow == row }"
+        *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </mat-card-content>
   <mat-card-actions> </mat-card-actions>

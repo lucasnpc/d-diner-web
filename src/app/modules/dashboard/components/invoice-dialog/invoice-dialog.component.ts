@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
 import { Gain } from 'src/app/modules/caixa/models/gain.model';
 import { CaixaService } from 'src/app/modules/caixa/service/caixa.service';
 import { MenuItem } from 'src/app/modules/cardapio/models/menu-item.model';
@@ -20,7 +19,7 @@ export class InvoiceDialogComponent implements OnInit {
   clientOptToNotPay = false
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: MenuItem[],
-    public dialogRef: MatDialogRef<InvoiceDialogComponent>, private service: CaixaService, private storage: BusinessStorage) { }
+    public dialogRef: MatDialogRef<InvoiceDialogComponent>, private service: CaixaService) { }
 
   ngOnInit(): void {
     this.data.map(i => {
@@ -33,12 +32,11 @@ export class InvoiceDialogComponent implements OnInit {
     if (this.payementForm == null) return;
 
     const gain: Gain = {
-      gainId: undefined,
+      id: '',
       value: this.totalValue,
       paymentWay: this.payementForm,
-      gainDate: new Date(),
-      additionalValue: this.additionalValue,
-      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj
+      gainDate: '',
+      additionalValue: this.additionalValue
     }
 
     this.service.postGain(gain).subscribe((result) => {

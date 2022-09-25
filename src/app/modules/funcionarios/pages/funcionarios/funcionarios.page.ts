@@ -27,7 +27,6 @@ export class FuncionariosPage implements OnInit {
     'Bairro',
     'Cidade',
     'Telefone',
-    'Cargo',
     'Data de Admissao',
     'Data de Nascimento',
   ];
@@ -43,9 +42,11 @@ export class FuncionariosPage implements OnInit {
   }
 
   getEmployees() {
-    this.rest.getEmployees(JSON.parse(this.storage.get(USER_INFO)).businessCnpj).subscribe((result) => {
+    this.rest.getEmployees().subscribe((result) => {
       if (result) {
-        this.funcionarios = result.data;
+        this.funcionarios = result
+        console.log(result);
+        
         this.dataSource = new MatTableDataSource(this.funcionarios);
       }
     });
@@ -76,7 +77,6 @@ export class FuncionariosPage implements OnInit {
   }
 
   setRow(row: Employee) {
-    this.formatDate(row.admissionDate);
     this.clickedRow = row;
   }
 
@@ -92,7 +92,7 @@ export class FuncionariosPage implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.rest.unactivateEmployee(this.clickedRow!.cpf).subscribe(r => {
+        this.rest.unactivateEmployee(this.clickedRow!.idCpf).subscribe(r => {
           if (r.success)
             this.getEmployees()
         })

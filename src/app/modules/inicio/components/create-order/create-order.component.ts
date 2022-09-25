@@ -52,7 +52,7 @@ export class CreateOrderComponent implements OnInit {
             this.service.getItemsWithClientOrderId(v.clientOrderId).subscribe(result => {
               if (result) {
                 this.selectedItems = result.data
-                this.itemRequest = result.data.map(item => ({ itemId: item.itemId, quantity: item.itemQuantity }))
+                this.itemRequest = result.data.map(item => ({ itemId: item.id, quantity: item.itemQuantity }))
               }
             })
           })
@@ -117,17 +117,17 @@ export class CreateOrderComponent implements OnInit {
     }
 
     this.selectedItems.push(item)
-    this.itemRequest.push({ itemId: item.itemId, quantity: 1 })
+    this.itemRequest.push({ itemId: item.id, quantity: 1 })
 
   }
 
   sumOrder(order: ItemRequest) {
-    this.selectedItems.map(value => value.itemId == order.itemId ? this.totalOrder += Number(value.price) : undefined)
+    this.selectedItems.map(value => value.id == order.itemId ? this.totalOrder += Number(value.price) : undefined)
     this._changeQuantity(order)
   }
 
   lessOrder(order: ItemRequest) {
-    this.selectedItems.map(value => value.itemId == order.itemId ? this.totalOrder -= Number(value.price) : undefined)
+    this.selectedItems.map(value => value.id == order.itemId ? this.totalOrder -= Number(value.price) : undefined)
     this._changeQuantity(order)
   }
 

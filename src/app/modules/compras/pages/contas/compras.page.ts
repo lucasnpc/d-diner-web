@@ -28,7 +28,7 @@ export class ComprasPage implements OnInit {
   }
 
   getProducts() {
-    this.service.getProducts().then(result => {
+    this.service.getProducts().subscribe(result => {
       if (result) {
         this.products = result
       }

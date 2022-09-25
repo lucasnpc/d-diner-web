@@ -16,7 +16,7 @@ const deleteFornecedor = environment.url + 'fornecedores/deleteFornecedor'
 @Injectable({
   providedIn: 'root'
 })
-export class ProvidersService {
+export class ProvidersService { 
 
   providers: Observable<Provider[]>
 

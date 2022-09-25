@@ -48,7 +48,7 @@ export class DesksPageComponent implements OnInit {
   }
 
   getDesks() {
-    this.service.getDesks().then(result => {
+    this.service.getDesks().subscribe(result => {
       this.desks = result.sort()
     })
   }

@@ -40,9 +40,9 @@ export class AddItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.service.getProducts(JSON.parse(this.storage.get(USER_INFO)).businessCnpj).subscribe(result => {
-      this.products = result.data
-      this.productsDescription = this.products.map(p => p.name)
+    this.service.getProducts().subscribe(result => {
+      this.products = result
+      this.productsDescription = this.products.map(p => p.name)      
 
       this.filteredProducts = this.createMenuItemControl.valueChanges.pipe(
         startWith(''),
@@ -58,12 +58,11 @@ export class AddItemComponent implements OnInit {
     }
 
     var dados: MenuItem = {
-      itemId: undefined,
+      id: '',
       price: this.formRegisterItems.get('preco')!.value,
       description: this.formRegisterItems.get('descricao')!.value,
-      itemQuantity: undefined,
-      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
-      selected: undefined
+      itemQuantity: 0,
+      selected: false
     };
     this.postItem(dados)
   }

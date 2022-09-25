@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
 import { Expense } from '../../models/expense.model';
 import { CaixaService } from '../../service/caixa.service';
 import { DialogAddInCaixaComponent } from '../dialog-add-in-caixa/dialog-add-in-caixa.component';
@@ -31,11 +30,10 @@ export class AddExpenseComponent implements OnInit {
   addExpense() {
     console.log('Add expense');
     var dados: Expense = {
-      expenseId: undefined,
+      id: '',
       description: this.formRegisterExpenses.get('description')!.value,
       value: this.formRegisterExpenses.get('value')!.value,
       expenseDate: this.formRegisterExpenses.get('expenseDate')!.value,
-      businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj
     };
     this.rest.postExpense(dados).subscribe((result) => {
       if (result.success) this.dialogRef.close(true);
