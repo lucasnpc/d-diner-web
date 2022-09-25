@@ -16,16 +16,18 @@ export class LoginPage implements OnInit {
   ngOnInit(): void { }
 
   logarSistema(login: User) {
-    this.rest.authUser(login).then(() => {
-      const userRole = this.storage.get(USER_INFO).role;
-      switch (userRole) {
-        case 'Administrador':
-          this.router.navigate([DASHBOARD_ROUTE]);
-          break;
-        case 'Cozinha':
-          this.router.navigate([KITCHEN_ROUTE]);
-          break;
-      }
+    this.rest.authUser(login).then(doc => {
+      doc.get().then(info => {
+        this.storage.set(USER_INFO, info.data())
+        switch (info.data()?.role) {
+          case 'Administrador':
+            this.router.navigate([DASHBOARD_ROUTE]);
+            break;
+          case 'Cozinha':
+            this.router.navigate([KITCHEN_ROUTE]);
+            break;
+        }
+      })
     }).catch(exception => {
       console.log(exception);
       alert('Usuário inválido');
