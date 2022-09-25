@@ -42,8 +42,10 @@ export class FornecedoresPage implements OnInit {
   }
 
   getProviders() {
-    this.service.getProviders().then((result) => {
+    this.service.getProviders().subscribe((result) => {
       this.providers = result;
+      console.log(this.providers);
+      
       this.dataSource = new MatTableDataSource(this.providers);
     });
   }

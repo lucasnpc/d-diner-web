@@ -31,7 +31,7 @@ export class AddPurchaseDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.providerService.getProviders().then(result => {
+    this.providerService.getProviders().subscribe(result => {
       if (result)
         this.providerOpts = result
     })
