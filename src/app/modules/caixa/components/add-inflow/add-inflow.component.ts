@@ -57,8 +57,8 @@ export class AddInflowComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.rest.getItens(this.storage.get("businessCnpj")).subscribe((result) => {
-      this.itens = result.data;
+    this.rest.getItems().subscribe((result) => {
+      this.itens = result
     });
   }
 

@@ -31,7 +31,7 @@ export class FornecedoresPage implements OnInit {
     'email'
   ]
 
-  constructor(private dialog: MatDialog, private service: ProvidersService, private storage: BusinessStorage) { }
+  constructor(private dialog: MatDialog, private service: ProvidersService) { }
 
   ngOnInit(): void {
     this.getProviders()
@@ -42,8 +42,10 @@ export class FornecedoresPage implements OnInit {
   }
 
   getProviders() {
-    this.service.getProviders(this.storage.get("businessCnpj")).subscribe((result) => {
-      this.providers = result.data;
+    this.service.getProviders().subscribe((result) => {
+      this.providers = result;
+      console.log(this.providers);
+      
       this.dataSource = new MatTableDataSource(this.providers);
     });
   }
@@ -88,7 +90,7 @@ export class FornecedoresPage implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.service.disableProvider(this.clickedRow!.providerCnpj).subscribe(r => {
+        this.service.disableProvider(this.clickedRow!.idCnpj).subscribe(r => {
           if (r.success)
             this.getProviders()
         })

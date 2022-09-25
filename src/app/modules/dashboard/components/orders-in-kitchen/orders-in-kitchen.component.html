@@ -1,10 +1,11 @@
 <mat-grid-list cols="1" rowHeight="3.4rem">
     <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <p class="orders-style">Pedidos totais</p>
+        <p class="orders-style">Pedidos na Cozinha</p>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
-        <p class="total-orders-style">{{totalOrders.length}}</p>
+        <p class="total-orders-style">{{ordersAtKitchen.length}}</p>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <button mat-raised-button class="button-see-kitchen" (click)="showKitchen()">Ver cozinha</button>
     </mat-grid-tile>
 </mat-grid-list>

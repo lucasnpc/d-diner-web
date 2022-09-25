@@ -1,8 +1,10 @@
-export class Order {
-    orderId: number | undefined;
+export interface Order {
+    orderId: string;
     employeeCpf: string | undefined;
-    deskDescription: string = '';
-    concluded: boolean = false;
-    businessCnpj: string = '';
-    dateTimeOrder: Date = new Date();
+    deskDescription: string
+    concluded: boolean
+    startDate: string
+    startHour: string
+    endDate: string | undefined
+    endHour: string | undefined
 }

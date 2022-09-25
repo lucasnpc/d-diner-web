@@ -19,7 +19,7 @@ import { InicioService } from '../../services/inicio.service';
 export class CreateOrderComponent implements OnInit {
   @Input() index: number = 0;
   @Output() indexChanged = new EventEmitter<number>();
-  @Input() createdOrder: Order = new Order();
+  @Input() createdOrder: any;
   @Input() orderToUpdate: Order | undefined
 
   createOrderControl = new FormControl('');
@@ -52,7 +52,7 @@ export class CreateOrderComponent implements OnInit {
             this.service.getItemsWithClientOrderId(v.clientOrderId).subscribe(result => {
               if (result) {
                 this.selectedItems = result.data
-                this.itemRequest = result.data.map(item => ({ itemId: item.itemId, quantity: item.itemQuantity }))
+                this.itemRequest = result.data.map(item => ({ itemId: item.id, quantity: item.itemQuantity }))
               }
             })
           })
@@ -117,17 +117,17 @@ export class CreateOrderComponent implements OnInit {
     }
 
     this.selectedItems.push(item)
-    this.itemRequest.push({ itemId: item.itemId, quantity: 1 })
+    this.itemRequest.push({ itemId: item.id, quantity: 1 })
 
   }
 
   sumOrder(order: ItemRequest) {
-    this.selectedItems.map(value => value.itemId == order.itemId ? this.totalOrder += Number(value.price) : undefined)
+    this.selectedItems.map(value => value.id == order.itemId ? this.totalOrder += Number(value.price) : undefined)
     this._changeQuantity(order)
   }
 
   lessOrder(order: ItemRequest) {
-    this.selectedItems.map(value => value.itemId == order.itemId ? this.totalOrder -= Number(value.price) : undefined)
+    this.selectedItems.map(value => value.id == order.itemId ? this.totalOrder -= Number(value.price) : undefined)
     this._changeQuantity(order)
   }
 
@@ -141,21 +141,21 @@ export class CreateOrderComponent implements OnInit {
   }
 
   _postOrder() {
-    this.service.postClientOrder({ orderId: this.createdOrder.orderId, clientOrder: undefined }).subscribe(result => {
-      if (result.success) {
-        this.itemRequest.map(value => {
-          this.service.postClientOrdersItems({
-            clientOrderId: result.id,
-            itemId: value.itemId,
-            itemQuantity: value.quantity,
-            orderStatus: STATUS_STARTING
-          }).subscribe(r2 => {
-            if (r2.success)
-              this.cancelAttendance(false)
-          })
-        })
-      }
-    })
+    // this.service.postClientOrder({ orderId: this.createdOrder.orderId, clientOrder: undefined }).subscribe(result => {
+    //   if (result.success) {
+    //     this.itemRequest.map(value => {
+    //       this.service.postClientOrdersItems({
+    //         clientOrderId: result.id,
+    //         itemId: value.itemId,
+    //         itemQuantity: value.quantity,
+    //         orderStatus: STATUS_STARTING
+    //       }).subscribe(r2 => {
+    //         if (r2.success)
+    //           this.cancelAttendance(false)
+    //       })
+    //     })
+    //   }
+    // })
   }
 
   _updateOrder() {

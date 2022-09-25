@@ -9,7 +9,15 @@ import { ProductRequest } from '../../models/menu-item-product.model';
 })
 export class ProductListitemComponent implements OnInit {
 
-  @Input() product: Product = new Product
+  @Input() product: Product = {
+    id: '',
+    name: '',
+    minimumStock: 0,
+    currentStock: 0,
+    measurementUnit: '',
+    barcode: '',
+    selected: false
+  }
   productQuantity: number = 0;
   _request: ProductRequest = new ProductRequest()
   @Output() lessQuantity = new EventEmitter<ProductRequest>()
@@ -62,10 +70,10 @@ export class ProductListitemComponent implements OnInit {
   }
 
   emitProductQuantity(sum: boolean) {
-    this._request = {
-      productId: this.product.productId,
-      quantity: this.productQuantity,
-    }
+    // this._request = {
+    //   productId: this.product.id,
+    //   quantity: this.productQuantity,
+    // }
     sum ? this.sumQuantity.emit(this._request) : this.lessQuantity.emit(this._request)
   }
 }

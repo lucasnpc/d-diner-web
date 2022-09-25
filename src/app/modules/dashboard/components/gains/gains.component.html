@@ -15,10 +15,10 @@
         </p>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="2" [rowspan]="2">
-        <div class="see-gains">Entradas: R$ {{gains}}</div>
+        <div class="see-gains">Entradas: R$ {{gains | currency: ''}}</div>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="2" [rowspan]="2">
-        <div class="see-expenses">Saídas: R$ {{expenses}}</div>
+        <div class="see-expenses">Saídas: R$ {{expenses | currency: ''}}</div>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="2" [rowspan]="2">
         <div class="see-total">Total: R$ {{gains - expenses | currency: ''}}</div>

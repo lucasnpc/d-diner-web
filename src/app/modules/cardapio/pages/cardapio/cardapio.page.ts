@@ -33,8 +33,8 @@ export class CardapioPage implements OnInit {
   }
 
   getItems() {
-    this.rest.getItens(this.storage.get("businessCnpj")).subscribe((result) => {
-      this.items = result.data;
+    this.rest.getItems().subscribe((result) => {
+      this.items = result
       this.dataSource = new MatTableDataSource(this.items)
     });
   }

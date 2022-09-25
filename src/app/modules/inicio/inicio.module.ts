@@ -19,9 +19,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HttpClientModule } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
 import { OrderListitemComponent } from './components/order-listitem/order-listitem.component';
-import { KitchenListComponent } from './components/kitchen-list/kitchen-list.component';
-import { KitchenService } from './services/kitchen.service';
-import { KitchenOrderDialogComponent } from './components/kitchen-order-dialog/kitchen-order-dialog.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
@@ -31,8 +28,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ChooseDeskComponent,
     CreateOrderComponent,
     OrderListitemComponent,
-    KitchenListComponent,
-    KitchenOrderDialogComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +48,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDialogModule,
     MatSnackBarModule
   ],
-  providers: [InicioService, KitchenService]
+  providers: [InicioService]
 })
 
 export class InicioModule { }

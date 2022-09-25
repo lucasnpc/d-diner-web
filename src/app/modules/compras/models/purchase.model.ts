@@ -1,13 +1,11 @@
 import { Provider } from "../../fornecedores/models/provider.model";
 
 export interface Purchase {
+  batch: string;
   description: string;
-  quantityPurchased: number;
-  unitCostValue: number;
-  productId: number | undefined;
-  businessCnpj: string;
-  datePurchased: Date;
-  productBatch: string;
-  provider: Provider;
   expirationDate: Date | undefined;
+  purchaseDate: Date;
+  quantity: number;
+  unitCostValue: number;
+  provider: Provider | undefined;
 }

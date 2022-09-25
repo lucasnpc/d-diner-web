@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { formatter } from 'src/app/core/utils/numberFormatter';
 import { Product } from 'src/app/modules/compras/models/product.model';
 import { ProductRequest } from '../../models/menu-item-product.model';
@@ -40,9 +40,9 @@ export class AddItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.service.getProducts(this.storage.get(BUSINESS_CNPJ)).subscribe(result => {
-      this.products = result.data
-      this.productsDescription = this.products.map(p => p.productName)
+    this.service.getProducts().subscribe(result => {
+      this.products = result
+      this.productsDescription = this.products.map(p => p.name)      
 
       this.filteredProducts = this.createMenuItemControl.valueChanges.pipe(
         startWith(''),
@@ -58,12 +58,11 @@ export class AddItemComponent implements OnInit {
     }
 
     var dados: MenuItem = {
-      itemId: undefined,
+      id: '',
       price: this.formRegisterItems.get('preco')!.value,
       description: this.formRegisterItems.get('descricao')!.value,
-      itemQuantity: undefined,
-      businessCnpj: this.storage.get(BUSINESS_CNPJ),
-      selected: undefined
+      itemQuantity: 0,
+      selected: false
     };
     this.postItem(dados)
   }
@@ -89,18 +88,18 @@ export class AddItemComponent implements OnInit {
     this.createMenuItemControl.setValue('', { emitEvent: true })
 
     // verifica se o item já esta na lista de items 
-    if (this.selectedProducts.some(product => product.productName === p)) {
+    if (this.selectedProducts.some(product => product.name === p)) {
       alert("Este item já esta na lista")
       return
     }
 
-    const product = this.products.find(i => i.productName === p)
+    const product = this.products.find(i => i.name === p)
     if (!product) {
       return
     }
 
     this.selectedProducts.push(product)
-    this.productRequest.push({ productId: product.productId!, quantity: 1 })
+    this.productRequest.push({ productId: product.id!, quantity: 1 })
   }
 
   sumQuantity(p: ProductRequest) {

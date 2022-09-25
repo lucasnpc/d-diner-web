@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
 
 @Component({
   templateUrl: './dashboard.page.html',
@@ -9,11 +8,10 @@ export class DashboardPage implements OnInit {
 
   selectedDate: Date = new Date()
 
-  constructor(private storage: BusinessStorage) { }
+  constructor() { }
 
   ngOnInit(): void {
-    console.log(this.storage.get('businessCnpj'));
-    console.log(this.storage.get('userRole'));
+    
   }
 
   changeDate(changedDate: Date) {

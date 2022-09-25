@@ -19,8 +19,8 @@ export class ListEntradasComponent implements OnInit {
   constructor(private rest: CaixaService, private storage: BusinessStorage) { }
 
   ngOnInit(): void {
-    this.rest.getGains(this.storage.get("businessCnpj")).subscribe((result) => {
-      this.entradas = result.data;
+    this.rest.getGains().subscribe((result) => {
+      this.entradas = result
       this.dataSource = new MatTableDataSource(this.entradas);
     });
   }

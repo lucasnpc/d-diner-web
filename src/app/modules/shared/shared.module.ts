@@ -10,6 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { SharedDialogComponent } from './components/shared-dialog/shared-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LoginService } from '../login/services/login.service';
 
 @NgModule({
   declarations: [LayoutMenuComponent, TopBarComponent, SharedDialogComponent],
@@ -21,8 +22,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   exports: [LayoutMenuComponent, TopBarComponent],
+  providers: [LoginService]
 })
-export class SharedModule {}
+export class SharedModule { }

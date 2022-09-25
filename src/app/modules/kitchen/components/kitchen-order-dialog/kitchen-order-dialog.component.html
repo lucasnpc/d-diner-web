@@ -4,9 +4,9 @@
     </div>
     <span *ngFor="let item of items">
         <p class="description">{{item.description}}</p>
-        <p>&nbsp;&nbsp;Qtd.{{item.itemQuantity}}</p>
+        <p>&nbsp;&nbsp;Qtd.{{item.quantity}}</p>
     </span>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button class="confirm" [mat-dialog-close]="true" cdkFocusInitial>Iniciar</button>
+    <button mat-button class="confirm" [mat-dialog-close]="true">Iniciar</button>
 </mat-dialog-actions>

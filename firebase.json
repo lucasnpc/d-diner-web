@@ -21,7 +21,7 @@
   "hosting": [
     {
       "target": "d-diner-web",
-      "public": "public",
+      "public": "dist/d-diner-web",
       "ignore": [
         "firebase.json",
         "**/.*",

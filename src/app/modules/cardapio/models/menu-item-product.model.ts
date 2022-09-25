@@ -1,4 +1,4 @@
 export class ProductRequest {
-    productId: number | undefined;
+    productId: string | undefined;
     quantity: number | undefined;
 }

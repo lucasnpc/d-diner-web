@@ -3,7 +3,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_ROLE } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { Order } from 'src/app/modules/dashboard/models/order.model';
 
 const DOOR_OPEN = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="120" height="120"><path fill="none" d="M0 0H24V24H0z"/>
@@ -22,9 +22,9 @@ export class InicioPage implements OnInit {
 
   tabs = ['First', 'Second', 'Third'];
   selected = 0;
-  createdOrder: Order = new Order();
+  createdOrder: any;
   orderToUpdate: Order | undefined
-  userRole = ''
+  userRole = this.storage.get(USER_INFO).role
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private storage: BusinessStorage, private router: Router) {
     iconRegistry.addSvgIconLiteral('door-open', sanitizer.bypassSecurityTrustHtml(DOOR_OPEN))
@@ -36,7 +36,6 @@ export class InicioPage implements OnInit {
       this.orderToUpdate = history.state.order
       this.selected = 2
     }
-    this.userRole = this.storage.get(USER_ROLE)
   }
 
   changeIndex(index: number) {

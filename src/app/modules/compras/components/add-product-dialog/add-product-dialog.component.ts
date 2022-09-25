@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { BUSINESS_CNPJ } from 'src/app/core/utils/constants';
+import { USER_INFO } from 'src/app/core/utils/constants';
 import { Product } from '../../models/product.model';
 import { ComprasService } from '../../service/compras.service';
 
@@ -40,20 +40,20 @@ export class AddProductDialog implements OnInit {
   }
 
   addProduct() {
-    var data: Product = {
-      productId: undefined,
-      productName: this.formRegisterProduct.get('productName')!.value,
-      minimumStock: this.formRegisterProduct.get('minimumStock')!.value,
-      currentStock: 0,
-      measurementUnit: this.formRegisterProduct.get('measurementUnit')!.value.name,
-      businessCnpj: this.storage.get(BUSINESS_CNPJ),
-      barcode: this.formRegisterProduct.get('barcode')!.value,
-      selected: undefined
-    };
+    // var data: Product = {
+    //   id: undefined,
+    //   name: this.formRegisterProduct.get('productName')!.value,
+    //   minimumStock: this.formRegisterProduct.get('minimumStock')!.value,
+    //   currentStock: 0,
+    //   measurementUnit: this.formRegisterProduct.get('measurementUnit')!.value.name,
+    //   businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
+    //   barcode: this.formRegisterProduct.get('barcode')!.value,
+    //   selected: undefined
+    // };
 
-    this.service.postProduct(data).subscribe(result => {
-      if (result.success) this.dialogRef.close(true)
-    })
+    // this.service.postProduct(data).subscribe(result => {
+    //   if (result.success) this.dialogRef.close(true)
+    // })
   }
 
 }

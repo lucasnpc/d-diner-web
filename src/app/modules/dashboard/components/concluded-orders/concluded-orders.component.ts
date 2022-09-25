@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { Order } from '../../models/order.model';
 import { DashboardService } from '../../service/dashboard.service';
 
@@ -12,7 +11,7 @@ export class ConcludedOrdersComponent implements OnInit {
   concludedOrders: Order[] = []
   @Input() selectedDate: Date = new Date()
 
-  constructor(private rest: DashboardService, private storage: BusinessStorage) { }
+  constructor(private rest: DashboardService) { }
 
   ngOnInit(): void {
     this.getConcludedOrders()
@@ -23,8 +22,8 @@ export class ConcludedOrdersComponent implements OnInit {
   }
 
   getConcludedOrders() {
-    this.rest.getConcludedOrders(this.storage.get("businessCnpj"), this.selectedDate).subscribe((result) => {
-      this.concludedOrders = result.data;
+    this.rest.getConcludedOrders(this.selectedDate).then((result) => {
+      this.concludedOrders = result
     });
   }
 }

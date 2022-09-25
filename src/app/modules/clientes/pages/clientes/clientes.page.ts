@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { CLIENT_KEY } from 'src/app/core/utils/constants';
 import { SharedDialogComponent } from 'src/app/modules/shared/components/shared-dialog/shared-dialog.component';
 import { DialogAddInClientesComponent } from '../../components/dialog-add-in-clientes/dialog-add-in-clientes.component';
@@ -28,7 +27,7 @@ export class ClientesPage implements OnInit {
     'cidade',
   ];
 
-  constructor(private dialog: MatDialog, private rest: ClienteService, private storage: BusinessStorage) { }
+  constructor(private dialog: MatDialog, private rest: ClienteService) { }
 
   ngOnInit(): void {
     this.getCustomers()
@@ -39,8 +38,8 @@ export class ClientesPage implements OnInit {
   }
 
   getCustomers() {
-    this.rest.getCustomers(this.storage.get("businessCnpj")).subscribe((result) => {
-      this.clientes = result.data;
+    this.rest.getCustomers().subscribe((result) => {
+      this.clientes = result
       this.dataSource = new MatTableDataSource(this.clientes);
     });
   }
@@ -85,7 +84,7 @@ export class ClientesPage implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.rest.deleteCustomer(this.clickedRow!.clientId).subscribe(r => {
+        this.rest.deleteCustomer(this.clickedRow!.id).subscribe(r => {
           if (r.success)
             this.getCustomers()
         })

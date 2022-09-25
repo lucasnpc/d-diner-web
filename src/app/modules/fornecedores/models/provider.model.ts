@@ -1,13 +1,12 @@
-export class Provider {
-    providerCnpj: string = '';
-    businessCnpj: string = '';
-    corporateName: string = '';
-    street: string = '';
-    number: string = '';
-    district: string = '';
-    city: string = '';
-    state: string = '';
-    phone: string = '';
-    email: string = '';
-    decommissioned: boolean = false;
+export interface Provider {
+    idCnpj: string
+    city: string
+    corporateName: string
+    decommissioned: boolean
+    district: string
+    email: string
+    number: string
+    phone: string
+    state: string
+    street: string
 }
