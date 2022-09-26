@@ -11,6 +11,9 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { registerLocaleData } from '@angular/common';
+import LocalePT from '@angular/common/locales/pt';
+registerLocaleData(LocalePT);
 
 @NgModule({
   declarations: [AppComponent],

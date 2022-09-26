@@ -10,9 +10,6 @@ import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { BUSINESS_COLLECTION, EXPENSES_COLLECTION, GAINS_COLLECTION } from 'src/app/core/utils/firestore-keys';
 import { USER_INFO } from 'src/app/core/utils/constants';
 
-const getEntradas = environment.url + 'caixa/getEntradas';
-const getSaidas = environment.url + 'caixa/getSaidas';
-
 const postEntrada = environment.url + 'caixa/postEntrada';
 const postSaida = environment.url + 'caixa/postSaida';
 

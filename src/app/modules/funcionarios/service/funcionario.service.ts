@@ -1,19 +1,12 @@
-import { DatePipe } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
+import { datePipe, SAVE_DATE_FORMAT, USER_INFO } from 'src/app/core/utils/constants';
 import { BUSINESS_COLLECTION, EMPLOYEES_COLLECTION } from 'src/app/core/utils/firestore-keys';
-import { environment } from 'src/environments/environment';
 import { Employee } from '../models/employee.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-const getFuncionarios = environment.url + 'funcionarios/getFuncionarios';
-const postFuncionario = environment.url + 'funcionarios/postFuncionario';
-const putFuncionario = environment.url + 'funcionarios/putFuncionario'
-const deleteFuncionario = environment.url + 'funcionarios/deleteFuncionario'
 
 @Injectable()
 export class FuncionarioService {
@@ -26,9 +19,9 @@ export class FuncionarioService {
     }),
   };
 
-  constructor(private httpClient: HttpClient, private firestore: AngularFirestore, private storage: BusinessStorage) {
+  constructor(private firestore: AngularFirestore, private storage: BusinessStorage) {
     this.employees = firestore.collection(BUSINESS_COLLECTION).doc(storage.get(USER_INFO).businessCnpj)
-      .collection(EMPLOYEES_COLLECTION).snapshotChanges().pipe(
+      .collection(EMPLOYEES_COLLECTION, ref => ref.where('isActive', '==', true)).snapshotChanges().pipe(
         map(changes => changes.map(c => ({
           idCpf: c.payload.doc.id,
           name: c.payload.doc.data()['name'],
@@ -50,20 +43,45 @@ export class FuncionarioService {
   getEmployees() {
     return this.employees
   }
-  postEmployee(employee: Employee) {
-    return this.httpClient.post<any>(
-      postFuncionario,
-      employee,
-      this.httpOptions
-    );
+  async postEmployee(employee: Employee) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj).collection(EMPLOYEES_COLLECTION)
+      .doc(employee.idCpf).set(({
+        admissionDate: datePipe.transform(employee.admissionDate, SAVE_DATE_FORMAT),
+        birthDate: datePipe.transform(employee.birthDate, SAVE_DATE_FORMAT),
+        city: employee.city,
+        district: employee.district,
+        isActive: employee.isActive,
+        isOutsource: employee.isOutsource,
+        name: employee.name,
+        number: employee.number,
+        phone: employee.phone,
+        salary: employee.salary,
+        street: employee.street
+      }))
   }
 
-  updateEmployee(employee: Employee) {
-    return this.httpClient.put<any>(putFuncionario, employee, this.httpOptions)
+  async updateEmployee(employee: Employee) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj).collection(EMPLOYEES_COLLECTION)
+      .doc(employee.idCpf).update(({
+        admissionDate: datePipe.transform(employee.admissionDate, SAVE_DATE_FORMAT),
+        birthDate: datePipe.transform(employee.birthDate, SAVE_DATE_FORMAT),
+        city: employee.city,
+        district: employee.district,
+        isActive: employee.isActive,
+        isOutsource: employee.isOutsource,
+        name: employee.name,
+        number: employee.number,
+        phone: employee.phone,
+        salary: employee.salary,
+        street: employee.street
+      }))
   }
 
-  unactivateEmployee(cpf: string) {
-    const pipe = new DatePipe('en-US')
-    return this.httpClient.delete<any>(deleteFuncionario, { params: { id: cpf, date: pipe.transform(Date.now(), 'yyyy-MM-dd')! } })
+  async unactivateEmployee(cpf: string) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj).collection(EMPLOYEES_COLLECTION)
+      .doc(cpf).update(({
+        isActive: false,
+        terminationDate: datePipe.transform(new Date(), SAVE_DATE_FORMAT)
+      }))
   }
 }

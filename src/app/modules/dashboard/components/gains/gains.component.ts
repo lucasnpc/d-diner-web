@@ -1,10 +1,8 @@
-import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
+import { datePipe, SAVE_DATE_FORMAT } from 'src/app/core/utils/constants';
 import { DashboardService } from '../../service/dashboard.service';
-
-const datePipe = new DatePipe('pt-BR');
 
 @Component({
   selector: 'rp-gains',
@@ -35,7 +33,7 @@ export class GainsComponent implements OnInit {
   }
 
   getTotalGains() {
-    const dateConverted = datePipe.transform(this.selectedDate, "dd 'de' MMMM 'de' yyyy")
+    const dateConverted = datePipe.transform(this.selectedDate, SAVE_DATE_FORMAT)
     this.rest.getGainsSum().then(result => {
       result.ref.where('gainDate', '==', dateConverted).onSnapshot(snapshot => {
         this.gains = 0
@@ -49,7 +47,7 @@ export class GainsComponent implements OnInit {
   }
 
   getTotalExpenses() {
-    const dateConverted = datePipe.transform(this.selectedDate, "dd 'de' MMMM 'de' yyyy")
+    const dateConverted = datePipe.transform(this.selectedDate, SAVE_DATE_FORMAT)
     this.rest.getExpensesSum().then(result => {
       result.ref.where('expenseDate', '==', dateConverted).onSnapshot(snapshot => {
         this.expenses = 0

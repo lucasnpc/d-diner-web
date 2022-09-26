@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { CLIENT_KEY } from 'src/app/core/utils/constants';
 import { SharedDialogComponent } from 'src/app/modules/shared/components/shared-dialog/shared-dialog.component';
 import { DialogAddInClientesComponent } from '../../components/dialog-add-in-clientes/dialog-add-in-clientes.component';
 import { Client } from '../../models/client.model';
@@ -75,12 +74,7 @@ export class ClientesPage implements OnInit {
   openExcludingDialog() {
     if (this.clickedRow === undefined) { alert('Selecione um registro para editar!!'); return }
 
-    const dialogRef = this.dialog.open(SharedDialogComponent, {
-      data: {
-        name: this.clickedRow.name,
-        type: CLIENT_KEY
-      }
-    })
+    const dialogRef = this.dialog.open(SharedDialogComponent)
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

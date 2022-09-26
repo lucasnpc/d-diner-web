@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
@@ -8,8 +7,7 @@ import { CaixaService } from '../../service/caixa.service';
 @Component({
   selector: 'rp-list-saidas',
   templateUrl: './list-saidas.component.html',
-  styleUrls: ['./list-saidas.component.less'],
-  providers: [DatePipe]
+  styleUrls: ['./list-saidas.component.less']
 })
 export class ListSaidasComponent implements OnInit {
   saidas: Expense[] = [];

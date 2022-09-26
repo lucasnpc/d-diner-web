@@ -5,6 +5,8 @@ export interface Product {
     currentStock: number;
     measurementUnit: string;
     barcode: string;
+
+    //Not Saved Data
     selected: boolean;
     menuItemQuantity: number;
 }

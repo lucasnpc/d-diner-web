@@ -9,7 +9,7 @@
       <form [formGroup]="formRegisterEmployees">
         <mat-form-field appearance="outline">
           <mat-label>CPF</mat-label>
-          <input [(ngModel)]="data.idCpf" matInput formControlName="cpf" placeholder="CPF" required />
+          <input [(ngModel)]="data.idCpf" matInput type="number" formControlName="cpf" placeholder="CPF" required />
         </mat-form-field>
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Nome</mat-label>
@@ -21,7 +21,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Número de endereço</mat-label>
-          <input [(ngModel)]="data.number" matInput formControlName="number" placeholder="Número" required />
+          <input [(ngModel)]="data.number" matInput type="number" formControlName="number" placeholder="Número" required />
         </mat-form-field>
 
         <mat-form-field appearance="outline" floatLabel="always">

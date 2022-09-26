@@ -1,11 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DashboardService } from '../../service/dashboard.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { DatePipe } from '@angular/common';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { Color } from '@swimlane/ngx-charts/lib/utils/color-sets';
 import { ScaleType } from '@swimlane/ngx-charts';
 
@@ -41,11 +39,8 @@ export class InformativeGraphComponent implements OnInit {
   };
 
   constructor(
-    private rest: DashboardService,
     iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer,
-    private storage: BusinessStorage
-  ) {
+    sanitizer: DomSanitizer  ) {
     iconRegistry.addSvgIconLiteral(
       'export-icon',
       sanitizer.bypassSecurityTrustHtml(EXPORT_ICON)

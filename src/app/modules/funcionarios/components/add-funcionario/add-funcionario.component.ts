@@ -2,7 +2,6 @@ import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { Employee } from '../../models/employee.model';
 import { FuncionarioService } from '../../service/funcionario.service';
 import { DialogAddInFuncionariosComponent } from '../dialog-add-in-funcionarios/dialog-add-in-funcionarios.component';
@@ -35,13 +34,14 @@ export class AddFuncionarioComponent implements OnInit {
     dateAdapter: DateAdapter<any>,
     private rest: FuncionarioService,
     private dialogRef: MatDialogRef<DialogAddInFuncionariosComponent>,
-    private storage: BusinessStorage,
     @Inject(MAT_DIALOG_DATA) public data: Employee
   ) {
     dateAdapter.setLocale('pt-br');
   }
 
   ngOnInit(): void {
+    console.log(this.data);
+
     if (this.data.idCpf != undefined) {
       this.data.isOutsource ? this.formRegisterEmployees.controls['isOutsource'].setValue('option1')
         : this.formRegisterEmployees.controls['isOutsource'].setValue('option2')
@@ -51,10 +51,10 @@ export class AddFuncionarioComponent implements OnInit {
 
   sendEmployee(edit: boolean) {
     var employee: Employee = {
-      idCpf: this.formRegisterEmployees.get('cpf')!.value,
+      idCpf: String(this.formRegisterEmployees.get('cpf')!.value),
       name: this.formRegisterEmployees.get('name')!.value,
       street: this.formRegisterEmployees.get('street')!.value,
-      number: this.formRegisterEmployees.get('number')!.value,
+      number: String(this.formRegisterEmployees.get('number')!.value),
       district: this.formRegisterEmployees.get('district')!.value,
       city: this.formRegisterEmployees.get('city')!.value,
       phone: this.formRegisterEmployees.get('phone')!.value,
@@ -70,14 +70,12 @@ export class AddFuncionarioComponent implements OnInit {
   }
 
   addEmployee(employee: Employee) {
-    this.rest.postEmployee(employee).subscribe((result) => {
-      if (result.success) this.dialogRef.close(true);
-    });
+    this.rest.postEmployee(employee).then(() => this.dialogRef.close(true)).catch(e => console.log(e))
   }
 
   updateEmployee(employee: Employee) {
-    this.rest.updateEmployee(employee).subscribe((result) => {
-      if (result.success) this.dialogRef.close(true);
-    });
+    this.rest.updateEmployee(employee).then(() => {
+      this.dialogRef.close(true);
+    }).catch(e => console.log(e))
   }
 }

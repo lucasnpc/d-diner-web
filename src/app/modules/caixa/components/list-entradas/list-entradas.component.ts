@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
@@ -9,7 +8,6 @@ import { CaixaService } from '../../service/caixa.service';
   selector: 'rp-list-entradas',
   templateUrl: './list-entradas.component.html',
   styleUrls: ['./list-entradas.component.less'],
-  providers: [DatePipe]
 })
 export class ListEntradasComponent implements OnInit {
   entradas: Gain[] = [];
