@@ -83,10 +83,8 @@ export class FornecedoresPage implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.service.disableProvider(this.clickedRow!.idCnpj).subscribe(r => {
-          if (r.success)
-            this.getProviders()
-        })
+        this.service.disableProvider(this.clickedRow!.idCnpj).catch(e => console.log(e)
+        )
       }
     })
   }

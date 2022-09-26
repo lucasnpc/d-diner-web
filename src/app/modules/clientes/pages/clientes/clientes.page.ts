@@ -78,10 +78,7 @@ export class ClientesPage implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.rest.deleteCustomer(this.clickedRow!.id).subscribe(r => {
-          if (r.success)
-            this.getCustomers()
-        })
+        this.rest.deleteCustomer(this.clickedRow!.id).catch(e => console.log(e))
       }
     })
   }

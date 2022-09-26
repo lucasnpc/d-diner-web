@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { Client } from '../../models/client.model';
 import { ClienteService } from '../../service/cliente.service';
 import { DialogAddInClientesComponent } from '../dialog-add-in-clientes/dialog-add-in-clientes.component';
@@ -49,14 +48,14 @@ export class AddClienteComponent implements OnInit {
   }
 
   addClient(client: Client) {
-    this.rest.postCustomer(client).subscribe((result) => {
-      if (result.success) this.dialogRef.close(true);
-    });
+    this.rest.postCustomer(client).then(() => {
+      this.dialogRef.close(true);
+    }).catch(e => console.log(e));
   }
 
   updateClient(client: Client) {
-    this.rest.updateCustomer(client).subscribe((result) => {
-      if (result.success) this.dialogRef.close(true);
-    });
+    this.rest.updateCustomer(client).then(() => {
+      this.dialogRef.close(true);
+    }).catch(e => console.log(e))
   }
 }
