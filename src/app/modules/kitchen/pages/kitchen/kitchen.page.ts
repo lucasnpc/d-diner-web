@@ -45,9 +45,8 @@ export class KitchenPage implements OnInit {
 
   getClientOrders() {
     this.kitchenService.getSentClientOrders().then(result => {
-      if (result) {
+      if (result)
         this.clientOrders = result
-      }
     })
   }
 
@@ -60,10 +59,10 @@ export class KitchenPage implements OnInit {
     var msg = () => { if (status === STATUS_PREPARED) { this.getClientOrders(); return 'Pedido Preparado!!! 🍕' } else return 'Pedido Iniciado!!! 🍕' }
 
     this.kitchenService.updateOrderStatus(order, status).then(() => {
-        this.snackBar.open(msg(), undefined, {
-          duration: 3000,
-          panelClass: ['blue-snackbar']
-        })
+      this.snackBar.open(msg(), undefined, {
+        duration: 3000,
+        panelClass: ['blue-snackbar']
+      })
     })
   }
 }

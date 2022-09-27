@@ -22,7 +22,7 @@
       <ng-container matColumnDef="Forma de pagamento">
         <th mat-header-cell *matHeaderCellDef>Data da entrada</th>
         <td class="item-border-right" mat-cell *matCellDef="let element">
-          {{ element.gainDate }}
+          {{ formatDateString(element.gainDate) }}
         </td>
       </ng-container>
 
