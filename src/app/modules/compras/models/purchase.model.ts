@@ -7,5 +7,7 @@ export interface Purchase {
   purchaseDate: Date;
   quantity: number;
   unitCostValue: number;
+
+  //Not Saved data
   provider: Provider | undefined;
 }
