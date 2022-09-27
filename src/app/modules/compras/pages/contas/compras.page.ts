@@ -4,6 +4,7 @@ import { AddProductDialog } from '../../components/add-product-dialog/add-produc
 import { Product } from '../../models/product.model';
 import { ComprasService } from '../../service/compras.service';
 import { AddPurchaseDialogComponent } from '../../components/add-purchase-dialog/add-purchase-dialog.component';
+import { SharedDialogComponent } from 'src/app/modules/shared/components/shared-dialog/shared-dialog.component';
 
 @Component({
   templateUrl: './compras.page.html',
@@ -18,8 +19,32 @@ export class ComprasPage implements OnInit {
     this.getProducts()
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(AddProductDialog);
+  openDialog(edit: boolean) {
+    const product = this.products.filter(product => product.selected)
+    if (product.length > 1) {
+      alert('Você pode alterar apenas um produto por vez')
+      return
+    }
+    var dialogRef
+    if (edit === true) {
+      dialogRef = this.dialog.open(AddProductDialog, {
+        data: ({
+          id: product[0].id,
+          name: product[0].name,
+          minimumStock: product[0].minimumStock,
+          currentStock: product[0].currentStock,
+          measurementUnit: product[0].measurementUnit,
+          barcode: product[0].barcode,
+          selected: product[0].selected,
+          menuItemQuantity: product[0].menuItemQuantity,
+        })
+      });
+    }
+    else {
+      dialogRef = this.dialog.open(AddProductDialog, {
+        data: {}
+      });
+    }
 
     dialogRef.afterClosed().subscribe(result => {
       if (result)
@@ -50,5 +75,21 @@ export class ComprasPage implements OnInit {
       if (result)
         alert('Compras registradas com sucesso!')
     });
+  }
+
+  openExclusionDialog() {
+    const product = this.products.filter(product => product.selected)
+    if (product.length > 1) {
+      alert('Você pode alterar apenas um produto por vez')
+      return
+    }
+
+    const dialogRef = this.dialog.open(SharedDialogComponent)
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.service.deleteProduct(product[0])
+      }
+    })
   }
 }

@@ -2,7 +2,7 @@
   <div class="content-container">
     <mat-grid-list cols="4" rowHeight="68px">
       <mat-grid-tile [colspan]="4" [rowspan]="2">
-        <rp-top-bar (openDialog)="openDialog()"></rp-top-bar>
+        <rp-top-bar (openDialog)="openDialog(false)"></rp-top-bar>
         <h2>Estoque atual</h2>
       </mat-grid-tile>
       <mat-grid-tile class="grid-tile-products" [colspan]="4" [rowspan]="9">
@@ -23,7 +23,7 @@
       </mat-grid-tile>
     </mat-grid-list>
     <button mat-button class="button-conclude" (click)="concludePurchase()">Concluir</button>
-    <button mat-button class="button-editar">Editar</button>
-    <button mat-button class="button-excluir">Excluir</button>
+    <button mat-button class="button-editar" (click)="openDialog(true)">Editar</button>
+    <button mat-button class="button-excluir" (click)="openExclusionDialog()">Excluir</button>
   </div>
 </div>

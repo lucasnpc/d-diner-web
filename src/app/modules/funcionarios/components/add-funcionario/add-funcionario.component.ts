@@ -40,8 +40,6 @@ export class AddFuncionarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
-
     if (this.data.idCpf != undefined) {
       this.data.isOutsource ? this.formRegisterEmployees.controls['isOutsource'].setValue('option1')
         : this.formRegisterEmployees.controls['isOutsource'].setValue('option2')

@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Product } from '../../models/product.model';
 import { ComprasService } from '../../service/compras.service';
 
@@ -30,30 +28,44 @@ export class AddProductDialog implements OnInit {
     { name: 'Gramas' },
     { name: 'Unidade' }
   ]
+  isEditting = false;
 
-  constructor(private fb: FormBuilder, private storage: BusinessStorage, private service: ComprasService,
-    private dialogRef: MatDialogRef<AddProductDialog>,
+  constructor(private fb: FormBuilder, private service: ComprasService,
+    private dialogRef: MatDialogRef<AddProductDialog>, @Inject(MAT_DIALOG_DATA) public data: Product
   ) { }
 
   ngOnInit(): void {
-
+    if (this.data.id != undefined) {
+      const opt = this.measureOpts.find(index => index.name == this.data.measurementUnit)
+      this.formRegisterProduct.controls['measurementUnit'].setValue(opt)
+      this.isEditting = true
+    }
   }
 
-  addProduct() {
-    // var data: Product = {
-    //   id: undefined,
-    //   name: this.formRegisterProduct.get('productName')!.value,
-    //   minimumStock: this.formRegisterProduct.get('minimumStock')!.value,
-    //   currentStock: 0,
-    //   measurementUnit: this.formRegisterProduct.get('measurementUnit')!.value.name,
-    //   businessCnpj: JSON.parse(this.storage.get(USER_INFO)).businessCnpj,
-    //   barcode: this.formRegisterProduct.get('barcode')!.value,
-    //   selected: undefined
-    // };
+  sendProduct(edit: boolean) {
+    var data: Product = {
+      id: this.data.id,
+      name: this.formRegisterProduct.get('productName')!.value,
+      minimumStock: this.formRegisterProduct.get('minimumStock')!.value,
+      currentStock: 0,
+      measurementUnit: this.formRegisterProduct.get('measurementUnit')!.value.name,
+      barcode: this.formRegisterProduct.get('barcode')!.value,
+      selected: false,
+      menuItemQuantity: 0
+    };
 
-    // this.service.postProduct(data).subscribe(result => {
-    //   if (result.success) this.dialogRef.close(true)
-    // })
+    edit ? this.updateProduct(data) : this.addProduct(data)
   }
 
+  addProduct(product: Product) {
+    this.service.postProduct(product).then(() => {
+      this.dialogRef.close(true)
+    }).catch(e => console.log(e))
+  }
+
+  updateProduct(product: Product) {
+    this.service.updateProduct(product).then(() => {
+      this.dialogRef.close(true)
+    }).catch(e => console.log(e))
+  }
 }

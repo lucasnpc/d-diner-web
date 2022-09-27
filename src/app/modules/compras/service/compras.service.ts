@@ -39,8 +39,31 @@ export class ComprasService {
     return this.products
   }
 
-  postProduct(product: Product) {
-    // return this.httpClient.post<any>(postProduto, product, this.httpOptions)
+  async postProduct(product: Product) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(PRODUCTS_COLLECTION).add(({
+        name: product.name,
+        minimumStock: product.minimumStock,
+        currentStock: product.currentStock,
+        measurementUnit: product.measurementUnit,
+        barcode: product.barcode,
+      }))
+  }
+
+  async updateProduct(product: Product) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(PRODUCTS_COLLECTION).doc(product.id).set(({
+        name: product.name,
+        minimumStock: product.minimumStock,
+        currentStock: product.currentStock,
+        measurementUnit: product.measurementUnit,
+        barcode: product.barcode,
+      }))
+  }
+
+  async deleteProduct(product: Product) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(PRODUCTS_COLLECTION).doc(product.id).delete()
   }
 
   postPurchase(purchase: any) {
