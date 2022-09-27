@@ -46,10 +46,7 @@ export class ComprasPage implements OnInit {
       });
     }
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result)
-        this.getProducts()
-    });
+    dialogRef.afterClosed()
   }
 
   getProducts() {

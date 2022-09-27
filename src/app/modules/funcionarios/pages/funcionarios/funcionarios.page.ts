@@ -77,10 +77,7 @@ export class FuncionariosPage implements OnInit {
         data: {}
       });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.getEmployees()
-    });
+    dialogRef.afterClosed()
   }
 
   applyFilter(event: Event) {

@@ -24,9 +24,7 @@ export class ProductListitemComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.increaseItemQuantity()
-  }
+  ngOnInit(): void { }
 
   lessItemQuantity() {
     var lessUnit = 0;

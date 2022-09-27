@@ -11,7 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '../shared/shared.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogAddInCardapioComponent } from './components/dialog-add-in-cardapio/dialog-add-in-cardapio.component';
-import { AddItemComponent } from './components/add-item/add-item.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { MatTableModule } from '@angular/material/table';
@@ -25,7 +24,6 @@ import { ProductListitemComponent } from './components/product-listitem/product-
   declarations: [
     CardapioPage,
     DialogAddInCardapioComponent,
-    AddItemComponent,
     ProductListitemComponent,
   ],
   imports: [

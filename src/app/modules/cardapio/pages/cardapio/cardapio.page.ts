@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
+import { SharedDialogComponent } from 'src/app/modules/shared/components/shared-dialog/shared-dialog.component';
 import { DialogAddInCardapioComponent } from '../../components/dialog-add-in-cardapio/dialog-add-in-cardapio.component';
 import { MenuItem } from '../../models/menu-item.model';
 import { CardapioService } from '../../service/menu.service';
@@ -39,8 +40,19 @@ export class CardapioPage implements OnInit {
     });
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogAddInCardapioComponent)
+  openDialog(edit: boolean) {
+    var dialogRef
+    if (edit === true) {
+      if (this.clickedRow === undefined) { alert('Selecione um registro para editar!!'); return }
+      dialogRef = this.dialog.open(DialogAddInCardapioComponent, {
+        data: this.clickedRow
+      })
+    }
+    else {
+      dialogRef = this.dialog.open(DialogAddInCardapioComponent, {
+        data: {}
+      })
+    }
 
     dialogRef.afterClosed().subscribe(result => {
       if (result)
@@ -55,5 +67,17 @@ export class CardapioPage implements OnInit {
 
   setRow(row: MenuItem) {
     this.clickedRow = row;
+  }
+
+  openExclusionDialog() {
+    if (this.clickedRow === undefined) { alert('Selecione um registro para editar!!'); return }
+
+    const dialogRef = this.dialog.open(SharedDialogComponent)
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.rest.deleteItem(this.clickedRow!.id).catch(e => console.log(e))
+      }
+    })
   }
 }

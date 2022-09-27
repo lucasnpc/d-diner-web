@@ -59,10 +59,7 @@ export class FornecedoresPage implements OnInit {
         data: {}
       });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result)
-        this.getProviders()
-    })
+    dialogRef.afterClosed()
   }
 
   applyFilter(event: Event) {

@@ -6,7 +6,7 @@ import { Product } from '../../compras/models/product.model';
 import { MenuItem } from '../models/menu-item.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BUSINESS_COLLECTION, ITEM_PRODUCTS_COLLECTION, MENU_ITEMS_COLLECTION, PRODUCTS_COLLECTION } from 'src/app/core/utils/firestore-keys';
+import { BUSINESS_COLLECTION, ITEMS_PRODUCTS_COLLECTION, MENU_ITEMS_COLLECTION, PRODUCTS_COLLECTION } from 'src/app/core/utils/firestore-keys';
 import { USER_INFO } from 'src/app/core/utils/constants';
 
 @Injectable({
@@ -55,6 +55,11 @@ export class CardapioService {
     return this.products
   }
 
+  getItemsProducts(id: string) {
+    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj).collection(MENU_ITEMS_COLLECTION)
+      .doc(id).collection(ITEMS_PRODUCTS_COLLECTION).get()
+  }
+
   async postItem(item: MenuItem) {
     return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
       .collection(MENU_ITEMS_COLLECTION).add(({
@@ -63,14 +68,38 @@ export class CardapioService {
         price: item.price
       }))
   }
-  
+
   async postItemProducts(selectedProducts: Product[], id: string) {
     selectedProducts.forEach(product => {
       this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
-        .collection(MENU_ITEMS_COLLECTION).doc(id).collection(ITEM_PRODUCTS_COLLECTION).doc(product.id).set(({
+        .collection(MENU_ITEMS_COLLECTION).doc(id).collection(ITEMS_PRODUCTS_COLLECTION).doc(product.id).set(({
           description: product.name,
           quantity: product.menuItemQuantity
         }))
     })
+  }
+
+  async updateItem(item: MenuItem) {
+    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(MENU_ITEMS_COLLECTION).doc(item.id).update({
+        category: item.category,
+        description: item.description,
+        price: item.price
+      })
+  }
+
+  async updateItemProducts(selectedProducts: Product[], id: string) {
+    selectedProducts.forEach(product => {
+      this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+        .collection(MENU_ITEMS_COLLECTION).doc(id).collection(ITEMS_PRODUCTS_COLLECTION).doc(product.id).set(({
+          description: product.name,
+          quantity: product.menuItemQuantity
+        }))
+    })
+  }
+
+  async deleteItem(id: string) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(MENU_ITEMS_COLLECTION).doc(id).delete()
   }
 }

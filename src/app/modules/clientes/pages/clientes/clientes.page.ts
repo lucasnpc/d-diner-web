@@ -56,10 +56,7 @@ export class ClientesPage implements OnInit {
         data: {}
       });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.getCustomers()
-    });
+    dialogRef.afterClosed()
   }
 
   applyFilter(event: Event) {
