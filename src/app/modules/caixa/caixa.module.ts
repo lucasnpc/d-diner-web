@@ -16,7 +16,7 @@ import { DialogAddInCaixaComponent } from './components/dialog-add-in-caixa/dial
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import { CardapioService } from '../cardapio/service/menu.service';
+import { MenuService } from '../cardapio/service/menu.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
@@ -64,6 +64,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDatepickerModule,
     MatNativeDateModule
   ],
-  providers: [CardapioService, CaixaService],
+  providers: [MenuService, CaixaService],
 })
 export class CaixaModule { }

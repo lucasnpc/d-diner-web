@@ -12,7 +12,7 @@ import { USER_INFO } from 'src/app/core/utils/constants';
 @Injectable({
   providedIn: 'root'
 })
-export class CardapioService {
+export class MenuService {
 
   menuItems: Observable<MenuItem[]>
   products: Observable<Product[]>

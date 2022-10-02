@@ -9,7 +9,6 @@ export const CLIENT_ROLE = "cliente"
 export const datePipe = new DatePipe('pt-BR');
 
 export const STATUS_STARTING = "enviado"
-export const STATUS_PREPARING = "preparando"
 export const STATUS_PREPARED = "preparado"
 
 export const SAVE_DATE_FORMAT = "dd/MM/yyyy"

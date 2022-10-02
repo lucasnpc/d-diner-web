@@ -5,7 +5,7 @@ import { Observable, startWith, map } from 'rxjs';
 import { Product } from 'src/app/modules/compras/models/product.model';
 import { ItemProducts } from '../../models/item-products.model';
 import { MenuItem } from '../../models/menu-item.model';
-import { CardapioService } from '../../service/menu.service';
+import { MenuService } from '../../service/menu.service';
 
 @Component({
   selector: 'rp-dialog-add-in-cardapio',
@@ -40,9 +40,9 @@ export class DialogAddInCardapioComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private rest: CardapioService,
+    private rest: MenuService,
     public dialogRef: MatDialogRef<DialogAddInCardapioComponent>,
-    private service: CardapioService, @Inject(MAT_DIALOG_DATA) public data: MenuItem) { }
+    private service: MenuService, @Inject(MAT_DIALOG_DATA) public data: MenuItem) { }
 
   ngOnInit(): void {
     this.service.getProducts().subscribe(result => {

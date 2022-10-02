@@ -15,13 +15,12 @@ import { KitchenService } from './services/kitchen.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { KitchenPage } from './pages/kitchen/kitchen.page';
 import { KitchenRoutingModule } from './kitchen-routing.module';
-import { KitchenOrderDialogComponent } from './components/kitchen-order-dialog/kitchen-order-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MenuService } from '../cardapio/service/menu.service';
 
 @NgModule({
     declarations: [
         KitchenPage,
-        KitchenOrderDialogComponent
     ],
     imports: [
         CommonModule,
@@ -42,7 +41,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatSnackBarModule,
         MatProgressSpinnerModule
     ],
-    providers: [KitchenService]
+    providers: [KitchenService, MenuService]
 })
 
 export class KitchenModule { }

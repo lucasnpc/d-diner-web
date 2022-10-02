@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { ADD_ITEMS_TO_ORDER_KEY, DELETE_ORDER_KEY, STATUS_STARTING } from 'src/app/core/utils/constants';
 import { MenuItem } from 'src/app/modules/cardapio/models/menu-item.model';
 import { Order } from 'src/app/modules/dashboard/models/order.model';
 import { SharedDialogComponent } from 'src/app/modules/shared/components/shared-dialog/shared-dialog.component';
@@ -52,7 +51,7 @@ export class CreateOrderComponent implements OnInit {
             this.service.getItemsWithClientOrderId(v.clientOrderId).subscribe(result => {
               if (result) {
                 this.selectedItems = result.data
-                this.itemRequest = result.data.map(item => ({ itemId: item.id, quantity: item.itemQuantity }))
+                // this.itemRequest = result.data.map(item => ({ itemId: item.id, quantity: item.itemQuantity }))
               }
             })
           })
@@ -72,7 +71,7 @@ export class CreateOrderComponent implements OnInit {
       return
     }
     const dialogRef = this.dialog.open(SharedDialogComponent, {
-      data: { name: this.createdOrder.deskDescription, type: ADD_ITEMS_TO_ORDER_KEY }
+      // data: { name: this.createdOrder.deskDescription, type: ADD_ITEMS_TO_ORDER_KEY }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -85,7 +84,7 @@ export class CreateOrderComponent implements OnInit {
 
     if (cancelOrder) {
       const dialogRef = this.dialog.open(SharedDialogComponent, {
-        data: { name: 'Deseja cancelar o pedido?', type: DELETE_ORDER_KEY }
+        // data: { name: 'Deseja cancelar o pedido?', type: DELETE_ORDER_KEY }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -117,17 +116,17 @@ export class CreateOrderComponent implements OnInit {
     }
 
     this.selectedItems.push(item)
-    this.itemRequest.push({ itemId: item.id, quantity: 1 })
+    // this.itemRequest.push({ itemId: item.id, quantity: 1 })
 
   }
 
   sumOrder(order: ItemRequest) {
-    this.selectedItems.map(value => value.id == order.itemId ? this.totalOrder += Number(value.price) : undefined)
+    // this.selectedItems.map(value => value.id == order.itemId ? this.totalOrder += Number(value.price) : undefined)
     this._changeQuantity(order)
   }
 
   lessOrder(order: ItemRequest) {
-    this.selectedItems.map(value => value.id == order.itemId ? this.totalOrder -= Number(value.price) : undefined)
+    // this.selectedItems.map(value => value.id == order.itemId ? this.totalOrder -= Number(value.price) : undefined)
     this._changeQuantity(order)
   }
 

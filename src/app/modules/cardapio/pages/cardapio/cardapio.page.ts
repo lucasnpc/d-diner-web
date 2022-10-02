@@ -5,7 +5,7 @@ import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { SharedDialogComponent } from 'src/app/modules/shared/components/shared-dialog/shared-dialog.component';
 import { DialogAddInCardapioComponent } from '../../components/dialog-add-in-cardapio/dialog-add-in-cardapio.component';
 import { MenuItem } from '../../models/menu-item.model';
-import { CardapioService } from '../../service/menu.service';
+import { MenuService } from '../../service/menu.service';
 
 @Component({
   templateUrl: './cardapio.page.html',
@@ -23,7 +23,7 @@ export class CardapioPage implements OnInit {
     'price'
   ]
 
-  constructor(private dialog: MatDialog, private rest: CardapioService, private storage: BusinessStorage) { }
+  constructor(private dialog: MatDialog, private rest: MenuService, private storage: BusinessStorage) { }
 
   ngOnInit(): void {
     this.getItems()

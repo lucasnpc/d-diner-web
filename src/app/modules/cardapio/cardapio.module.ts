@@ -5,7 +5,7 @@ import { CardapioRoutingModule } from './cardapio-routing.module';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { CardapioService } from './service/menu.service';
+import { MenuService } from './service/menu.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '../shared/shared.module';
@@ -45,6 +45,6 @@ import { ProductListitemComponent } from './components/product-listitem/product-
     MatListModule,
     MatSelectModule
   ],
-  providers: [CardapioService],
+  providers: [MenuService],
 })
 export class CardapioModule { }
