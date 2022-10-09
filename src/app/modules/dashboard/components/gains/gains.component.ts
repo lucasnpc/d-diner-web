@@ -16,7 +16,7 @@ export class GainsComponent implements OnInit {
   @Input() selectedDate: Date = new Date()
   @Output() changedDate = new EventEmitter<Date>()
 
-  constructor(private rest: DashboardService, private storage: BusinessStorage) { }
+  constructor(private rest: DashboardService) { }
 
   ngOnInit(): void {
     this.getTotalGains()

@@ -25,6 +25,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { KitchenService } from '../kitchen/services/kitchen.service';
@@ -58,8 +59,9 @@ import { KitchenService } from '../kitchen/services/kitchen.service';
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MomentDateModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
   providers: [DashboardService, CaixaService, KitchenService],
 })
