@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Provider } from 'src/app/modules/fornecedores/models/provider.model';
 import { ProvidersService } from 'src/app/modules/fornecedores/services/fornecedores.service';
@@ -27,7 +27,7 @@ export class AddPurchaseDialogComponent implements OnInit {
   purchases: Purchase[] = []
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Product[], private service: ComprasService, private providerService: ProvidersService,
-    private fb: FormBuilder, public dialogRef: MatDialogRef<AddPurchaseDialogComponent>,
+    private fb: UntypedFormBuilder, public dialogRef: MatDialogRef<AddPurchaseDialogComponent>,
   ) { }
 
   ngOnInit(): void {

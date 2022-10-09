@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Employee } from '../../models/employee.model';
@@ -30,7 +30,7 @@ export class AddFuncionarioComponent implements OnInit {
   @Output() registerEmployee = new EventEmitter<Employee>()
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     dateAdapter: DateAdapter<any>,
     private rest: FuncionarioService,
     private dialogRef: MatDialogRef<DialogAddInFuncionariosComponent>,

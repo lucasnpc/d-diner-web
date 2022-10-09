@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Client } from '../../models/client.model';
 import { ClienteService } from '../../service/cliente.service';
@@ -22,7 +22,7 @@ export class AddClienteComponent implements OnInit {
   isEditting = false;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private rest: ClienteService,
     public dialogRef: MatDialogRef<DialogAddInClientesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Client

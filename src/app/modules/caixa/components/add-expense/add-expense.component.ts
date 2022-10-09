@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { Expense } from '../../models/expense.model';
@@ -19,7 +19,7 @@ export class AddExpenseComponent implements OnInit {
   });
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private rest: CaixaService,
     public dialogRef: MatDialogRef<DialogAddInCaixaComponent>,
     private storage: BusinessStorage

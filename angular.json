@@ -118,5 +118,7 @@
       }
     }
   },
-  "defaultProject": "d-diner-web"
+  "cli": {
+    "analytics": "cd01de76-fb51-41b2-9079-62c7a54088cb"
+  }
 }
