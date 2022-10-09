@@ -9,11 +9,12 @@
       <form [formGroup]="formRegisterProduct">
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Descrição do produto</mat-label>
-          <input matInput formControlName="productName" placeholder="Descrição do produto" required />
+          <input [(ngModel)]="data.name" matInput formControlName="productName" placeholder="Descrição do produto"
+            required />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Estoque mínimo</mat-label>
-          <input matInput currencyMask formControlName="minimumStock" placeholder="0"
+          <input [(ngModel)]="data.minimumStock" matInput currencyMask formControlName="minimumStock" placeholder="0"
             [options]="{ prefix: '', thousands: '', decimal: '.' }" required />
         </mat-form-field>
         <mat-form-field appearance="outline" floatLabel="always">
@@ -26,16 +27,18 @@
         </mat-form-field>
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Código de barras</mat-label>
-          <input matInput formControlName="barcode" placeholder="Código de barras" required />
+          <input [(ngModel)]="data.barcode" matInput formControlName="barcode" placeholder="Código de barras"
+            required />
         </mat-form-field>
       </form>
     </mat-dialog-content>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="4" [rowspan]="1">
     <mat-dialog-actions align="end">
-      <button mat-button (click)="addProduct()" type="submit" [disabled]="!formRegisterProduct.valid">
-        Registrar
-      </button>
+      <button *ngIf="!isEditting" mat-button (click)="sendProduct(false)" type="submit"
+        [disabled]="!formRegisterProduct.valid">Registrar</button>
+      <button *ngIf="isEditting" mat-button (click)="sendProduct(true)" type="submit"
+        [disabled]="!formRegisterProduct.valid">Atualizar</button>
     </mat-dialog-actions>
   </mat-grid-tile>
 </mat-grid-list>

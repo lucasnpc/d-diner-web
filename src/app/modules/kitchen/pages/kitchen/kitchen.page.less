@@ -23,19 +23,9 @@ mat-grid-tile.grid-tile-orders {
     overflow: auto;
 }
 
-p {
-    font-weight: 900;
-    font-size: 24px;
-    line-height: 28px;
-
-    max-width: 100%;
-    text-align: center;
-
-    color: #848684;
-}
-
-p.order-id{
-    font-size: 18px;
+ul {
+    display: flex;
+    align-items: flex-start;
 }
 
 li {
@@ -50,6 +40,34 @@ li {
 
 .order-container {
     padding: 5px;
+}
+
+p {
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 28px;
+
+    max-width: 100%;
+    text-align: center;
+
+    color: #848684;
+}
+
+span {
+    display: flex;
+}
+
+p.description {
+    font-size: 18px;
+    width: 85%;
+    color: #000000;
+    text-align: start;
+}
+
+p.quantity {
+    font-size: 18px;
+    text-align: end;
+    color: #000000;
 }
 
 button {

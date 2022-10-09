@@ -2,11 +2,12 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
-import { BUSINESS_COLLECTION, PRODUCTS_COLLECTION } from 'src/app/core/utils/firestore-keys';
+import { datePipe, SAVE_DATE_FORMAT, USER_INFO } from 'src/app/core/utils/constants';
+import { BUSINESS_COLLECTION, PRODUCTS_COLLECTION, PRODUCTS_PURCHASES_COLLECTION } from 'src/app/core/utils/firestore-keys';
 import { Product } from '../models/product.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Purchase } from '../models/purchase.model';
 
 @Injectable()
 export class ComprasService {
@@ -29,7 +30,8 @@ export class ComprasService {
           currentStock: c.payload.doc.data()['currentStock'],
           measurementUnit: c.payload.doc.data()['measurementUnit'],
           barcode: c.payload.doc.data()['barcode'],
-          selected: false
+          selected: false,
+          menuItemQuantity: 0
         })))
       )
   }
@@ -38,15 +40,50 @@ export class ComprasService {
     return this.products
   }
 
-  postProduct(product: Product) {
-    // return this.httpClient.post<any>(postProduto, product, this.httpOptions)
+  async postProduct(product: Product) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(PRODUCTS_COLLECTION).add(({
+        name: product.name,
+        minimumStock: product.minimumStock,
+        currentStock: product.currentStock,
+        measurementUnit: product.measurementUnit,
+        barcode: product.barcode,
+      }))
   }
 
-  postPurchase(purchase: any) {
-    // return this.httpClient.post<any>(postCompra, purchase, this.httpOptions)
+  async updateProduct(product: Product) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(PRODUCTS_COLLECTION).doc(product.id).set(({
+        name: product.name,
+        minimumStock: product.minimumStock,
+        currentStock: product.currentStock,
+        measurementUnit: product.measurementUnit,
+        barcode: product.barcode,
+      }))
   }
 
-  updateProductCurrentStock(stock: any) {
-    // return this.httpClient.put(updateEstoqueAtualProduto, stock, this.httpOptions)
+  async deleteProduct(product: Product) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(PRODUCTS_COLLECTION).doc(product.id).delete()
+  }
+
+  async updateProductCurrentStock(product: Product) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj).collection(PRODUCTS_COLLECTION)
+      .doc(product.id).update(({
+        currentStock: product.currentStock
+      }))
+  }
+
+  async postPurchase(purchase: Purchase, id: string) {
+    this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj).collection(PRODUCTS_COLLECTION)
+      .doc(id).collection(PRODUCTS_PURCHASES_COLLECTION).add(({
+        batch: purchase.batch,
+        description: purchase.description,
+        expirationDate: datePipe.transform(purchase.expirationDate, SAVE_DATE_FORMAT),
+        providerCnpj: purchase.provider?.idCnpj,
+        purchaseDate: datePipe.transform(purchase.purchaseDate, SAVE_DATE_FORMAT),
+        quantity: purchase.quantity,
+        unitCostValue: purchase.unitCostValue,
+      }))
   }
 }

@@ -7,7 +7,7 @@
     <mat-grid-tile [colspan]="1" [rowspan]="1">
         <div class="align-center" mat-line>
             <button mat-button class="less-quantity-button" (click)="lessItemQuantity()">-</button>
-            <button mat-button class="quantitity-item-button">{{productQuantity | number:'1.2-2'}}</button>
+            <button mat-button class="quantitity-item-button">{{product.menuItemQuantity | number:'1.2-2'}}</button>
             <button mat-button class="increase-quantity-button" (click)="increaseItemQuantity()">+</button>
         </div>
     </mat-grid-tile>

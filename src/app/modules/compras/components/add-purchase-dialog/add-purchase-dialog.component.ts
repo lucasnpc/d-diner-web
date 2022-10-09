@@ -37,27 +37,23 @@ export class AddPurchaseDialogComponent implements OnInit {
     })
     this.data.map(p => {
       this.purchases.push({
-        description: p.name,
-        quantity: 0,
-        unitCostValue: 0,
-        purchaseDate: new Date(),
         batch: '',
+        description: `Compra de ${p.name}`,
+        unitCostValue: 0,
+        expirationDate: undefined,
+        purchaseDate: new Date(),
+        quantity: 0,
         provider: undefined,
-        expirationDate: undefined
       })
     })
   }
 
   addPurchase() {
-    this.purchases.map(p => {
-      const purchase: Purchase = p
-
-      // const index = this.data.findIndex(product => product.productId === p.productId)
-
-      // this.service.updateProductCurrentStock({ stock: Number(this.data[index].currentStock) + p.quantityPurchased, id: p.productId }).subscribe()
-
-      // this.service.postPurchase(purchase).subscribe()
-    })
+    for (const i in this.purchases) {
+      this.data[i].currentStock += this.purchases[i].quantity
+      this.service.updateProductCurrentStock(this.data[i]).catch(e => console.log(e))
+      this.service.postPurchase(this.purchases[i], this.data[i].id).catch(e => console.log(e))
+    }
   }
 
   previousStep(index: number) {

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { STATUS_PREPARING, STATUS_PREPARED } from 'src/app/core/utils/constants';
-import { KitchenOrderDialogComponent } from '../../components/kitchen-order-dialog/kitchen-order-dialog.component';
+import { STATUS_PREPARED } from 'src/app/core/utils/constants';
+import { MenuItem } from 'src/app/modules/cardapio/models/menu-item.model';
+import { MenuService } from 'src/app/modules/cardapio/service/menu.service';
 import { KitchenInfo } from '../../models/KitchenInfo.model';
+import { MenuItemInfo } from '../../models/MenuItemInfo.model';
 import { KitchenService } from '../../services/kitchen.service';
 
 @Component({
@@ -12,31 +13,35 @@ import { KitchenService } from '../../services/kitchen.service';
 })
 export class KitchenPage implements OnInit {
   clientOrders: KitchenInfo[] = []
+  menuItems: MenuItem[] = []
 
-  constructor(private kitchenService: KitchenService, private dialog: MatDialog,
-    private snackBar: MatSnackBar) { }
+  constructor(private kitchenService: KitchenService, private snackBar: MatSnackBar, private menuService: MenuService) { }
 
   ngOnInit(): void {
     this.getClientOrders()
+    this.getMenuItems();
   }
 
-  seeOrderDetail(order: KitchenInfo) {
-    this.kitchenService.getMenuItems(order.placedItems).then(r => {
-      if (r) {
-        const dialogRef = this.dialog.open(KitchenOrderDialogComponent, {
-          data: r
-        })
-
-        dialogRef.afterClosed().subscribe(r => {
-          if (r)
-            this.updateOrderStatus(order, STATUS_PREPARING)
-        })
-      }
+  getMenuItems() {
+    this.menuService.getItems().subscribe(r => {
+      this.menuItems = r
     })
   }
 
-  startOrderPreparing(order: KitchenInfo) {
-    this.updateOrderStatus(order, STATUS_PREPARING)
+  getItemInfo(info: KitchenInfo) {
+    var itemInfo: MenuItemInfo[] = []
+    Object.keys(info.placedItems).forEach(key => {
+      this.menuItems.map(item => {
+        if (item.id == key)
+          itemInfo.push({
+            id: item.id,
+            description: item.description,
+            price: item.price,
+            quantity: info.placedItems[key]
+          })
+      })
+    })
+    return itemInfo
   }
 
   concludeOrderPreparing(order: KitchenInfo) {
@@ -45,9 +50,8 @@ export class KitchenPage implements OnInit {
 
   getClientOrders() {
     this.kitchenService.getSentClientOrders().then(result => {
-      if (result) {
+      if (result)
         this.clientOrders = result
-      }
     })
   }
 
@@ -60,10 +64,10 @@ export class KitchenPage implements OnInit {
     var msg = () => { if (status === STATUS_PREPARED) { this.getClientOrders(); return 'Pedido Preparado!!! 🍕' } else return 'Pedido Iniciado!!! 🍕' }
 
     this.kitchenService.updateOrderStatus(order, status).then(() => {
-        this.snackBar.open(msg(), undefined, {
-          duration: 3000,
-          panelClass: ['blue-snackbar']
-        })
+      this.snackBar.open(msg(), undefined, {
+        duration: 3000,
+        panelClass: ['blue-snackbar']
+      })
     })
   }
 }

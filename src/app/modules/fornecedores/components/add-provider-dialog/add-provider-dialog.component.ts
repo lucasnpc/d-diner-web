@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { Provider } from '../../models/provider.model';
 import { ProvidersService } from '../../services/fornecedores.service';
 
@@ -24,7 +23,7 @@ export class AddProviderDialogComponent implements OnInit {
   });
   isEditting = false;
 
-  constructor(private fb: FormBuilder, private storage: BusinessStorage, private service: ProvidersService,
+  constructor(private fb: FormBuilder, private service: ProvidersService,
     public dialogRef: MatDialogRef<AddProviderDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Provider
   ) { }
@@ -43,7 +42,7 @@ export class AddProviderDialogComponent implements OnInit {
       city: this.formRegisterProviders.get('city')!.value,
       state: this.formRegisterProviders.get('state')!.value,
       phone: this.formRegisterProviders.get('phone')!.value,
-      email: this.formRegisterProviders.get('phone')!.value,
+      email: this.formRegisterProviders.get('email')!.value,
       decommissioned: false
     }
 
@@ -52,14 +51,15 @@ export class AddProviderDialogComponent implements OnInit {
   }
 
   addProvider(provider: Provider) {
-    this.service.postProvider(provider).subscribe(result => {
-      if (result.success) this.dialogRef.close(true)
-    })
+    this.service.postProvider(provider).then(() => {
+      this.dialogRef.close(true)
+    }).catch(e => console.log(e))
   }
 
   updateProvider(provider: Provider) {
-    this.service.updateProvider(provider).subscribe(result => {
-      if (result.success) this.dialogRef.close(true)
-    })
+    this.service.updateProvider(provider).then(() => {
+      this.dialogRef.close(true)
+    }).catch(e => console.log(e)
+    )
   }
 }

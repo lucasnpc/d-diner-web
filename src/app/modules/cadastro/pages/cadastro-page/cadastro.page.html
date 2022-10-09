@@ -14,7 +14,7 @@
             <p>CNPJ/CPF</p>
             <mat-form-field appearance="outline">
               <mat-label>CNPJ</mat-label>
-              <input matInput formControlName="cnpjNegocio" placeholder="CNPJ da empresa" required />
+              <input matInput type="number" formControlName="cnpjNegocio" placeholder="CNPJ da empresa" required />
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="1" [rowspan]="1"> </mat-grid-tile>
@@ -61,10 +61,10 @@
       <form [formGroup]="formUserRegister" class="form-container background">
         <mat-grid-list cols="2" rowHeight="6.3rem" [gutterSize]="'4px'">
           <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <p>Nome de Usuário</p>
+            <p>Email do Usuário</p>
             <mat-form-field appearance="outline">
-              <mat-label>Usuário</mat-label>
-              <input matInput formControlName="userName" placeholder="ID do usuário" required />
+              <mat-label>Email</mat-label>
+              <input matInput type="email" formControlName="userName" placeholder="ID do usuário" ngModel email="true" required />
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2" [rowspan]="1">
@@ -89,15 +89,15 @@
     </mat-step>
     <mat-step label="Finalize o cadastro">
       <div class="result-container">
-        <span *ngIf="negocio != null && usuario != null">
-          <p class="result-label">Nome da empresa: {{negocio.corporateName}}</p>
-          <p class="result-label">Nome do Usuário: {{usuario.email}}</p>
-          <p class="result-label">CNPJ/CPF: {{negocio.cnpj}}</p>
+        <span *ngIf="business != null && user != null">
+          <p class="result-label">Nome da empresa: {{business.corporateName}}</p>
+          <p class="result-label">Nome do Usuário: {{user.email}}</p>
+          <p class="result-label">CNPJ/CPF: {{business.idCnpj}}</p>
           <p class="result-label">
-            Endereço: {{negocio.street}}, {{negocio.number}}, {{negocio.district}},
-            {{negocio.city}}
+            Endereço: {{business.street}}, {{business.number}}, {{business.district}},
+            {{business.city}}
           </p>
-          <p class="result-label">Estado: {{negocio.state}}</p>
+          <p class="result-label">Estado: {{business.state}}</p>
         </span>
       </div>
       <div>

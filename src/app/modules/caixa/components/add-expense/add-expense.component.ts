@@ -35,8 +35,8 @@ export class AddExpenseComponent implements OnInit {
       value: this.formRegisterExpenses.get('value')!.value,
       expenseDate: this.formRegisterExpenses.get('expenseDate')!.value,
     };
-    this.rest.postExpense(dados).subscribe((result) => {
-      if (result.success) this.dialogRef.close(true);
-    });
+    this.rest.postExpense(dados).then(() => {
+      this.dialogRef.close(true);
+    }).catch(e => { alert(e); console.log(e) });
   }
 }

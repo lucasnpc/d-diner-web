@@ -1,15 +1,12 @@
-import { DatePipe } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map, Observable } from 'rxjs';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { USER_INFO } from 'src/app/core/utils/constants';
+import { datePipe, SAVE_DATE_FORMAT, USER_INFO } from 'src/app/core/utils/constants';
 import { BUSINESS_COLLECTION, DESKS_COLLECTION, EXPENSES_COLLECTION, GAINS_COLLECTION, ORDERS_COLLECTION } from 'src/app/core/utils/firestore-keys';
 import { Desk } from '../../desks/model/desk.model';
 import { Order } from '../models/order.model';
-
-const datePipe = new DatePipe('pt-BR');
 
 @Injectable()
 export class DashboardService {
@@ -39,7 +36,7 @@ export class DashboardService {
 
   async getConcludedOrders(date: Date) {
     var orders: Order[] = []
-    const dateConverted = datePipe.transform(date, "dd 'de' MMMM 'de' yyyy")
+    const dateConverted = datePipe.transform(date, SAVE_DATE_FORMAT)
     this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
       .collection(DESKS_COLLECTION, ref => {
         ref.get().then(desks => {

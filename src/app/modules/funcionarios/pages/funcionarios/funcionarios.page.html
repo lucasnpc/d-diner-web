@@ -52,13 +52,13 @@
               <!-- Data Admissão Column -->
               <ng-container matColumnDef="Data de Admissao">
                 <th mat-header-cell *matHeaderCellDef>Admissão</th>
-                <td mat-cell *matCellDef="let element">{{ element.admissionDate }}</td>
+                <td mat-cell *matCellDef="let element">{{ formatDateString(element.admissionDate) }}</td>
               </ng-container>
               <!-- Data Nascimento Column -->
               <ng-container matColumnDef="Data de Nascimento">
                 <th mat-header-cell *matHeaderCellDef>Nascimento</th>
                 <td class="item-border-right" mat-cell *matCellDef="let element">
-                  {{ element.birthDate }}
+                  {{ formatDateString(element.birthDate) }}
                 </td>
               </ng-container>
 

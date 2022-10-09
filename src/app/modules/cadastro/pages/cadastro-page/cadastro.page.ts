@@ -26,8 +26,8 @@ export class CadastroPage implements OnInit {
     confirmPassword: ['', Validators.required],
   });
 
-  usuario: User | undefined;
-  negocio: Business | undefined;
+  user: User | undefined;
+  business: Business | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -39,9 +39,9 @@ export class CadastroPage implements OnInit {
 
   setBusiness() {
     if (this.formBusinessRegister != null) {
-      this.negocio = {
+      this.business = {
         corporateName: this.formBusinessRegister.get('nomeNegocio')!.value,
-        cnpj: this.formBusinessRegister.get('cnpjNegocio')!.value,
+        idCnpj: String(this.formBusinessRegister.get('cnpjNegocio')!.value),
         street: this.formBusinessRegister.get('ruaNegocio')!.value,
         number: this.formBusinessRegister.get('numeroNegocio')!.value,
         district: this.formBusinessRegister.get('bairroNegocio')!.value,
@@ -53,27 +53,21 @@ export class CadastroPage implements OnInit {
 
   setUser() {
     if (this.formUserRegister != null) {
-      this.usuario = {
+      this.user = {
         email: this.formUserRegister.get('userName')!.value,
-        businessCnpj: this.negocio!.cnpj,
+        businessCnpj: this.business!.idCnpj,
         password: this.formUserRegister.get('password')!.value,
-        userType: 'Administrador',
+        role: 'Administrador',
       };
     }
   }
 
   finishRegistration() {
     try {
-      this.service.postBusiness(this.negocio!).subscribe((result) => {
-        if (result.success) {
-          this.service.postUser(this.usuario!).subscribe((result) => {
-            if (result.success) {
-              alert('Negócio e usuário cadastrado');
-              this.router.navigate(['']);
-            }
-          });
-        }
-      });
+      this.service.postBusiness(this.business!)
+      this.service.postUser(this.user!)
+      alert('Negócio e usuário cadastrado');
+      this.router.navigate(['']);
     } catch (error) {
       console.log(error);
       alert("Algum erro inesperado aconteceu")
