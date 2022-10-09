@@ -19,10 +19,6 @@ export class OrderInKitchenComponent implements OnInit {
     this.getTotalOrders()
   }
 
-  ngOnChanges() {
-    this.getTotalOrders()
-  }
-
   getTotalOrders() {
     this.kitchenService.getSentClientOrders().then(result => {
       if (result)
