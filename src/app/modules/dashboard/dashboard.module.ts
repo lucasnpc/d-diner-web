@@ -21,7 +21,6 @@ import { InvoiceDialogComponent } from './components/invoice-dialog/invoice-dial
 import { CaixaService } from '../caixa/service/caixa.service';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InicioService } from '../inicio/services/inicio.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -62,6 +61,6 @@ import { KitchenService } from '../kitchen/services/kitchen.service';
     MatInputModule,
     MatFormFieldModule
   ],
-  providers: [DashboardService, CaixaService, InicioService, KitchenService],
+  providers: [DashboardService, CaixaService, KitchenService],
 })
 export class DashboardModule { }

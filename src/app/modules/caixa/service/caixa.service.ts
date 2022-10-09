@@ -1,6 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { Gain } from '../models/gain.model';
 import { Expense } from '../models/expense.model';
 import { Observable } from 'rxjs';
@@ -8,10 +7,8 @@ import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { BUSINESS_COLLECTION, EXPENSES_COLLECTION, GAINS_COLLECTION } from 'src/app/core/utils/firestore-keys';
-import { USER_INFO } from 'src/app/core/utils/constants';
+import { datePipe, SAVE_DATE_FORMAT, USER_INFO } from 'src/app/core/utils/constants';
 
-const postEntrada = environment.url + 'caixa/postEntrada';
-const postSaida = environment.url + 'caixa/postSaida';
 
 @Injectable()
 export class CaixaService {
@@ -25,7 +22,7 @@ export class CaixaService {
     }),
   };
 
-  constructor(private httpClient: HttpClient, private firestore: AngularFirestore, private storage: BusinessStorage) {
+  constructor(private firestore: AngularFirestore, private storage: BusinessStorage) {
     this.gains = firestore.collection(BUSINESS_COLLECTION).doc(storage.get(USER_INFO).businessCnpj).collection(GAINS_COLLECTION)
       .snapshotChanges().pipe(map(changes => changes.map(c => ({
         id: c.payload.doc.id,
@@ -50,14 +47,21 @@ export class CaixaService {
   getExpenses() {
     return this.expensses
   }
-  postGain(gain: Gain) {
-    return this.httpClient.post<any>(
-      postEntrada,
-      gain,
-      this.httpOptions
-    );
+  async postGain(gain: Gain) {
+    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(GAINS_COLLECTION).add(({
+        additionalValue: gain.additionalValue,
+        gainDate: gain.gainDate,
+        paymentWay: gain.paymentWay,
+        value: gain.value
+      }))
   }
-  postExpense(saida: any) {
-    return this.httpClient.post<any>(postSaida, saida, this.httpOptions);
+  async postExpense(expense: Expense) {
+    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(EXPENSES_COLLECTION).add(({
+        description: expense.description,
+        expenseDate: datePipe.transform(expense.expenseDate, SAVE_DATE_FORMAT),
+        value: expense.value
+      }))
   }
 }
