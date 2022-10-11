@@ -44,9 +44,21 @@ export class CaixaService {
   getGains() {
     return this.gains
   }
+
   getExpenses() {
     return this.expensses
   }
+
+  getGainsByDate(date: string) {
+    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(GAINS_COLLECTION, ref => ref.where('gainDate', '==', date)).get()
+  }
+
+  getExpensesByDate(date: string) {
+    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(EXPENSES_COLLECTION, ref => ref.where('expenseDate', '==', date)).get()
+  }
+
   async postGain(gain: Gain) {
     return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
       .collection(GAINS_COLLECTION).add(({
@@ -56,6 +68,7 @@ export class CaixaService {
         value: gain.value
       }))
   }
+
   async postExpense(expense: Expense) {
     return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
       .collection(EXPENSES_COLLECTION).add(({

@@ -61,7 +61,7 @@ export class KitchenPage implements OnInit {
       return
     }
 
-    var msg = () => { if (status === STATUS_PREPARED) { this.getClientOrders(); return 'Pedido Preparado!!! 🍕' } else return 'Pedido Iniciado!!! 🍕' }
+    var msg = () => { if (status === STATUS_PREPARED) { return 'Pedido Preparado!!! 🍕' } else return 'Pedido Iniciado!!! 🍕' }
 
     this.kitchenService.updateOrderStatus(order, status).then(() => {
       this.snackBar.open(msg(), undefined, {

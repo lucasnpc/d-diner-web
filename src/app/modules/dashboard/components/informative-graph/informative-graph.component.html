@@ -7,8 +7,13 @@
         <input matEndDate formControlName="end" placeholder="Data final">
       </mat-date-range-input>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
-
+      <mat-date-range-picker #picker>
+        <mat-date-range-picker-actions>
+          <button mat-button class="date-picker-button" matDateRangePickerCancel>Cancel</button>
+          <button mat-raised-button class="date-picker-button" color="primary" matDateRangePickerApply
+            (click)="getData()">Apply</button>
+        </mat-date-range-picker-actions>
+      </mat-date-range-picker>
       <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">Data inicial inválida</mat-error>
       <mat-error *ngIf="range.controls['end'].hasError('matEndDateInvalid')">Data final inválida</mat-error>
     </mat-form-field>
@@ -27,10 +32,10 @@
     </p>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="2" [rowspan]="6">
-    <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="data" [gradient]="gradient" [xAxis]="showXAxis"
+    <ngx-charts-line-chart [scheme]="colorScheme" [results]="data" [timeline]="timeline" [xAxis]="showXAxis"
       [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="'Legenda'" [showXAxisLabel]="showXAxisLabel"
       [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
-    </ngx-charts-bar-vertical>
+    </ngx-charts-line-chart>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <p>
