@@ -8,7 +8,7 @@
       <!-- Balance Column -->
       <ng-container matColumnDef="balance">
         <th mat-header-cell *matHeaderCellDef>Balanço</th>
-        <td class="item-border" mat-cell *matCellDef="let element">Total R$ {{ element.total }}</td>
+        <td class="item-border" mat-cell *matCellDef="let element">Total {{ gainSum - expenseSum | currency: 'BRL' }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
