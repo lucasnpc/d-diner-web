@@ -28,7 +28,10 @@ interface graphData {
   ]
 })
 export class InformativeGraphComponent implements OnInit {
-  data: graphData[] = [];
+  data: graphData[] = [
+    { name: 'Ganhos', series: [] },
+    { name: 'Gastos', series: [] }
+  ];
   @Input() selectedDate: Date = new Date()
   todayDate: string = ''
   range = new UntypedFormGroup({

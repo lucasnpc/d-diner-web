@@ -12,9 +12,15 @@ import { DesksPageComponent } from "./pages/desks-page/desks-page.component";
 import { DesksRoutingModule } from "./desks-routing.module";
 import { DesksService } from "./service/desk-service.service";
 import { DeskDataDialogComponent } from './components/desk-data-dialog/desk-data-dialog.component';
+import { InvoiceDialogComponent } from "./components/invoice-dialog/invoice-dialog.component";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatRadioModule } from "@angular/material/radio";
+import { CaixaService } from "../caixa/service/caixa.service";
+import { MenuService } from "../cardapio/service/menu.service";
+import { CurrencyMaskModule } from "ng2-currency-mask";
 
 @NgModule({
-    declarations: [DesksPageComponent, DeskDataDialogComponent],
+    declarations: [DesksPageComponent, DeskDataDialogComponent, InvoiceDialogComponent],
     imports: [
         CommonModule,
         DesksRoutingModule,
@@ -27,9 +33,12 @@ import { DeskDataDialogComponent } from './components/desk-data-dialog/desk-data
         MatFormFieldModule,
         FormsModule,
         ReactiveFormsModule,
-        MatIconModule
+        MatIconModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        CurrencyMaskModule
     ],
-    providers: [DesksService]
+    providers: [DesksService, CaixaService, MenuService]
 })
 
 export class DesksModule { }

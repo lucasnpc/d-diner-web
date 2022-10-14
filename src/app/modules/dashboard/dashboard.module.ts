@@ -17,7 +17,6 @@ import { DashboardDetailPage } from './pages/dashboard-detail/dashboard-detail.p
 import { DashboardService } from './service/dashboard.service';
 import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
-import { InvoiceDialogComponent } from './components/invoice-dialog/invoice-dialog.component';
 import { CaixaService } from '../caixa/service/caixa.service';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -39,7 +38,6 @@ import { KitchenService } from '../kitchen/services/kitchen.service';
     GainsComponent,
     InformativeGraphComponent,
     DashboardDetailPage,
-    InvoiceDialogComponent,
   ],
   imports: [
     CommonModule,

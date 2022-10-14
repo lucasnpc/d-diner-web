@@ -23,6 +23,7 @@ export const STATUS_STARTING = "enviado"
 export const STATUS_PREPARED = "preparado"
 
 export const SAVE_DATE_FORMAT = "dd/MM/yyyy"
+export const SAVE_HOUR_FORMAT = "HH:mm:ss"
 export const SHOW_DATE_FORMAT = "dd 'de' MMMM 'de' yyyy"
 
 export const INICIO_ROUTE = "/menu/inicio"
