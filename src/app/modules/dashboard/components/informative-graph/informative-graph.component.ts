@@ -55,7 +55,7 @@ export class InformativeGraphComponent implements OnInit {
     name: '',
     selectable: true,
     group: ScaleType.Linear,
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ['#19AD79', '#FA4B4B']
   };
 
   currencyPipe = new CurrencyPipe('pt-Br')
@@ -69,40 +69,49 @@ export class InformativeGraphComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.range.valueChanges.subscribe(change => {
+      if (change.end != undefined) {
+        const init = new Date(change.start)
+        const end = new Date(change.end)
 
-  getData() {
-    const init = new Date(this.range.value.start)
-    const end = new Date(this.range.value.end)
-    var selectedGains: any[] = []
-    var selectedExpenses: any[] = []
+        var selectedGains: any[] = []
+        var selectedExpenses: any[] = []
 
-    for (var d = init; d <= end; d.setDate(d.getDate() + 1)) {
-      this.service.getGainsByDate(datePipe.transform(d, SAVE_DATE_FORMAT)!).subscribe(r => {
-        r.docs.forEach(doc => {
-          if (doc.exists)
-            selectedGains.push({
-              value: doc.data()['value'],
-              name: doc.data()['gainDate']
-            })
-        })
-        this.data = [{
-          name: 'Ganhos', series: selectedGains
-        }, { name: 'Gastos', series: selectedExpenses }]
-      })
-      this.service.getExpensesByDate(datePipe.transform(d, SAVE_DATE_FORMAT)!).subscribe(r => {
-        r.docs.forEach(doc => {
-          if (doc.exists)
-            selectedExpenses.push({
-              value: doc.data()['value'],
-              name: doc.data()['expenseDate']
-            })
-        })
-        this.data = [{
-          name: 'Ganhos', series: selectedGains
-        }, { name: 'Gastos', series: selectedExpenses }]
-      })
-    }
+        for (var d = init; d <= end; d.setDate(d.getDate() + 1)) {
+          this.service.getGainsByDate(datePipe.transform(d, SAVE_DATE_FORMAT)!).subscribe(r => {
+            if (r.docs[0] != undefined) {
+              const sum = r.docs.reduce((sum, obj) => {
+                return sum + obj.data()['value']
+              }, 0)
+
+              selectedGains.push({
+                value: sum,
+                name: r.docs[0].data()['gainDate']
+              })
+              this.data = [{
+                name: 'Ganhos', series: selectedGains
+              }, { name: 'Gastos', series: selectedExpenses }]
+            }
+          })
+          this.service.getExpensesByDate(datePipe.transform(d, SAVE_DATE_FORMAT)!).subscribe(r => {
+            if (r.docs[0] != undefined) {
+              const sum = r.docs.reduce((sum, obj) => {
+                return sum + obj.data()['value']
+              }, 0)
+
+              selectedExpenses.push({
+                value: sum,
+                name: r.docs[0].data()['expenseDate']
+              })
+              this.data = [{
+                name: 'Ganhos', series: selectedGains
+              }, { name: 'Gastos', series: selectedExpenses }]
+            }
+          })
+        }
+      }
+    })
   }
 
   onSelect(event: any) {

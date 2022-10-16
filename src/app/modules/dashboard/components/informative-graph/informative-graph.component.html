@@ -8,11 +8,6 @@
       </mat-date-range-input>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-date-range-picker #picker>
-        <mat-date-range-picker-actions>
-          <button mat-button class="date-picker-button" matDateRangePickerCancel>Cancel</button>
-          <button mat-raised-button class="date-picker-button" color="primary" matDateRangePickerApply
-            (click)="getData()">Apply</button>
-        </mat-date-range-picker-actions>
       </mat-date-range-picker>
       <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">Data inicial inválida</mat-error>
       <mat-error *ngIf="range.controls['end'].hasError('matEndDateInvalid')">Data final inválida</mat-error>
