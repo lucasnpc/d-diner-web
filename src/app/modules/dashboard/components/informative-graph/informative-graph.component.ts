@@ -6,13 +6,10 @@ import autoTable from 'jspdf-autotable';
 import { ScaleType } from '@swimlane/ngx-charts';
 import { UntypedFormGroup, FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { datePipe, MY_DATE_FORMATS, SAVE_DATE_FORMAT, SHOW_DATE_FORMAT } from 'src/app/core/utils/constants';
+import { datePipe, GRAPHIC_DATE_FORMAT, MY_DATE_FORMATS, SAVE_DATE_FORMAT, SHOW_DATE_FORMAT } from 'src/app/core/utils/constants';
 import { CaixaService } from 'src/app/modules/caixa/service/caixa.service';
 import { CurrencyPipe } from '@angular/common';
-
-const EXPORT_ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
-<path fill="none" d="M0 0h24v24H0z"/><path d="M13 14h-2a8.999 8.999 0 0 0-7.968 4.81A10.136 10.136 0 0 1 3 18C3 12.477 7.477 8 13 8V3l10 8-10 8v-5z"
- fill="rgba(132,134,132,1)"/></svg>`;
+import { EXPORT_ICON } from 'src/app/core/utils/icons';
 
 interface graphData {
   name: string,
@@ -62,7 +59,8 @@ export class InformativeGraphComponent implements OnInit {
 
   constructor(
     iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer, private service: CaixaService) {
+    sanitizer: DomSanitizer, private service: CaixaService
+  ) {
     iconRegistry.addSvgIconLiteral(
       'export-icon',
       sanitizer.bypassSecurityTrustHtml(EXPORT_ICON)
@@ -87,7 +85,7 @@ export class InformativeGraphComponent implements OnInit {
 
               selectedGains.push({
                 value: sum,
-                name: r.docs[0].data()['gainDate']
+                name: this.formatToDate(r.docs[0].data()['gainDate'])
               })
               this.data = [{
                 name: 'Ganhos', series: selectedGains
@@ -102,7 +100,7 @@ export class InformativeGraphComponent implements OnInit {
 
               selectedExpenses.push({
                 value: sum,
-                name: r.docs[0].data()['expenseDate']
+                name: this.formatToDate(r.docs[0].data()['expenseDate'])
               })
               this.data = [{
                 name: 'Ganhos', series: selectedGains
@@ -112,10 +110,6 @@ export class InformativeGraphComponent implements OnInit {
         }
       }
     })
-  }
-
-  onSelect(event: any) {
-    console.log(event);
   }
 
   exportData() {
@@ -167,5 +161,14 @@ export class InformativeGraphComponent implements OnInit {
     })
     doc.save(`${datePipe.transform(this.range.value.start, SAVE_DATE_FORMAT)}-${datePipe.transform(this.range.value.end, SAVE_DATE_FORMAT)}.pdf`);
     doc.close;
+  }
+
+  graphicDateFormating(value: Date): string {
+    return datePipe.transform(value, GRAPHIC_DATE_FORMAT)!
+  }
+
+  formatToDate(dateString: string) {
+    const [day, month, year] = dateString.split('/');
+    return new Date(+year, +month - 1, +day);
   }
 }

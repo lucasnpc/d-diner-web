@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { Expense } from '../../models/expense.model';
 import { CaixaService } from '../../service/caixa.service';
 import { DialogAddInCaixaComponent } from '../dialog-add-in-caixa/dialog-add-in-caixa.component';
@@ -21,14 +20,11 @@ export class AddExpenseComponent implements OnInit {
   constructor(
     private fb: UntypedFormBuilder,
     private rest: CaixaService,
-    public dialogRef: MatDialogRef<DialogAddInCaixaComponent>,
-    private storage: BusinessStorage
-  ) { }
+    public dialogRef: MatDialogRef<DialogAddInCaixaComponent>) { }
 
   ngOnInit(): void { }
 
   addExpense() {
-    console.log('Add expense');
     var dados: Expense = {
       id: '',
       description: this.formRegisterExpenses.get('description')!.value,

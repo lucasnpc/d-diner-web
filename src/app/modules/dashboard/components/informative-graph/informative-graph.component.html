@@ -16,7 +16,8 @@
   <mat-grid-tile [colspan]="2" [rowspan]="6">
     <ngx-charts-line-chart [scheme]="colorScheme" [results]="data" [timeline]="timeline" [xAxis]="showXAxis"
       [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="'Legenda'" [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+      [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
+      [xAxisTickFormatting]="graphicDateFormating">
     </ngx-charts-line-chart>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="1" [rowspan]="1">

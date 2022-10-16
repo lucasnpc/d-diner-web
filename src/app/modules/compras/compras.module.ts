@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComprasPage } from './pages/contas/compras.page';
+import { ComprasPage } from './pages/compras/compras.page';
 import { ComprasRoutingModule } from './compras-routing.module';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';

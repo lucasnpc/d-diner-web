@@ -16,7 +16,6 @@ import { FuncionarioService } from '../../service/funcionario.service';
 export class FuncionariosPage implements OnInit {
   filterEvent: Event | undefined;
   filterValue: String = '';
-  funcionarios: Employee[] = [];
   dataSource: any;
   clickedRow: Employee | undefined;
 
@@ -43,12 +42,7 @@ export class FuncionariosPage implements OnInit {
   }
 
   getEmployees() {
-    this.rest.getEmployees().subscribe((result) => {
-      if (result) {
-        this.funcionarios = result
-        this.dataSource = new MatTableDataSource(this.funcionarios);
-      }
-    });
+    this.rest.getEmployees().subscribe((result) => this.dataSource = new MatTableDataSource(result));
   }
 
   openDialog(edit: boolean) {

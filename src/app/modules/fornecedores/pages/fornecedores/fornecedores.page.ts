@@ -13,7 +13,6 @@ import { ProvidersService } from '../../services/fornecedores.service';
 export class FornecedoresPage implements OnInit {
   filterEvent: Event | undefined;
   filterValue: String = '';
-  providers: Provider[] = [];
   clickedRow: Provider | undefined;
   dataSource: any;
 
@@ -41,8 +40,7 @@ export class FornecedoresPage implements OnInit {
 
   getProviders() {
     this.service.getProviders().subscribe((result) => {
-      this.providers = result;
-      this.dataSource = new MatTableDataSource(this.providers);
+      this.dataSource = new MatTableDataSource(result);
     });
   }
 
