@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { datePipe, SAVE_DATE_FORMAT } from 'src/app/core/utils/constants';
+import { CaixaService } from 'src/app/modules/caixa/service/caixa.service';
 import { Provider } from 'src/app/modules/fornecedores/models/provider.model';
 import { ProvidersService } from 'src/app/modules/fornecedores/services/fornecedores.service';
 import { Product } from '../../models/product.model';
@@ -27,8 +29,7 @@ export class AddPurchaseDialogComponent implements OnInit {
   purchases: Purchase[] = []
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Product[], private service: ComprasService, private providerService: ProvidersService,
-    private fb: UntypedFormBuilder, public dialogRef: MatDialogRef<AddPurchaseDialogComponent>,
-  ) { }
+    private fb: UntypedFormBuilder, public dialogRef: MatDialogRef<AddPurchaseDialogComponent>, private caixaService: CaixaService) { }
 
   ngOnInit(): void {
     this.providerService.getProviders().subscribe(result => {
@@ -53,6 +54,12 @@ export class AddPurchaseDialogComponent implements OnInit {
       this.data[i].currentStock += this.purchases[i].quantity
       this.service.updateProductCurrentStock(this.data[i]).catch(e => console.log(e))
       this.service.postPurchase(this.purchases[i], this.data[i].id).catch(e => console.log(e))
+      this.caixaService.postExpense({
+        id: '',
+        description: this.purchases[i].description,
+        expenseDate: this.purchases[i].purchaseDate.toDateString(),
+        value: (this.purchases[i].unitCostValue * this.purchases[i].quantity)
+      }).catch(e => alert(e))
     }
   }
 
