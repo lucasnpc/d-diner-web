@@ -16,6 +16,11 @@ interface graphData {
   series: any[]
 }
 
+interface expenseData {
+  [key: string]: string,
+  value: string
+}
+
 @Component({
   selector: 'rp-informative-graph',
   templateUrl: './informative-graph.component.html',
@@ -29,6 +34,7 @@ export class InformativeGraphComponent implements OnInit {
     { name: 'Ganhos', series: [] },
     { name: 'Gastos', series: [] }
   ];
+  expenseData: expenseData[] = []
   @Input() selectedDate: Date = new Date()
   todayDate: string = ''
   range = new UntypedFormGroup({
@@ -95,6 +101,10 @@ export class InformativeGraphComponent implements OnInit {
           this.service.getExpensesByDate(datePipe.transform(d, SAVE_DATE_FORMAT)!).subscribe(r => {
             if (r.docs[0] != undefined) {
               const sum = r.docs.reduce((sum, obj) => {
+                this.expenseData.push({
+                  description: obj.data()['description'],
+                  value: `${this.currencyPipe.transform(obj.data()['value'] * -1, 'BRL')}`
+                })
                 return sum + obj.data()['value']
               }, 0)
 
@@ -113,16 +123,13 @@ export class InformativeGraphComponent implements OnInit {
   }
 
   exportData() {
-    var gainSum = 0
-    var expenseSum = 0
-
     if (this.data.length <= 0)
       return
 
-    gainSum = this.data[0].series.reduce((sum, obj) => {
+    const gainSum = this.data[0].series.reduce((sum, obj) => {
       return sum + obj.value
     }, 0)
-    expenseSum = this.data[1].series.reduce((sum, obj) => {
+    const expenseSum = this.data[1].series.reduce((sum, obj) => {
       return sum + obj.value
     }, 0)
 
@@ -131,10 +138,6 @@ export class InformativeGraphComponent implements OnInit {
     const gainShow = [{
       name: 'Vendas no restaurante',
       value: `${this.currencyPipe.transform(gainSum, 'BRL')}`
-    }]
-    const expenseShow = [{
-      name: 'Gastos do restaurante',
-      value: `${this.currencyPipe.transform(expenseSum * -1, 'BRL')}`
     }]
 
     doc.text((`Período: ${datePipe.transform(this.range.value.start, SHOW_DATE_FORMAT)} até ${datePipe.transform(this.range.value.end, SHOW_DATE_FORMAT)}`), 14, 12)
@@ -148,10 +151,10 @@ export class InformativeGraphComponent implements OnInit {
     });
     autoTable(doc, {
       columns: [
-        { header: 'Deduções da receita', dataKey: 'name' },
+        { header: 'Deduções da receita', dataKey: 'description' },
         { header: 'Valor total', dataKey: 'value' },
       ],
-      body: expenseShow,
+      body: this.expenseData,
     });
     autoTable(doc, {
       columns: [
