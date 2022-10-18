@@ -12,7 +12,6 @@ import { ClienteService } from '../../service/cliente.service';
 })
 export class ClientesPage implements OnInit {
   filterValue: String = '';
-  clientes: Client[] = [];
   clickedRow: Client | undefined;
   dataSource: any;
   filterEvent: Event | undefined;
@@ -38,8 +37,7 @@ export class ClientesPage implements OnInit {
 
   getCustomers() {
     this.rest.getCustomers().subscribe((result) => {
-      this.clientes = result
-      this.dataSource = new MatTableDataSource(this.clientes);
+      this.dataSource = new MatTableDataSource(result);
     });
   }
 

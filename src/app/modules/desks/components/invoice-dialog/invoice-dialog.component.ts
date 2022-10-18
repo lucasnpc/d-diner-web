@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { datePipe, SAVE_DATE_FORMAT } from 'src/app/core/utils/constants';
 import { Gain } from 'src/app/modules/caixa/models/gain.model';
 import { CaixaService } from 'src/app/modules/caixa/service/caixa.service';
 import { MenuItem } from 'src/app/modules/cardapio/models/menu-item.model';
@@ -16,6 +18,8 @@ export class InvoiceDialogComponent implements OnInit {
   totalValue = 0
   additionalValue = 0
   clientOptToNotPay = false
+  cashChange = 0
+  cashChangeFormControl = new UntypedFormControl('');
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: MenuItem[],
     public dialogRef: MatDialogRef<InvoiceDialogComponent>, private service: CaixaService) { }
@@ -29,19 +33,20 @@ export class InvoiceDialogComponent implements OnInit {
   }
   addGain() {
     if (this.payementForm == null) return;
+    if (this.payementForm == 'Dinheiro' && this.cashChange - this.totalValue < 0) {
+      alert('Valor de troco inválido')
+      return;
+    }
 
     const gain: Gain = {
       id: '',
       value: this.totalValue,
       paymentWay: this.payementForm,
-      gainDate: '',
+      gainDate: datePipe.transform(new Date(), SAVE_DATE_FORMAT)!,
       additionalValue: this.additionalValue
     }
 
-    // this.service.postGain(gain).subscribe((result) => {
-    //   if (result.success) this.dialogRef.close(true);
-    // });
-    this.dialogRef.close();
+    this.service.postGain(gain).then(() => this.dialogRef.close(true)).catch(e => alert(e))
   }
 
   changeCheck() {
@@ -54,7 +59,5 @@ export class InvoiceDialogComponent implements OnInit {
       this.additionalValue = Number(this.totalValue * 0.1)
       this.totalValue += Number(this.additionalValue)
     }
-
-
   }
 }

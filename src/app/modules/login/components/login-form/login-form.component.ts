@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { User } from '../../models/usuario.model';
 
 @Component({
@@ -11,9 +11,9 @@ export class LoginFormComponent implements OnInit {
   @Output() entrar = new EventEmitter<User>();
   @Output() cadastrar = new EventEmitter<Boolean>();
 
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
     this.loginForm = this.fb.group({
       usuario: [{ value: '', disabled: false }, [Validators.required]],
       senha: [{ value: '', disabled: false }, [Validators.required]],

@@ -1,0 +1,52 @@
+<mat-grid-list cols="4" rowHeight="3rem">
+  <mat-grid-tile mat-dialog-title [colspan]="4" [rowspan]="1">
+    <div class="gray-top-bar" mat-dialog-title></div>
+  </mat-grid-tile>
+  <mat-dialog-content>
+    <mat-grid-tile [colspan]="4" [rowspan]="2">
+      <p>Forma de Pagamento</p>
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+        [(ngModel)]="payementForm">
+        <mat-radio-button class="example-radio-button" *ngFor="let payement of payements" [value]="payement">
+          {{ payement }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </mat-grid-tile>
+    <mat-grid-tile class="order" [colspan]="4" [rowspan]="6">
+      <p class="order">Pedido:</p>
+      <span #item *ngFor="let item of data; let i = index">
+        <p class="item">
+          {{ item.description }}: R$ {{ item.price }}
+        </p>
+        <p class="item-quantity">Qtd.{{item.itemQuantity}}</p>
+      </span>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="4" [rowspan]="3">
+      <section>
+        <mat-checkbox [checked]="clientOptToNotPay" (change)="changeCheck()" class="total">
+          Cliente optou por não pagar a taxa de 10%
+        </mat-checkbox>
+      </section>
+      <p class="total">Valor adicional: R$ {{ additionalValue | number:'1.2-2' }}</p>
+      <p class="total">Valor total: R$ {{ totalValue | number:'1.2-2' }}</p>
+    </mat-grid-tile>
+    <mat-grid-tile *ngIf="payementForm == 'Dinheiro'" [colspan]="4" [rowspan]="2">
+      <span>
+        <mat-form-field appearance="outline">
+          <input [(ngModel)]="cashChange" matInput currencyMask [formControl]="cashChangeFormControl" placeholder="0"
+            [options]="{ prefix: '', thousands: '', decimal: '.' }" required />
+          <span matPrefix>R$&nbsp;</span>
+        </mat-form-field>
+        <p class="change" *ngIf="cashChange - totalValue < 0">Troco: {{ 0 | currency: 'BRL' }}</p>
+        <p class="change" *ngIf="cashChange - totalValue > 0">Troco {{cashChange - totalValue | currency : 'BRL'}}</p>
+      </span>
+    </mat-grid-tile>
+  </mat-dialog-content>
+  <mat-grid-tile [colspan]="4" [rowspan]="1">
+    <mat-dialog-actions>
+      <button mat-button (click)="addGain()" cdkFocusInitial>
+        Efetuar Pagamento
+      </button>
+    </mat-dialog-actions>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -11,7 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from '../shared/shared.module';
 import { DialogAddInClientesComponent } from './components/dialog-add-in-clientes/dialog-add-in-clientes.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AddClienteComponent } from './components/add-cliente/add-cliente.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ClienteService } from './service/cliente.service';
@@ -20,7 +19,6 @@ import { ClienteService } from './service/cliente.service';
   declarations: [
     ClientesPage,
     DialogAddInClientesComponent,
-    AddClienteComponent,
   ],
   imports: [
     CommonModule,

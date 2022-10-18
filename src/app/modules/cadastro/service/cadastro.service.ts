@@ -27,6 +27,7 @@ export class CadastroService {
       street: business.street
     }))
   }
+  
   postUser(user: User) {
     this.auth.createUserWithEmailAndPassword(user.email, user.password)
     this.firestore.collection(USERS_COLLECTION).doc(user.email).set({

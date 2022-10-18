@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ComprasPage } from './pages/contas/compras.page';
+import { ComprasPage } from './pages/compras/compras.page';
 import { ComprasRoutingModule } from './compras-routing.module';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
@@ -22,6 +22,7 @@ import { MatListModule } from '@angular/material/list';
 import { AddPurchaseDialogComponent } from './components/add-purchase-dialog/add-purchase-dialog.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProvidersService } from '../fornecedores/services/fornecedores.service';
+import { CaixaService } from '../caixa/service/caixa.service';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,6 @@ import { ProvidersService } from '../fornecedores/services/fornecedores.service'
     MatDatepickerModule,
     NativeDateModule
   ],
-  providers: [ComprasService, ProvidersService],
+  providers: [ComprasService, ProvidersService, CaixaService],
 })
 export class ComprasModule { }

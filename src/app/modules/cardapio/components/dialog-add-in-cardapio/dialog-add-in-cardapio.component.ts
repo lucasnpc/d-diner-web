@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Validators, FormControl, FormBuilder } from '@angular/forms';
+import { Validators, UntypedFormControl, UntypedFormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, startWith, map } from 'rxjs';
 import { Product } from 'src/app/modules/compras/models/product.model';
@@ -24,7 +24,7 @@ export class DialogAddInCardapioComponent implements OnInit {
   filteredProducts: Observable<string[]> = new Observable;
   productsDescription: string[] = [];
   selectedProducts: Product[] = []
-  createMenuItemControl = new FormControl('');
+  createMenuItemControl = new UntypedFormControl('');
   itemProducts: ItemProducts[] = []
 
   categories = [
@@ -39,7 +39,7 @@ export class DialogAddInCardapioComponent implements OnInit {
   isEditting = false;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private rest: MenuService,
     public dialogRef: MatDialogRef<DialogAddInCardapioComponent>,
     private service: MenuService, @Inject(MAT_DIALOG_DATA) public data: MenuItem) { }

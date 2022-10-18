@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { SharedDialogComponent } from 'src/app/modules/shared/components/shared-dialog/shared-dialog.component';
 import { DialogAddInCardapioComponent } from '../../components/dialog-add-in-cardapio/dialog-add-in-cardapio.component';
 import { MenuItem } from '../../models/menu-item.model';
@@ -14,7 +13,6 @@ import { MenuService } from '../../service/menu.service';
 export class CardapioPage implements OnInit {
   filterEvent: Event | undefined;
   filterValue: String = '';
-  items: MenuItem[] = [];
   clickedRow: MenuItem | undefined;
   dataSource: any;
 
@@ -23,7 +21,7 @@ export class CardapioPage implements OnInit {
     'price'
   ]
 
-  constructor(private dialog: MatDialog, private rest: MenuService, private storage: BusinessStorage) { }
+  constructor(private dialog: MatDialog, private rest: MenuService) { }
 
   ngOnInit(): void {
     this.getItems()
@@ -34,10 +32,7 @@ export class CardapioPage implements OnInit {
   }
 
   getItems() {
-    this.rest.getItems().subscribe((result) => {
-      this.items = result
-      this.dataSource = new MatTableDataSource(this.items)
-    });
+    this.rest.getItems().subscribe(result => this.dataSource = new MatTableDataSource(result));
   }
 
   openDialog(edit: boolean) {

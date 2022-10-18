@@ -11,7 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from '../shared/shared.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogAddInFuncionariosComponent } from './components/dialog-add-in-funcionarios/dialog-add-in-funcionarios.component';
-import { AddFuncionarioComponent } from './components/add-funcionario/add-funcionario.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -24,7 +23,6 @@ import { MatSelectModule } from '@angular/material/select';
   declarations: [
     FuncionariosPage,
     DialogAddInFuncionariosComponent,
-    AddFuncionarioComponent,
   ],
   imports: [
     CommonModule,

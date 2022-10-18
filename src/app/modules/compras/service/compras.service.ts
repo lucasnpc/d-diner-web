@@ -53,10 +53,9 @@ export class ComprasService {
 
   async updateProduct(product: Product) {
     this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
-      .collection(PRODUCTS_COLLECTION).doc(product.id).set(({
+      .collection(PRODUCTS_COLLECTION).doc(product.id).update(({
         name: product.name,
         minimumStock: product.minimumStock,
-        currentStock: product.currentStock,
         measurementUnit: product.measurementUnit,
         barcode: product.barcode,
       }))

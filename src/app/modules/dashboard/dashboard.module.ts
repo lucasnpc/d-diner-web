@@ -17,7 +17,6 @@ import { DashboardDetailPage } from './pages/dashboard-detail/dashboard-detail.p
 import { DashboardService } from './service/dashboard.service';
 import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
-import { InvoiceDialogComponent } from './components/invoice-dialog/invoice-dialog.component';
 import { CaixaService } from '../caixa/service/caixa.service';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,6 +24,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { KitchenService } from '../kitchen/services/kitchen.service';
@@ -38,7 +38,6 @@ import { KitchenService } from '../kitchen/services/kitchen.service';
     GainsComponent,
     InformativeGraphComponent,
     DashboardDetailPage,
-    InvoiceDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -58,8 +57,9 @@ import { KitchenService } from '../kitchen/services/kitchen.service';
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MomentDateModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
   providers: [DashboardService, CaixaService, KitchenService],
 })

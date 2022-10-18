@@ -34,17 +34,9 @@ export class KitchenService {
                     placedItems: change.doc.data()['placedItems'],
                     status: change.doc.data()['status']
                   })
-                if (change.type == 'modified') {
+                if (change.type == 'removed') {
                   const index = placedItems.findIndex(index => index.id == change.doc.id)
-                  placedItems[index] = {
-                    id: change.doc.id,
-                    deskId: desk.id,
-                    orderId: order.id,
-                    deskDescription: desk.data()['description'],
-                    observations: change.doc.data()['observations'],
-                    placedItems: change.doc.data()['placedItems'],
-                    status: change.doc.data()['status']
-                  }
+                  placedItems.splice(index, 1)
                 }
               })
             })

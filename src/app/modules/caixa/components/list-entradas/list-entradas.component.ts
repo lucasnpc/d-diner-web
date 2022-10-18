@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
 import { datePipe, SHOW_DATE_FORMAT } from 'src/app/core/utils/constants';
 import { Gain } from '../../models/gain.model';
 import { CaixaService } from '../../service/caixa.service';
@@ -11,16 +10,14 @@ import { CaixaService } from '../../service/caixa.service';
   styleUrls: ['./list-entradas.component.less'],
 })
 export class ListEntradasComponent implements OnInit {
-  entradas: Gain[] = [];
   dataSource: any;
   clickedRow: Gain | undefined;
 
-  constructor(private rest: CaixaService, private storage: BusinessStorage) { }
+  constructor(private rest: CaixaService) { }
 
   ngOnInit(): void {
     this.rest.getGains().subscribe((result) => {
-      this.entradas = result
-      this.dataSource = new MatTableDataSource(this.entradas);
+      this.dataSource = new MatTableDataSource(result);
     });
   }
   displayedColumns: string[] = ['N. Mesa', 'Valor Conta', 'Forma de pagamento'];

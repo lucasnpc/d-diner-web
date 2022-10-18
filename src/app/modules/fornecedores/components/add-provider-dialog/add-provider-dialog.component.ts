@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Provider } from '../../models/provider.model';
 import { ProvidersService } from '../../services/fornecedores.service';
@@ -23,7 +23,7 @@ export class AddProviderDialogComponent implements OnInit {
   });
   isEditting = false;
 
-  constructor(private fb: FormBuilder, private service: ProvidersService,
+  constructor(private fb: UntypedFormBuilder, private service: ProvidersService,
     public dialogRef: MatDialogRef<AddProviderDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Provider
   ) { }

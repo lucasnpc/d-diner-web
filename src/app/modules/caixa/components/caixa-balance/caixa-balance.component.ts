@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-export interface PeriodicElement {
-  total: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [{ total: 0 }];
+import { CaixaService } from '../../service/caixa.service';
 
 @Component({
   selector: 'rp-caixa-balance',
@@ -12,9 +7,21 @@ const ELEMENT_DATA: PeriodicElement[] = [{ total: 0 }];
   styleUrls: ['./caixa-balance.component.less'],
 })
 export class CaixaBalanceComponent implements OnInit {
-  constructor() {}
+  gainSum = 0
+  expenseSum = 0
 
-  ngOnInit(): void {}
   displayedColumns: string[] = ['balance'];
-  dataSource = ELEMENT_DATA;
+  dataSource = [{}];
+
+  constructor(private service: CaixaService) { }
+
+  ngOnInit(): void {
+    this.service.getGains().subscribe(r => this.gainSum = r.reduce((sum, obj) => {
+      return sum + obj.value
+    }, 0))
+    this.service.getExpenses().subscribe(r => this.expenseSum = r.reduce((sum, obj) => {
+      return sum + obj.value
+    }, 0))
+  }
+
 }

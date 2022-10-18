@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Product } from '../../models/product.model';
 import { ComprasService } from '../../service/compras.service';
@@ -30,7 +30,7 @@ export class AddProductDialog implements OnInit {
   ]
   isEditting = false;
 
-  constructor(private fb: FormBuilder, private service: ComprasService,
+  constructor(private fb: UntypedFormBuilder, private service: ComprasService,
     private dialogRef: MatDialogRef<AddProductDialog>, @Inject(MAT_DIALOG_DATA) public data: Product
   ) { }
 

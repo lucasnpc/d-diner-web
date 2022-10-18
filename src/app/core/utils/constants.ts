@@ -7,11 +7,24 @@ export const CASH_ROLE = "caixa"
 export const CLIENT_ROLE = "cliente"
 
 export const datePipe = new DatePipe('pt-BR');
+export const MY_DATE_FORMATS = {
+    parse: {
+        dateInput: 'DD/MM/YYYY',
+    },
+    display: {
+        dateInput: 'DD/MM/YYYY',
+        monthYearLabel: 'MMMM YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY'
+    },
+};
 
 export const STATUS_STARTING = "enviado"
 export const STATUS_PREPARED = "preparado"
 
 export const SAVE_DATE_FORMAT = "dd/MM/yyyy"
+export const GRAPHIC_DATE_FORMAT = "dd, MMM"
+export const SAVE_HOUR_FORMAT = "HH:mm:ss"
 export const SHOW_DATE_FORMAT = "dd 'de' MMMM 'de' yyyy"
 
 export const INICIO_ROUTE = "/menu/inicio"

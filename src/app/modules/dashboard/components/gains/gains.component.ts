@@ -1,13 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { BusinessStorage } from 'src/app/core/utils/business-storage';
-import { datePipe, SAVE_DATE_FORMAT } from 'src/app/core/utils/constants';
+import { datePipe, MY_DATE_FORMATS, SAVE_DATE_FORMAT } from 'src/app/core/utils/constants';
 import { DashboardService } from '../../service/dashboard.service';
 
 @Component({
   selector: 'rp-gains',
   templateUrl: './gains.component.html',
   styleUrls: ['./gains.component.less'],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 
 export class GainsComponent implements OnInit {
@@ -16,7 +19,7 @@ export class GainsComponent implements OnInit {
   @Input() selectedDate: Date = new Date()
   @Output() changedDate = new EventEmitter<Date>()
 
-  constructor(private rest: DashboardService, private storage: BusinessStorage) { }
+  constructor(private rest: DashboardService) { }
 
   ngOnInit(): void {
     this.getTotalGains()

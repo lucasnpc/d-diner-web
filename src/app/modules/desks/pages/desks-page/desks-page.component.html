@@ -13,6 +13,8 @@
                             <mat-icon [svgIcon]="desk.isOccupied ? 'restaurant-icon-white' : 'restaurant-icon-gray'">
                             </mat-icon>
                             <p [ngClass]="{'busy-text': desk.isOccupied == true}">{{desk.description}}</p>
+                            <p *ngIf="desk.isOccupied" class="busy-text">Ocupada</p>
+                            <p *ngIf="!desk.isOccupied">Disponível</p>
                         </button>
                     </li>
                 </ul>

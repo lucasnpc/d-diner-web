@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/modules/login/models/usuario.model';
 import { Business } from '../../models/negocio.model';
@@ -30,7 +30,7 @@ export class CadastroPage implements OnInit {
   business: Business | undefined;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private service: CadastroService,
     private router: Router
   ) { }
