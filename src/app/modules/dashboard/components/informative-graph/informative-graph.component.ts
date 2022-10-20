@@ -133,14 +133,14 @@ export class InformativeGraphComponent implements OnInit {
       return sum + obj.value
     }, 0)
 
-    var doc = new jsPDF();
+    const doc = new jsPDF();
 
     const gainShow = [{
       name: 'Vendas no restaurante',
       value: `${this.currencyPipe.transform(gainSum, 'BRL')}`
     }]
 
-    doc.text((`Período: ${datePipe.transform(this.range.value.start, SHOW_DATE_FORMAT)} até ${datePipe.transform(this.range.value.end, SHOW_DATE_FORMAT)}`), 14, 12)
+    doc.text(`Período: ${datePipe.transform(this.range.value.start, SHOW_DATE_FORMAT)} até ${datePipe.transform(this.range.value.end, SHOW_DATE_FORMAT)}`, 14, 12)
 
     autoTable(doc, {
       columns: [

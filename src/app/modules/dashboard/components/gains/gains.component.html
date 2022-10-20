@@ -1,19 +1,19 @@
 <mat-grid-list cols="2" rowHeight="4rem">
-    <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <p>Ganhos</p>
-    </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <p>Ganhos do dia</p>
+    </mat-grid-tile>
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="2">
         <p style="text-align: end">
             <button mat-button (click)="picker.open()">Alterar Data</button>
-            <mat-form-field>
+            <mat-form-field> -->
                 <!-- Input Escondido -->
-                <input matInput [matDatepicker]="picker" (dateChange)="changeDate($event)" [disabled]="true">
+                <!-- <input matInput [matDatepicker]="picker" (dateChange)="changeDate($event)" [disabled]="true">
                 <mat-datepicker-toggle matSuffix [for]="picker">
                 </mat-datepicker-toggle>
                 <mat-datepicker #picker disabled="false"></mat-datepicker>
             </mat-form-field>
         </p>
-    </mat-grid-tile>
+    </mat-grid-tile> -->
     <mat-grid-tile [colspan]="2" [rowspan]="2">
         <div class="see-gains">Entradas: R$ {{gains | currency: ''}}</div>
     </mat-grid-tile>
