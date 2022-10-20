@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Validators, UntypedFormBuilder } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -10,6 +10,7 @@ import { FuncionarioService } from '../../service/funcionario.service';
   templateUrl: './dialog-add-in-funcionarios.component.html',
   styleUrls: ['./dialog-add-in-funcionarios.component.less']
 })
+
 export class DialogAddInFuncionariosComponent implements OnInit {
   formRegisterEmployees = this.fb.group({
     cpf: ['', Validators.required],
@@ -25,8 +26,6 @@ export class DialogAddInFuncionariosComponent implements OnInit {
     isOutsource: ['', Validators.required]
   });
   isEditting = false;
-
-  @Output() registerEmployee = new EventEmitter<Employee>()
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -67,12 +66,10 @@ export class DialogAddInFuncionariosComponent implements OnInit {
   }
 
   addEmployee(employee: Employee) {
-    this.rest.postEmployee(employee).then(() => this.dialogRef.close(true)).catch(e => console.log(e))
+    this.rest.postEmployee(employee).then(() => this.dialogRef.close(true)).catch(e => alert(e))
   }
 
   updateEmployee(employee: Employee) {
-    this.rest.updateEmployee(employee).then(() => {
-      this.dialogRef.close(true);
-    }).catch(e => console.log(e))
+    this.rest.updateEmployee(employee).then(() => this.dialogRef.close(true)).catch(e => alert(e))
   }
 }

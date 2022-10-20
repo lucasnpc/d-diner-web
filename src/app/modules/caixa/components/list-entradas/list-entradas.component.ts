@@ -11,8 +11,7 @@ import { CaixaService } from '../../service/caixa.service';
 })
 export class ListEntradasComponent implements OnInit {
   dataSource: any;
-  clickedRow: Gain | undefined;
-
+  
   constructor(private rest: CaixaService) { }
 
   ngOnInit(): void {
@@ -21,10 +20,6 @@ export class ListEntradasComponent implements OnInit {
     });
   }
   displayedColumns: string[] = ['N. Mesa', 'Valor Conta', 'Forma de pagamento'];
-
-  setRow(row: Gain) {
-    this.clickedRow = row;
-  }
 
   formatDateString(dateString: string) {
     const [day, month, year] = dateString.split('/');

@@ -28,7 +28,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row (click)="setRow(row)" [ngClass]="{ rowSelected: clickedRow == row }"
+      <tr mat-row (click)="setRow(row)" [ngClass]="{ rowSelected: selectedRow == row }"
         *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </mat-card-content>
