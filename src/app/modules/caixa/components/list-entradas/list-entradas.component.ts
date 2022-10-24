@@ -19,7 +19,7 @@ export class ListEntradasComponent implements OnInit {
       this.dataSource = new MatTableDataSource(result);
     });
   }
-  displayedColumns: string[] = ['N. Mesa', 'Valor Conta', 'Forma de pagamento'];
+  displayedColumns: string[] = ['Valor Conta', 'Forma de pagamento', 'Data do Ganho'];
 
   formatDateString(dateString: string) {
     const [day, month, year] = dateString.split('/');

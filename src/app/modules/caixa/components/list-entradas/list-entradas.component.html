@@ -1,11 +1,11 @@
 <mat-card class="card-style">
   <mat-card-header>
-    <mat-card-title>Entradas</mat-card-title>
+    <mat-card-title>Ganhos</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <table mat-table [dataSource]="dataSource">
       <!-- ID Column -->
-      <ng-container matColumnDef="N. Mesa">
+      <ng-container matColumnDef="Valor Conta">
         <th mat-header-cell *matHeaderCellDef>Valor da conta</th>
         <td class="item-border-left" mat-cell *matCellDef="let element">
           R{{ element.value | currency: ''}}
@@ -13,14 +13,14 @@
       </ng-container>
 
       <!-- Numero da mesa Column -->
-      <ng-container matColumnDef="Valor Conta">
+      <ng-container matColumnDef="Forma de pagamento">
         <th mat-header-cell *matHeaderCellDef>Forma de pagamento</th>
         <td mat-cell *matCellDef="let element">{{ element.paymentWay }}</td>
       </ng-container>
 
       <!-- Valor Column -->
-      <ng-container matColumnDef="Forma de pagamento">
-        <th mat-header-cell *matHeaderCellDef>Data da entrada</th>
+      <ng-container matColumnDef="Data do Ganho">
+        <th mat-header-cell *matHeaderCellDef>Data da venda</th>
         <td class="item-border-right" mat-cell *matCellDef="let element">
           {{ formatDateString(element.gainDate) }}
         </td>
