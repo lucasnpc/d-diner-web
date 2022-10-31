@@ -33,10 +33,6 @@ export class CaixaPage implements OnInit {
         data: {}
       })
     }
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog caixa result: ${result}`);
-    });
   }
 
   setExpense(event: Expense) {

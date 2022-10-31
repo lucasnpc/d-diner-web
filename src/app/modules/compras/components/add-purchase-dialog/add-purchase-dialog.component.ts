@@ -58,6 +58,7 @@ export class AddPurchaseDialogComponent implements OnInit {
         id: '',
         description: this.purchases[i].description,
         expenseDate: this.purchases[i].purchaseDate.toDateString(),
+        responsibleName: '',
         value: (this.purchases[i].unitCostValue * this.purchases[i].quantity)
       }).catch(e => alert(e))
     }

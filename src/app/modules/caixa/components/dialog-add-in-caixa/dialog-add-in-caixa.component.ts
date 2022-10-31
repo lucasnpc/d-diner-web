@@ -38,6 +38,7 @@ export class DialogAddInCaixaComponent implements OnInit {
       id: this.data.id,
       description: this.formRegisterExpenses.get('description')!.value,
       value: this.formRegisterExpenses.get('value')!.value,
+      responsibleName: '',
       expenseDate: this.formRegisterExpenses.get('expenseDate')!.value,
     };
 

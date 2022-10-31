@@ -103,6 +103,7 @@ export class InformativeGraphComponent implements OnInit {
               const sum = r.docs.reduce((sum, obj) => {
                 this.expenseData.push({
                   description: obj.data()['description'],
+                  responsibleName: obj.data()['responsibleName'],
                   value: `${this.currencyPipe.transform(obj.data()['value'] * -1, 'BRL')}`
                 })
                 return sum + obj.data()['value']
@@ -152,6 +153,7 @@ export class InformativeGraphComponent implements OnInit {
     autoTable(doc, {
       columns: [
         { header: 'Deduções da receita', dataKey: 'description' },
+        { header: 'Responsável', dataKey: 'responsibleName' },
         { header: 'Valor total', dataKey: 'value' },
       ],
       body: this.expenseData,
