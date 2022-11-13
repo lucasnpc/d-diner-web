@@ -14,6 +14,9 @@ import { DashboardService } from '../../service/dashboard.service';
 })
 
 export class GainsComponent implements OnInit {
+
+  gainsStructure: { [key: number]: number } = { 0: 0 }
+  expensesStructure: { [key: number]: number } = { 0: 0 }
   gains = 0;
   expenses = 0;
   @Input() selectedDate: Date = new Date()
@@ -39,12 +42,12 @@ export class GainsComponent implements OnInit {
     const dateConverted = datePipe.transform(this.selectedDate, SAVE_DATE_FORMAT)
     this.rest.getGainsSum().then(result => {
       result.ref.where('gainDate', '==', dateConverted).onSnapshot(snapshot => {
-        this.gains = 0
         snapshot.docChanges().forEach(changes => {
           if (changes.type == 'added') {
-            this.gains += Number(changes.doc.data()['value'])
+            this.gainsStructure[changes.newIndex] = Number(changes.doc.data()['value'])
           }
         })
+        this.gains = Object.values(this.gainsStructure).reduce((acc, value) => acc + value)
       })
     })
   }
@@ -53,12 +56,12 @@ export class GainsComponent implements OnInit {
     const dateConverted = datePipe.transform(this.selectedDate, SAVE_DATE_FORMAT)
     this.rest.getExpensesSum().then(result => {
       result.ref.where('expenseDate', '==', dateConverted).onSnapshot(snapshot => {
-        this.expenses = 0
         snapshot.docChanges().forEach(changes => {
           if (changes.type == 'added') {
-            this.expenses += Number(changes.doc.data()['value'])
+            this.expensesStructure[changes.newIndex] = Number(changes.doc.data()['value'])
           }
         })
+        this.expenses = Object.values(this.expensesStructure).reduce((acc, value) => acc + value)
       })
     })
   }

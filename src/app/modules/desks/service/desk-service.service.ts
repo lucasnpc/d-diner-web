@@ -44,7 +44,7 @@ export class DesksService {
     const date = new Date()
     return this.businessCollection.collection(DESKS_COLLECTION).doc(deskId).collection(ORDERS_COLLECTION)
       .doc(orderId).update({
-        conclude: true,
+        concluded: true,
         endDate: datePipe.transform(date, SAVE_DATE_FORMAT),
         endHour: datePipe.transform(date, SAVE_HOUR_FORMAT)
       })
