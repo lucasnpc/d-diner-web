@@ -37,6 +37,7 @@ export class CaixaService {
         id: c.payload.doc.id,
         description: c.payload.doc.data()['description'],
         expenseDate: c.payload.doc.data()['expenseDate'],
+        responsibleName: c.payload.doc.data()['responsibleName'],
         value: c.payload.doc.data()['value']
       }))))
   }
@@ -74,7 +75,22 @@ export class CaixaService {
       .collection(EXPENSES_COLLECTION).add(({
         description: expense.description,
         expenseDate: datePipe.transform(expense.expenseDate, SAVE_DATE_FORMAT),
+        responsibleName: this.storage.get(USER_INFO).name,
         value: expense.value
       }))
+  }
+
+  async updateExpense(expense: Expense) {
+    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(EXPENSES_COLLECTION).doc(expense.id).update(({
+        description: expense.description,
+        expenseDate: datePipe.transform(expense.expenseDate, SAVE_DATE_FORMAT),
+        value: expense.value
+      }))
+  }
+
+  async deleteExpense(id: string) {
+    return this.firestore.collection(BUSINESS_COLLECTION).doc(this.storage.get(USER_INFO).businessCnpj)
+      .collection(EXPENSES_COLLECTION).doc(id).delete()
   }
 }

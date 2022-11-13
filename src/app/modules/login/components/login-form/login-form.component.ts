@@ -8,7 +8,7 @@ import { User } from '../../models/usuario.model';
   styleUrls: ['./login-form.component.less'],
 })
 export class LoginFormComponent implements OnInit {
-  @Output() entrar = new EventEmitter<User>();
+  @Output() entrar = new EventEmitter<any>();
   @Output() cadastrar = new EventEmitter<Boolean>();
 
   loginForm: UntypedFormGroup;
@@ -23,7 +23,7 @@ export class LoginFormComponent implements OnInit {
   ngOnInit(): void { }
 
   submitLogin() {
-    var dados: User = {
+    var dados = {
       email: this.loginForm.get('usuario')!.value,
       businessCnpj: '',
       password: this.loginForm.get('senha')!.value,

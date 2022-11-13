@@ -1,6 +1,10 @@
 export interface User {
   email: string;
   businessCnpj: string;
-  password: string;
+  cpf: string;
+  name: string;
   role: string;
+
+  //Not saved properties
+  password: string;
 }

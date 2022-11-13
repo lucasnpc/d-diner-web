@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Expense } from '../../models/expense.model';
 import { CaixaService } from '../../service/caixa.service';
@@ -9,7 +9,8 @@ import { CaixaService } from '../../service/caixa.service';
   styleUrls: ['./list-saidas.component.less']
 })
 export class ListSaidasComponent implements OnInit {
-  clickedRow: Expense | undefined;
+  @Output() clickedRow = new EventEmitter<Expense>()
+  selectedRow: Expense | undefined
   dataSource: any;
 
   constructor(private rest: CaixaService) { }
@@ -22,6 +23,7 @@ export class ListSaidasComponent implements OnInit {
   displayedColumns: string[] = ['Descrição', 'Valor', 'Data do gasto'];
 
   setRow(row: Expense) {
-    this.clickedRow = row;
+    this.selectedRow = row
+    this.clickedRow.emit(row);
   }
 }

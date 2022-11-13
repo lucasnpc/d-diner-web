@@ -1,6 +1,6 @@
 <mat-card class="card-style">
   <mat-card-header>
-    <mat-card-title>Saídas</mat-card-title>
+    <mat-card-title>Despesas</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <table mat-table [dataSource]="dataSource">
@@ -23,12 +23,12 @@
 
       <!-- Data gasto Column -->
       <ng-container matColumnDef="Data do gasto">
-        <th mat-header-cell *matHeaderCellDef>Data do gasto</th>
+        <th mat-header-cell *matHeaderCellDef>Data da despesa</th>
         <td class="item-border-right" mat-cell *matCellDef="let element">{{ element.expenseDate }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row (click)="setRow(row)" [ngClass]="{ rowSelected: clickedRow == row }"
+      <tr mat-row (click)="setRow(row)" [ngClass]="{ rowSelected: selectedRow == row }"
         *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </mat-card-content>

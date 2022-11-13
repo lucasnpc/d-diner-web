@@ -21,7 +21,7 @@ export class ComprasPage implements OnInit {
 
   openDialog(edit: boolean) {
     const product = this.products.filter(product => product.selected)
-    if (product.length > 1) {
+    if (product.length > 1 && edit) {
       alert('Você pode alterar apenas um produto por vez')
       return
     }

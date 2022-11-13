@@ -103,6 +103,7 @@ export class InformativeGraphComponent implements OnInit {
               const sum = r.docs.reduce((sum, obj) => {
                 this.expenseData.push({
                   description: obj.data()['description'],
+                  responsibleName: obj.data()['responsibleName'],
                   value: `${this.currencyPipe.transform(obj.data()['value'] * -1, 'BRL')}`
                 })
                 return sum + obj.data()['value']
@@ -133,14 +134,14 @@ export class InformativeGraphComponent implements OnInit {
       return sum + obj.value
     }, 0)
 
-    var doc = new jsPDF();
+    const doc = new jsPDF();
 
     const gainShow = [{
       name: 'Vendas no restaurante',
       value: `${this.currencyPipe.transform(gainSum, 'BRL')}`
     }]
 
-    doc.text((`Período: ${datePipe.transform(this.range.value.start, SHOW_DATE_FORMAT)} até ${datePipe.transform(this.range.value.end, SHOW_DATE_FORMAT)}`), 14, 12)
+    doc.text(`Período: ${datePipe.transform(this.range.value.start, SHOW_DATE_FORMAT)} até ${datePipe.transform(this.range.value.end, SHOW_DATE_FORMAT)}`, 14, 12)
 
     autoTable(doc, {
       columns: [
@@ -152,6 +153,7 @@ export class InformativeGraphComponent implements OnInit {
     autoTable(doc, {
       columns: [
         { header: 'Deduções da receita', dataKey: 'description' },
+        { header: 'Responsável', dataKey: 'responsibleName' },
         { header: 'Valor total', dataKey: 'value' },
       ],
       body: this.expenseData,

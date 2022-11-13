@@ -14,7 +14,7 @@
     </mat-grid-tile>
     <mat-grid-tile class="order" [colspan]="4" [rowspan]="6">
       <p class="order">Pedido:</p>
-      <span #item *ngFor="let item of data; let i = index">
+      <span #item *ngFor="let item of data.items; let i = index">
         <p class="item">
           {{ item.description }}: R$ {{ item.price }}
         </p>

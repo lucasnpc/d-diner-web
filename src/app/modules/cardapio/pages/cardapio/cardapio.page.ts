@@ -49,10 +49,7 @@ export class CardapioPage implements OnInit {
       })
     }
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result)
-        this.getItems()
-    })
+    dialogRef.afterClosed()
   }
 
   applyFilter(event: Event) {

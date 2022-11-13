@@ -26,6 +26,7 @@ export const SAVE_DATE_FORMAT = "dd/MM/yyyy"
 export const GRAPHIC_DATE_FORMAT = "dd, MMM"
 export const SAVE_HOUR_FORMAT = "HH:mm:ss"
 export const SHOW_DATE_FORMAT = "dd 'de' MMMM 'de' yyyy"
+export const SHOW_INVOICE_DATE_FORMAT = "dd/MM/yyyy 'às' HH:mm"
 
 export const INICIO_ROUTE = "/menu/inicio"
 export const KITCHEN_ROUTE = "/menu/cozinha"

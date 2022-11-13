@@ -76,7 +76,7 @@ export class DeskDataDialogComponent implements OnInit {
       return
 
     this.dialog.open(InvoiceDialogComponent, {
-      data: _items
+      data: { items: _items, orderId: this.orderId }
     }).afterClosed().subscribe(r => {
       if (r) {
         this.service.concludeOrder(this.desk.id, this.orderId)

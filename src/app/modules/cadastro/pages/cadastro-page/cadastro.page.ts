@@ -56,8 +56,10 @@ export class CadastroPage implements OnInit {
       this.user = {
         email: this.formUserRegister.get('userName')!.value,
         businessCnpj: this.business!.idCnpj,
-        password: this.formUserRegister.get('password')!.value,
+        cpf: '',
+        name: '',
         role: 'Administrador',
+        password: this.formUserRegister.get('password')!.value,
       };
     }
   }

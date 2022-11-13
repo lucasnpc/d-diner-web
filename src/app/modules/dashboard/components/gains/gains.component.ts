@@ -14,6 +14,7 @@ import { DashboardService } from '../../service/dashboard.service';
 })
 
 export class GainsComponent implements OnInit {
+
   gains = 0;
   expenses = 0;
   @Input() selectedDate: Date = new Date()
@@ -39,10 +40,9 @@ export class GainsComponent implements OnInit {
     const dateConverted = datePipe.transform(this.selectedDate, SAVE_DATE_FORMAT)
     this.rest.getGainsSum().then(result => {
       result.ref.where('gainDate', '==', dateConverted).onSnapshot(snapshot => {
-        this.gains = 0
         snapshot.docChanges().forEach(changes => {
           if (changes.type == 'added') {
-            this.gains += Number(changes.doc.data()['value'])
+            this.gains += (Number(changes.doc.data()['value']) / 2)
           }
         })
       })
@@ -53,10 +53,9 @@ export class GainsComponent implements OnInit {
     const dateConverted = datePipe.transform(this.selectedDate, SAVE_DATE_FORMAT)
     this.rest.getExpensesSum().then(result => {
       result.ref.where('expenseDate', '==', dateConverted).onSnapshot(snapshot => {
-        this.expenses = 0
         snapshot.docChanges().forEach(changes => {
           if (changes.type == 'added') {
-            this.expenses += Number(changes.doc.data()['value'])
+            this.expenses += (Number(changes.doc.data()['value']) / 2)
           }
         })
       })
