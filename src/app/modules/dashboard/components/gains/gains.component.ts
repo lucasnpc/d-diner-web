@@ -15,8 +15,6 @@ import { DashboardService } from '../../service/dashboard.service';
 
 export class GainsComponent implements OnInit {
 
-  gainsStructure: { [key: number]: number } = { 0: 0 }
-  expensesStructure: { [key: number]: number } = { 0: 0 }
   gains = 0;
   expenses = 0;
   @Input() selectedDate: Date = new Date()
@@ -44,10 +42,9 @@ export class GainsComponent implements OnInit {
       result.ref.where('gainDate', '==', dateConverted).onSnapshot(snapshot => {
         snapshot.docChanges().forEach(changes => {
           if (changes.type == 'added') {
-            this.gainsStructure[changes.newIndex] = Number(changes.doc.data()['value'])
+            this.gains += (Number(changes.doc.data()['value']) / 2)
           }
         })
-        this.gains = Object.values(this.gainsStructure).reduce((acc, value) => acc + value)
       })
     })
   }
@@ -58,10 +55,9 @@ export class GainsComponent implements OnInit {
       result.ref.where('expenseDate', '==', dateConverted).onSnapshot(snapshot => {
         snapshot.docChanges().forEach(changes => {
           if (changes.type == 'added') {
-            this.expensesStructure[changes.newIndex] = Number(changes.doc.data()['value'])
+            this.expenses += (Number(changes.doc.data()['value']) / 2)
           }
         })
-        this.expenses = Object.values(this.expensesStructure).reduce((acc, value) => acc + value)
       })
     })
   }
